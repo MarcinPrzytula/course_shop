@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <div>Course Shop - Main Page</div>
-      <div>aaa</div>
+      <div>adaa</div>
     </>
   );
 }
