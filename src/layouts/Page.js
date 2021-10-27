@@ -10,6 +10,8 @@ import ShoppingCartPage from '../pages/ShoppingCartPage';
 import TransactionFormPage from '../pages/TransactionFormPage';
 import ErrorPage from '../pages/ErrorPage';
 
+import '../styles/Page.css';
+
 const Page = () => {
   const list = [
     { name: HomePage, path: '/', exact: true },
@@ -37,50 +39,22 @@ const Page = () => {
     { name: ErrorPage },
   ];
 
-  const pages = list.map(item => (
-    <Route
-      key={item.name}
-      path={item.path ? item.path : null}
-      exact={item.exact ? item.exact : null}
-      component={item.name}
-    />
-  ));
+  const pages = list.map(
+    ({ path, exact, name }, key) => (
+      <Route
+        key={key}
+        path={path}
+        exact={exact}
+        component={name}
+      />
+    )
+  );
 
   return (
     <>
-      <Switch>
-        {pages}
-        {/* <Route
-          path="/"
-          exact
-          component={HomePage}
-        />
-        <Route
-          path="/products"
-          component={ProductListPage}
-        />
-        <Route
-          path="/login"
-          component={LoginPage}
-        />
-        <Route
-          path="/registration"
-          component={RegistrationPage}
-        />
-        <Route
-          path="/user_panel"
-          component={UserPanelPage}
-        />
-        <Route
-          path="/shopping_cart"
-          component={ShoppingCartPage}
-        />
-        <Route
-          path="/transaction_form"
-          component={TransactionFormPage}
-        />
-        <Route component={ErrorPage} /> */}
-      </Switch>
+      <div className="page">
+        <Switch>{pages}</Switch>
+      </div>
     </>
   );
 };
