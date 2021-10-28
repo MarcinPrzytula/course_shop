@@ -1,10 +1,13 @@
 .panel {
+  user-select: none;
+  height: 50px;
   display: flex;
   justify-content: center;
   min-width: 30%;
   border-left: 1px solid black;
 
   &__list {
+    height: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;

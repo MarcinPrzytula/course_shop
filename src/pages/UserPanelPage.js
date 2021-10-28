@@ -5,7 +5,7 @@ import '../styles/HomePage.css';
 const UserPanelPage = () => {
   return (
     <>
-      <div>user page</div>
+      <div>Your courses:</div>
     </>
   );
 };

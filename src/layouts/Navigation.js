@@ -29,7 +29,9 @@ const Navigation = () => {
       '.navigation__list'
     );
 
-    x.classList.toggle('active');
+    x.classList.toggle(
+      'navigation__activeBurger'
+    );
   };
 
   return (
@@ -39,7 +41,7 @@ const Navigation = () => {
           className="navigation__burger"
           onClick={hamburgerActive}
         >
-          X
+          <span className="fa fa-bars"></span>
         </button>
         <ul className="navigation__list">
           {menu}
