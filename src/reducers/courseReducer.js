@@ -1,11 +1,11 @@
 import {
   BUY,
   DELETE,
-} from '../actions/appActions.js';
+} from '../actions/courseActions.js';
 
 import { v4 as uuid } from 'uuid';
 
-export const appReducer = (
+export const courseReducer = (
   state = [
     {
       authors: ['Marcin 1'],

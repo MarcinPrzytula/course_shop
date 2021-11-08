@@ -11,7 +11,6 @@ import LoginPanel from './LoginPanel';
 import '../styles/App.css';
 
 function App() {
-  console.log(store);
   return (
     <Provider store={store}>
       <Router>
