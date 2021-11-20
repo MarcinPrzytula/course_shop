@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   Formik,
   Field,
@@ -18,13 +21,25 @@ import '../styles/LoginPage.scss';
 
 function LoginPage() {
   const users = useSelector(store => store.users);
+
   const dispatch = useDispatch();
+
   const history = useHistory();
+
+  const isLogged = users.filter(
+    ({ logged }) => logged === true
+  );
+  if (isLogged.length > 0) {
+    history.push('/user_panel');
+  }
 
   const validationData = {
     loggedUser: '',
     login: '',
   };
+
+  const [errorActive, setErrorActive] =
+    useState(false);
 
   const validation = userLoginData => {
     const { formLogin, formPassword } =
@@ -57,13 +72,16 @@ function LoginPage() {
       validationData.login = 'failed';
       validationData.loggedUser =
         returnTheUserIfTheExists;
-      throw Error(
-        `Nie zalogowano z powodu złych danych`
-      );
+      setErrorActive(true);
     } else return console.log(' puste wykonanie');
   };
 
-  console.log(users);
+  //   useEffect(() => {
+  //     if (isLogged.length > 0) {
+  //       history.push('/user_panel');
+  //     }
+  //   }, []);
+
   const loginPanel = (
     <Formik
       initialValues={{
@@ -88,7 +106,6 @@ function LoginPage() {
         values,
         { setSubmitting, resetForm }
       ) => {
-        // setUserLoginData(values);
         validation(values);
         resetForm();
       }}
@@ -96,12 +113,13 @@ function LoginPage() {
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <div className="login">
-            {validationData.login === 'failed' ? (
+            {errorActive ? (
               <div>
                 Podano złą nazwę użytkownika lub
                 hasło
               </div>
             ) : null}
+
             <div>
               <ErrorMessage
                 name="newError"
@@ -138,18 +156,7 @@ function LoginPage() {
       )}
     </Formik>
   );
-  return (
-    <>
-      {/* {userLogged ? (
-        <Redirect to="/somewhere/else" />
-      ) : null} */}
-
-      {/* {validationData.login === 'successful'
-        ? 'Zostałeś zalogowany'
-        : loginPanel} */}
-      {loginPanel}
-    </>
-  );
+  return <>{loginPanel}</>;
 }
 
 export default LoginPage;

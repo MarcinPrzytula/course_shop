@@ -6,7 +6,6 @@ import {
 import { v4 as uuid } from 'uuid';
 
 const edit = (state, action) => {
-  console.log(action.payload);
   return state.map(currentStateElement => {
     if (
       currentStateElement.id !== action.payload.id
