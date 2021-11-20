@@ -5,74 +5,93 @@ import {
   ErrorMessage,
 } from 'formik';
 
-import { useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
+
+import { editUser } from '../actions/userActions';
+
+import { useHistory } from 'react-router-dom';
 
 import '../styles/LoginPage.scss';
-const validationData = {
-  userExist: '',
-  login: '',
-};
 
 function LoginPage() {
   const users = useSelector(store => store.users);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const [userLoginData, setUserLoginData] =
-    useState('');
-
-  const validation = () => {
-    const checkIfTheUserExists = users.filter(
-      item =>
-        item.userLogin ===
-          userLoginData.userLogin &&
-        item.userPassword ===
-          userLoginData.userPassword
-    );
-
-    if (
-      userLoginData &&
-      checkIfTheUserExists.length > 0
-    ) {
-      validationData.login = 'successful';
-      validationData.userExist =
-        checkIfTheUserExists;
-    } else if (
-      userLoginData &&
-      checkIfTheUserExists.length === 0
-    ) {
-      validationData.login = 'failed';
-      validationData.userExist =
-        checkIfTheUserExists;
-    }
-    return validationData;
+  const validationData = {
+    loggedUser: '',
+    login: '',
   };
 
-  if (userLoginData) {
-    validation();
-  }
+  const validation = userLoginData => {
+    const { formLogin, formPassword } =
+      userLoginData;
 
+    const returnTheUserIfTheExists = users.filter(
+      ({ userLogin, userPassword }) =>
+        userLogin === formLogin &&
+        userPassword === formPassword
+    );
+    if (
+      userLoginData &&
+      returnTheUserIfTheExists.length > 0
+    ) {
+      returnTheUserIfTheExists[0].logged = true;
+      validationData.login = 'successful';
+      validationData.loggedUser =
+        returnTheUserIfTheExists;
+      dispatch(
+        editUser(
+          validationData.loggedUser[0].id,
+          validationData.loggedUser[0].logged
+        )
+      );
+      history.push('/user_panel');
+    } else if (
+      userLoginData &&
+      returnTheUserIfTheExists.length === 0
+    ) {
+      validationData.login = 'failed';
+      validationData.loggedUser =
+        returnTheUserIfTheExists;
+      throw Error(
+        `Nie zalogowano z powodu złych danych`
+      );
+    } else return console.log(' puste wykonanie');
+  };
+
+  console.log(users);
   const loginPanel = (
     <Formik
       initialValues={{
-        userLogin: '',
-        userPassword: '',
+        formLogin: '',
+        formPassword: '',
       }}
       validate={values => {
         const errors = {};
 
-        if (values.userLogin.length < 3) {
-          errors.userLogin =
+        if (values.formLogin.length < 3) {
+          errors.formLogin =
             'Wprowadz login (minimum 3 znaki)';
         } else if (
-          values.userPassword.length < 4
+          values.formPassword.length < 4
         ) {
-          errors.userPassword =
+          errors.formPassword =
             'Wprowadz haslo (minimum 4 znaki)';
         }
         return errors;
       }}
-      onSubmit={values =>
-        setUserLoginData(values)
-      }
+      onSubmit={(
+        values,
+        { setSubmitting, resetForm }
+      ) => {
+        // setUserLoginData(values);
+        validation(values);
+        resetForm();
+      }}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
@@ -85,26 +104,32 @@ function LoginPage() {
             ) : null}
             <div>
               <ErrorMessage
-                name="userLogin"
+                name="newError"
+                component="div"
+              />
+            </div>
+            <div>
+              <ErrorMessage
+                name="formLogin"
                 component="div"
               />
             </div>
 
             <span>Login</span>
             <Field
-              name="userLogin"
+              name="formLogin"
               placeholder="login"
             />
           </div>
           <div className="password">
             <ErrorMessage
-              name="userPassword"
+              name="formPassword"
               component="div"
             />
             <span>Password</span>
             <Field
               placeholder="password"
-              name="userPassword"
+              name="formPassword"
               type="password"
             />
           </div>
@@ -115,9 +140,14 @@ function LoginPage() {
   );
   return (
     <>
-      {validationData.login === 'successful'
+      {/* {userLogged ? (
+        <Redirect to="/somewhere/else" />
+      ) : null} */}
+
+      {/* {validationData.login === 'successful'
         ? 'Zostałeś zalogowany'
-        : loginPanel}
+        : loginPanel} */}
+      {loginPanel}
     </>
   );
 }

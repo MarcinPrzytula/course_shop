@@ -17,7 +17,6 @@ import '../styles/RegistrationPage.scss';
 
 function RegistrationPage() {
   const users = useSelector(store => store.users);
-  console.log(users);
 
   const dispatch = useDispatch();
   const registrationSuccessful = values => {
@@ -54,9 +53,13 @@ function RegistrationPage() {
         }
         return errors;
       }}
-      onSubmit={values =>
-        registrationSuccessful(values)
-      }
+      onSubmit={(
+        values,
+        { setSubmitting, resetForm }
+      ) => {
+        registrationSuccessful(values);
+        resetForm();
+      }}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
