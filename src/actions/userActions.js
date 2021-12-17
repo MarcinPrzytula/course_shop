@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 export const ADD = 'ADD';
 export const EDIT = 'EDIT';
+export const ADD_COURSE = 'ADD_COURSE';
 
 export const addUser = ({
   id = uuid(),
@@ -22,4 +23,12 @@ export const addUser = ({
 export const editUser = (id, logged) => ({
   type: EDIT,
   payload: { id, logged },
+});
+
+export const addCourseToTheUser = (
+  id,
+  newCourse
+) => ({
+  type: ADD_COURSE,
+  payload: { id, newCourse },
 });

@@ -10,8 +10,6 @@ import ShoppingCartPage from '../pages/ShoppingCartPage';
 import TransactionFormPage from '../pages/TransactionFormPage';
 import ErrorPage from '../pages/ErrorPage';
 
-import '../styles/Page.css';
-
 const Page = () => {
   const list = [
     { name: HomePage, path: '/', exact: true },

@@ -1,6 +1,7 @@
 import {
   ADD,
   EDIT,
+  ADD_COURSE,
 } from '../actions/userActions.js';
 
 import { v4 as uuid } from 'uuid';
@@ -15,6 +16,7 @@ const edit = (state, action) => {
     }
 
     const { logged } = action.payload;
+
     const {
       id,
       userLogin,
@@ -26,6 +28,45 @@ const edit = (state, action) => {
       userLogin,
       userPassword,
       courses,
+      logged,
+    };
+  });
+};
+
+const addCourse = (state, action) => {
+  const { newCourse } = action.payload;
+
+  const loggedUser = state.filter(
+    user => user.logged === true
+  );
+  const checkIfTheCourseAlreadyThere =
+    loggedUser[0].courses.find(
+      course => course.id === newCourse.id
+    );
+
+  return state.map(currentStateElement => {
+    if (
+      currentStateElement.id !==
+        action.payload.id ||
+      checkIfTheCourseAlreadyThere
+    ) {
+      return currentStateElement;
+    }
+
+    const {
+      id,
+      userLogin,
+      userPassword,
+      logged,
+    } = currentStateElement;
+    return {
+      id,
+      userLogin,
+      userPassword,
+      courses: [
+        ...loggedUser[0].courses,
+        newCourse,
+      ],
       logged,
     };
   });
@@ -48,7 +89,8 @@ export const userReducer = (
       return [...state, action.payload];
     case EDIT:
       return edit(state, action);
-
+    case ADD_COURSE:
+      return addCourse(state, action);
     default:
       console.warn(
         `Nie mamy akcji typu ${action.type}`

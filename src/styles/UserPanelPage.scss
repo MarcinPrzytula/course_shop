@@ -1,0 +1,8 @@
+.userPanel_productList {
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: 574px) {
+    flex-direction: column;
+  }
+}

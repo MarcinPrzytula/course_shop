@@ -2,14 +2,37 @@ import React from 'react';
 
 import '../styles/Product.scss';
 
-const userLogin = true;
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
+import { addCourseToTheUser } from '../actions/userActions';
 
 const Product = ({
   title,
   img,
   price,
   authors,
+  id,
 }) => {
+  const users = useSelector(store => store.users);
+  const dispatch = useDispatch();
+
+  const loggedUser = users.filter(
+    user => user.logged === true
+  );
+
+  let checkIfTheCourseIsBought = null;
+
+  if (loggedUser.length > 0) {
+    const checkIfTheCourseAlreadyThere =
+      loggedUser[0].courses.find(
+        course => course.id === id
+      );
+
+    checkIfTheCourseIsBought =
+      checkIfTheCourseAlreadyThere;
+  }
   return (
     <div className="product">
       <div className="product__title">
@@ -26,9 +49,33 @@ const Product = ({
         <span>Authors: </span>
         <span>{authors}</span>
       </div>
-      <button>
-        {userLogin ? 'Buy' : 'Log in'}
-      </button>
+
+      {loggedUser.length > 0 ? (
+        checkIfTheCourseIsBought ? (
+          'You bought this course'
+        ) : (
+          <button
+            onClick={() => {
+              dispatch(
+                addCourseToTheUser(
+                  loggedUser[0].id,
+                  {
+                    title,
+                    img,
+                    price,
+                    authors,
+                    id,
+                  }
+                )
+              );
+            }}
+          >
+            <span>Buy</span>
+          </button>
+        )
+      ) : (
+        'Log in'
+      )}
     </div>
   );
 };

@@ -17,6 +17,8 @@ const ProductListPage = () => {
     store => store.products
   );
 
+  const users = useSelector(store => store.users);
+
   const productsList = products.map(
     ({ authors, img, price, title, id }) => (
       <Product

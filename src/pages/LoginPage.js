@@ -21,7 +21,7 @@ import '../styles/LoginPage.scss';
 
 function LoginPage() {
   const users = useSelector(store => store.users);
-
+  //   console.log(users);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -29,9 +29,6 @@ function LoginPage() {
   const isLogged = users.filter(
     ({ logged }) => logged === true
   );
-  if (isLogged.length > 0) {
-    history.push('/user_panel');
-  }
 
   const validationData = {
     loggedUser: '',
@@ -76,11 +73,11 @@ function LoginPage() {
     } else return console.log(' puste wykonanie');
   };
 
-  //   useEffect(() => {
-  //     if (isLogged.length > 0) {
-  //       history.push('/user_panel');
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (isLogged.length > 0) {
+      history.push('/user_panel');
+    }
+  }, []);
 
   const loginPanel = (
     <Formik
