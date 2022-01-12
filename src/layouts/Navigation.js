@@ -25,11 +25,11 @@ const menu = list.map(item => (
 
 const Navigation = () => {
   const hamburgerActive = () => {
-    const x = document.querySelector(
+    const navigation = document.querySelector(
       '.navigation__list'
     );
 
-    x.classList.toggle(
+    navigation.classList.toggle(
       'navigation__activeBurger'
     );
   };

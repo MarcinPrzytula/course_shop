@@ -1,6 +1,6 @@
 import React, {
   useState,
-  useEffect,
+  //   useEffect,
 } from 'react';
 import {
   Formik,
@@ -13,7 +13,7 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { editUser } from '../actions/userActions';
+import { editUser } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
@@ -21,14 +21,13 @@ import '../styles/LoginPage.scss';
 
 function LoginPage() {
   const users = useSelector(store => store.users);
-  //   console.log(users);
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const isLogged = users.filter(
-    ({ logged }) => logged === true
-  );
+  //   const isLogged = users.filter(
+  //     ({ logged }) => logged === true
+  //   );
 
   const validationData = {
     loggedUser: '',
@@ -38,33 +37,34 @@ function LoginPage() {
   const [errorActive, setErrorActive] =
     useState(false);
 
-  const validation = userLoginData => {
+  const submit = userLoginData => {
     const { formLogin, formPassword } =
       userLoginData;
 
-    const returnTheUserIfTheExists = users.filter(
+    const returnTheUserIfTheExists = users.find(
       ({ userLogin, userPassword }) =>
         userLogin === formLogin &&
         userPassword === formPassword
     );
+
     if (
       userLoginData &&
-      returnTheUserIfTheExists.length > 0
+      returnTheUserIfTheExists
     ) {
-      returnTheUserIfTheExists[0].logged = true;
+      returnTheUserIfTheExists.logged = true;
       validationData.login = 'successful';
       validationData.loggedUser =
         returnTheUserIfTheExists;
       dispatch(
         editUser(
-          validationData.loggedUser[0].id,
-          validationData.loggedUser[0].logged
+          validationData.loggedUser.id,
+          validationData.loggedUser.logged
         )
       );
       history.push('/user_panel');
     } else if (
       userLoginData &&
-      returnTheUserIfTheExists.length === 0
+      returnTheUserIfTheExists === undefined
     ) {
       validationData.login = 'failed';
       validationData.loggedUser =
@@ -73,11 +73,24 @@ function LoginPage() {
     } else return console.log(' puste wykonanie');
   };
 
-  useEffect(() => {
-    if (isLogged.length > 0) {
-      history.push('/user_panel');
+  //   useEffect(() => {
+  //     if (isLogged.length > 0) {
+  //       history.push('/user_panel');
+  //     }
+  //   }, []);
+
+  const validateForm = values => {
+    const errors = {};
+
+    if (values.formLogin.length < 3) {
+      errors.formLogin =
+        'Wprowadz login (minimum 3 znaki)';
+    } else if (values.formPassword.length < 4) {
+      errors.formPassword =
+        'Wprowadz haslo (minimum 4 znaki)';
     }
-  }, []);
+    return errors;
+  };
 
   const loginPanel = (
     <Formik
@@ -85,25 +98,12 @@ function LoginPage() {
         formLogin: '',
         formPassword: '',
       }}
-      validate={values => {
-        const errors = {};
-
-        if (values.formLogin.length < 3) {
-          errors.formLogin =
-            'Wprowadz login (minimum 3 znaki)';
-        } else if (
-          values.formPassword.length < 4
-        ) {
-          errors.formPassword =
-            'Wprowadz haslo (minimum 4 znaki)';
-        }
-        return errors;
-      }}
+      validate={values => validateForm(values)}
       onSubmit={(
         values,
         { setSubmitting, resetForm }
       ) => {
-        validation(values);
+        submit(values);
         resetForm();
       }}
     >

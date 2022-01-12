@@ -5,7 +5,7 @@ import {
   useSelector,
 } from 'react-redux';
 
-import { addUser } from '../actions/userActions';
+import { addUser } from '../store/actions/userActions';
 
 import {
   Formik,
@@ -22,7 +22,7 @@ function RegistrationPage() {
   const registrationSuccessful = values => {
     dispatch(addUser(values));
     alert(
-      `Gratulacje! Konto zostało założone, twój login to:  ${values.userLogin} , a twoje hasło to:  ${values.userPassword} zapamiętaj je!`
+      `Gratulacje! Konto zostało założone, twój login to:  ${values.userLogin} , zapamiętaj swoje hasło i nigdy go nikomu nie podawaj!`
     );
   };
 

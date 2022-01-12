@@ -36,11 +36,11 @@ const edit = (state, action) => {
 const addCourse = (state, action) => {
   const { newCourse } = action.payload;
 
-  const loggedUser = state.filter(
+  const loggedUser = state.find(
     user => user.logged === true
   );
   const checkIfTheCourseAlreadyThere =
-    loggedUser[0].courses.find(
+    loggedUser.courses.find(
       course => course.id === newCourse.id
     );
 
@@ -63,10 +63,7 @@ const addCourse = (state, action) => {
       id,
       userLogin,
       userPassword,
-      courses: [
-        ...loggedUser[0].courses,
-        newCourse,
-      ],
+      courses: [...loggedUser.courses, newCourse],
       logged,
     };
   });

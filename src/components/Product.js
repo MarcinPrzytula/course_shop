@@ -6,7 +6,11 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-import { addCourseToTheUser } from '../actions/userActions';
+
+import { takeId } from '../store/actions/coursesActions';
+import { addCourseToTheUser } from '../store/actions/userActions';
+
+import { useHistory } from 'react-router-dom';
 
 const Product = ({
   title,
@@ -15,26 +19,35 @@ const Product = ({
   authors,
   id,
 }) => {
-  const users = useSelector(store => store.users);
+  const { users, courses } = useSelector(
+    store => store
+  );
+  console.log(courses);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const loggedUser = users.filter(
+  const loggedUser = users.find(
     user => user.logged === true
   );
-
   let checkIfTheCourseIsBought = null;
+  let checkIfTheCourseInCart = null;
 
-  if (loggedUser.length > 0) {
-    const checkIfTheCourseAlreadyThere =
-      loggedUser[0].courses.find(
-        course => course.id === id
-      );
+  //   if (loggedUser) {
+  //     // const checkIfTheCourseAlreadyThere =
+  //     //   loggedUser.courses.find(
+  //     //     course => course.id === id
+  //     //   );
 
-    checkIfTheCourseIsBought =
-      checkIfTheCourseAlreadyThere;
-  }
+  //     const checkIfTheCourseAlreadyThere =
+  //       courses.find(course => course.id === id);
+  //     // checkIfTheCourseIsBought =
+  //     //   checkIfTheCourseAlreadyThere;
+  //     checkIfTheCourseInCart =
+  //       checkIfTheCourseAlreadyThere;
+  //   }
   return (
     <div className="product">
+      <div className="product__video"></div>
       <div className="product__title">
         <span>{title}</span>
       </div>
@@ -50,24 +63,28 @@ const Product = ({
         <span>{authors}</span>
       </div>
 
-      {loggedUser.length > 0 ? (
+      {loggedUser ? (
         checkIfTheCourseIsBought ? (
           'You bought this course'
         ) : (
           <button
             onClick={() => {
-              dispatch(
-                addCourseToTheUser(
-                  loggedUser[0].id,
-                  {
-                    title,
-                    img,
-                    price,
-                    authors,
-                    id,
-                  }
-                )
-              );
+              //   history.push('/transaction_form');
+              //   console.log(id);
+              dispatch(takeId(id));
+
+              //   dispatch(
+              //     addCourseToTheUser(
+              //       loggedUser.id,
+              //       {
+              //         title,
+              //         img,
+              //         price,
+              //         authors,
+              //         id,
+              //       }
+              //     )
+              //   );
             }}
           >
             <span>Buy</span>

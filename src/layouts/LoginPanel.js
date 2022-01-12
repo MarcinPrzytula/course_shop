@@ -7,7 +7,7 @@ import {
   useSelector,
 } from 'react-redux';
 
-import { editUser } from '../actions/userActions';
+import { editUser } from '../store/actions/userActions';
 const list = [
   { name: 'Log in', path: '/login' },
   { name: 'Registration', path: '/registration' },
@@ -29,7 +29,7 @@ const menu = list.map(item => (
 ));
 
 const LoginPanel = () => {
-  const dispatch = useDispatch(editUser());
+  const dispatch = useDispatch();
   const users = useSelector(store => store.users);
 
   const userLogged = users.filter(

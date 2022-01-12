@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { courseReducer } from './courseReducer';
 import { userReducer } from './userReducer';
+import { coursesReducer } from './coursesReducer';
 
 export const rootReducer = combineReducers({
-  products: courseReducer,
   users: userReducer,
+  courses: coursesReducer,
 });
