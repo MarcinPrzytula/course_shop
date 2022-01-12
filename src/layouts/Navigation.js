@@ -6,6 +6,10 @@ const list = [
   { name: 'Main page', path: '/', exact: true },
   { name: 'Products list', path: '/products' },
   { name: 'User Panel', path: '/user_panel' },
+  {
+    name: 'Shopping Cart',
+    path: '/shopping_cart',
+  },
 ];
 
 const menu = list.map(item => (

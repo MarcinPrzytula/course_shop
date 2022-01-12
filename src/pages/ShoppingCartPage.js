@@ -7,17 +7,18 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import alLCoursesList from '../store/allCoursesList.js';
+import allCoursesList from '../store/allCoursesList.js';
 
 const ShoppingCartPage = () => {
   const { users, courses } = useSelector(
     store => store
   );
-
-  alLCoursesList.filter(course =>
-    courses.includes(course.id)
+  console.log(allCoursesList);
+  console.log(courses);
+  const y = allCoursesList.filter(item =>
+    courses.find(item2 => item2.id == item.id)
   );
-  console.log(alLCoursesList);
+  console.log(y);
   return (
     <>
       <div>shopping cart page</div>;

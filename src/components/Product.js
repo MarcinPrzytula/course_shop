@@ -22,7 +22,7 @@ const Product = ({
   const { users, courses } = useSelector(
     store => store
   );
-  console.log(courses);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
