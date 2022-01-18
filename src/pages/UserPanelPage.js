@@ -13,20 +13,21 @@ const UserPanelPage = () => {
   );
 
   let loggedUserCourses = '';
-
+  console.log(loggedUser);
   if (loggedUser.length > 0) {
-    loggedUserCourses = loggedUser[0].courses.map(
-      ({ authors, img, price, title, id }) => (
-        <UserProduct
-          key={id}
-          id={id}
-          authors={authors}
-          img={img}
-          title={title}
-          price={price}
-        />
-      )
-    );
+    loggedUserCourses =
+      loggedUser[0].purchasedCourses.map(
+        ({ authors, img, price, title, id }) => (
+          <UserProduct
+            key={id}
+            id={id}
+            authors={authors}
+            img={img}
+            title={title}
+            price={price}
+          />
+        )
+      );
   }
 
   let mainPage =
@@ -37,7 +38,7 @@ const UserPanelPage = () => {
         ? loggedUserCourses
         : `Zalogowałeś się jako --->  ${
             loggedUser.length > 0
-              ? loggedUser[0].userLogin
+              ? loggedUser[0].login
               : null
           }  <--- ale nie masz żadnych kursów`;
   }

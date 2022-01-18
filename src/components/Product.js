@@ -7,11 +7,6 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { takeId } from '../store/actions/coursesActions';
-import { addCourseToTheUser } from '../store/actions/userActions';
-
-import { useHistory } from 'react-router-dom';
-
 const Product = ({
   title,
   img,
@@ -24,27 +19,17 @@ const Product = ({
   );
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const loggedUser = users.find(
     user => user.logged === true
   );
-  let checkIfTheCourseIsBought = null;
   let checkIfTheCourseInCart = null;
 
-  //   if (loggedUser) {
-  //     // const checkIfTheCourseAlreadyThere =
-  //     //   loggedUser.courses.find(
-  //     //     course => course.id === id
-  //     //   );
-
-  //     const checkIfTheCourseAlreadyThere =
-  //       courses.find(course => course.id === id);
-  //     // checkIfTheCourseIsBought =
-  //     //   checkIfTheCourseAlreadyThere;
-  //     checkIfTheCourseInCart =
-  //       checkIfTheCourseAlreadyThere;
-  //   }
+  if (loggedUser) {
+    checkIfTheCourseInCart = courses.find(
+      course => course.id === id
+    );
+  }
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -64,34 +49,15 @@ const Product = ({
       </div>
 
       {loggedUser ? (
-        checkIfTheCourseIsBought ? (
-          'You bought this course'
+        checkIfTheCourseInCart ? (
+          'The course has been added to the cart'
         ) : (
-          <button
-            onClick={() => {
-              //   history.push('/transaction_form');
-              //   console.log(id);
-              dispatch(takeId(id));
-
-              //   dispatch(
-              //     addCourseToTheUser(
-              //       loggedUser.id,
-              //       {
-              //         title,
-              //         img,
-              //         price,
-              //         authors,
-              //         id,
-              //       }
-              //     )
-              //   );
-            }}
-          >
+          <button onClick={() => {}}>
             <span>Buy</span>
           </button>
         )
       ) : (
-        'Log in'
+        'Log in if you want to buy a course'
       )}
     </div>
   );

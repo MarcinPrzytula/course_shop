@@ -7,7 +7,7 @@ import {
   useSelector,
 } from 'react-redux';
 
-import { editUser } from '../store/actions/userActions';
+import { changeLoginStatus } from '../store/actions/userActions';
 const list = [
   { name: 'Log in', path: '/login' },
   { name: 'Registration', path: '/registration' },
@@ -42,7 +42,10 @@ const LoginPanel = () => {
         <button
           onClick={() => {
             dispatch(
-              editUser(userLogged[0].id, false)
+              changeLoginStatus(
+                userLogged[0].id,
+                false
+              )
             );
           }}
         >

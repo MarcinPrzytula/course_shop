@@ -13,7 +13,7 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { editUser } from '../store/actions/userActions';
+import { changeLoginStatus } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
@@ -42,9 +42,9 @@ function LoginPage() {
       userLoginData;
 
     const returnTheUserIfTheExists = users.find(
-      ({ userLogin, userPassword }) =>
-        userLogin === formLogin &&
-        userPassword === formPassword
+      ({ login, password }) =>
+        login === formLogin &&
+        password === formPassword
     );
 
     if (
@@ -56,7 +56,7 @@ function LoginPage() {
       validationData.loggedUser =
         returnTheUserIfTheExists;
       dispatch(
-        editUser(
+        changeLoginStatus(
           validationData.loggedUser.id,
           validationData.loggedUser.logged
         )

@@ -1,34 +1,57 @@
 import { v4 as uuid } from 'uuid';
-export const ADD = 'ADD';
-export const EDIT = 'EDIT';
-export const ADD_COURSE = 'ADD_COURSE';
+export const ADD_USER = 'ADD_USER';
+export const CHANGE_LOGIN_STATUS =
+  'CHANGE_LOGIN_STATUS';
+export const BUY_COURSE = 'BUY_COURSE';
+export const ADD_COURSE_TO_SHOPPING_CART =
+  'ADD_COURSE_TO_SHOPPING_CART';
+export const REMOVE_COURSE_FROM_SHOPPING_CART =
+  'REMOVE_COURSE_FROM_SHOPPING_CART';
 
 export const addUser = ({
   id = uuid(),
-  userLogin,
-  userPassword,
-  courses = [],
+  login,
+  password,
+  purchasedCourses = [],
+  shoppingCart = [],
   logged = false,
 }) => ({
-  type: ADD,
+  type: ADD_USER,
   payload: {
     id,
-    userLogin,
-    userPassword,
-    courses,
+    login,
+    password,
+    purchasedCourses,
+    shoppingCart,
     logged,
   },
 });
 
-export const editUser = (id, logged) => ({
-  type: EDIT,
+export const changeLoginStatus = (
+  id,
+  logged
+) => ({
+  type: CHANGE_LOGIN_STATUS,
   payload: { id, logged },
 });
 
-export const addCourseToTheUser = (
+export const buyCourse = (id, newCourse) => ({
+  type: BUY_COURSE,
+  payload: { id, newCourse },
+});
+
+export const addCourseToShoppingCart = (
   id,
   newCourse
 ) => ({
-  type: ADD_COURSE,
+  type: ADD_COURSE_TO_SHOPPING_CART,
+  payload: { id, newCourse },
+});
+
+export const removeCourseFromShoppingCart = (
+  id,
+  newCourse
+) => ({
+  type: REMOVE_COURSE_FROM_SHOPPING_CART,
   payload: { id, newCourse },
 });
