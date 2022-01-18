@@ -40,13 +40,11 @@ export const buyCourse = (id, newCourse) => ({
   payload: { id, newCourse },
 });
 
-export const addCourseToShoppingCart = (
-  id,
-  newCourse
-) => ({
-  type: ADD_COURSE_TO_SHOPPING_CART,
-  payload: { id, newCourse },
-});
+export const addCourseToShoppingCart =
+  courseId => ({
+    type: ADD_COURSE_TO_SHOPPING_CART,
+    payload: courseId,
+  });
 
 export const removeCourseFromShoppingCart = (
   id,

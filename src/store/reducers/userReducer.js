@@ -80,7 +80,40 @@ const buyCourse = (state, action) => {
 const addCourseToShoppingCart = (
   state,
   action
-) => {};
+) => {
+  const loggedUser = state.find(
+    user => user.logged === true
+  );
+  const checkIfTheCourseAlreadyThere =
+    loggedUser.shoppingCart.find(
+      courseId => courseId === action.payload
+    );
+
+  return state.map(currentStateElement => {
+    if (checkIfTheCourseAlreadyThere) {
+      return currentStateElement;
+    }
+
+    const {
+      id,
+      login,
+      password,
+      logged,
+      purchasedCourses,
+    } = currentStateElement;
+    return {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      shoppingCart: [
+        ...loggedUser.shoppingCart,
+        action.payload,
+      ],
+      logged,
+    };
+  });
+};
 
 const removeCourseFromShoppingCart = (
   state,

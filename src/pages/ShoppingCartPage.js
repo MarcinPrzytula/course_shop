@@ -13,29 +13,36 @@ import UserProduct from '../components/UserProduct';
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
-  const { users, courses } = useSelector(
-    store => store
-  );
+  const users = useSelector(store => store.users);
   const history = useHistory();
 
-  const coursesToBuy = allCoursesList.filter(
-    item =>
-      courses.find(item2 => item2.id === item.id)
+  const loggedUser = users.find(
+    user => user.logged === true
   );
-  console.log(coursesToBuy);
-  console.log(courses);
-  const renderCoursesToBuy = coursesToBuy.map(
-    ({ authors, img, price, title, id }) => (
-      <UserProduct
-        key={id}
-        id={id}
-        authors={authors}
-        img={img}
-        title={title}
-        price={price}
-      />
-    )
-  );
+  let renderCoursesToBuy = null;
+
+  if (loggedUser) {
+    const coursesInShoppingCart =
+      allCoursesList.filter(item =>
+        loggedUser.shoppingCart.find(
+          item2 => item2 === item.id
+        )
+      );
+
+    renderCoursesToBuy =
+      coursesInShoppingCart.map(
+        ({ authors, img, price, title, id }) => (
+          <UserProduct
+            key={id}
+            id={id}
+            authors={authors}
+            img={img}
+            title={title}
+            price={price}
+          />
+        )
+      );
+  }
   return (
     <>
       <div className="shoppingCart_productList">

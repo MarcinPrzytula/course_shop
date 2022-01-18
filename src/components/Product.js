@@ -7,6 +7,8 @@ import {
   useDispatch,
 } from 'react-redux';
 
+import { addCourseToShoppingCart } from '../store/actions/userActions';
+
 const Product = ({
   title,
   img,
@@ -14,22 +16,19 @@ const Product = ({
   authors,
   id,
 }) => {
-  const { users, courses } = useSelector(
-    store => store
-  );
-
+  const users = useSelector(store => store.users);
   const dispatch = useDispatch();
 
   const loggedUser = users.find(
     user => user.logged === true
   );
   let checkIfTheCourseInCart = null;
-
-  if (loggedUser) {
-    checkIfTheCourseInCart = courses.find(
-      course => course.id === id
-    );
-  }
+  //   console.log(users);
+  //   if (loggedUser) {
+  //     checkIfTheCourseInCart = courses.find(
+  //       course => course.id === id
+  //     );
+  //   }
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -52,7 +51,13 @@ const Product = ({
         checkIfTheCourseInCart ? (
           'The course has been added to the cart'
         ) : (
-          <button onClick={() => {}}>
+          <button
+            onClick={() => {
+              dispatch(
+                addCourseToShoppingCart(id)
+              );
+            }}
+          >
             <span>Buy</span>
           </button>
         )

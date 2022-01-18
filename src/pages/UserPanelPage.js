@@ -13,7 +13,7 @@ const UserPanelPage = () => {
   );
 
   let loggedUserCourses = '';
-  console.log(loggedUser);
+  //   console.log(loggedUser);
   if (loggedUser.length > 0) {
     loggedUserCourses =
       loggedUser[0].purchasedCourses.map(
