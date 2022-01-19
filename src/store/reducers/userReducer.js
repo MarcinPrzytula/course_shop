@@ -90,7 +90,11 @@ const addCourseToShoppingCart = (
     );
 
   return state.map(currentStateElement => {
-    if (checkIfTheCourseAlreadyThere) {
+    if (
+      currentStateElement.id !== loggedUser.id
+    ) {
+      return currentStateElement;
+    } else if (checkIfTheCourseAlreadyThere) {
       return currentStateElement;
     }
 

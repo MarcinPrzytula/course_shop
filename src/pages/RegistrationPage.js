@@ -22,33 +22,30 @@ function RegistrationPage() {
   const registrationSuccessful = values => {
     dispatch(addUser(values));
     alert(
-      `Gratulacje! Konto zostało założone, twój login to:  ${values.userLogin} , zapamiętaj swoje hasło i nigdy go nikomu nie podawaj!`
+      `Gratulacje! Konto zostało założone, twój login to:  ${values.login} , zapamiętaj swoje hasło i nigdy go nikomu nie podawaj!`
     );
   };
 
   return (
     <Formik
       initialValues={{
-        userLogin: '',
-        userPassword: '',
+        login: '',
+        password: '',
       }}
       validate={values => {
         const errors = {};
         const validation = users.filter(
-          item =>
-            item.userLogin === values.userLogin
+          item => item.login === values.login
         );
 
-        if (values.userLogin.length < 3) {
-          errors.userLogin =
+        if (values.login.length < 3) {
+          errors.login =
             'Wprowadz login (minimum 3 znaki)';
-        } else if (
-          values.userPassword.length < 4
-        ) {
-          errors.userPassword =
+        } else if (values.password.length < 4) {
+          errors.password =
             'Wprowadz haslo (minimum 4 znaki)';
         } else if (validation.length) {
-          errors.userLogin =
+          errors.login =
             'Nazwa użytkownika jest zajęta';
         }
         return errors;
@@ -65,24 +62,24 @@ function RegistrationPage() {
         <form onSubmit={handleSubmit}>
           <div className="login">
             <ErrorMessage
-              name="userLogin"
+              name="login"
               component="div"
             />
             <span>Login</span>
             <Field
-              name="userLogin"
+              name="login"
               placeholder="login"
             />
           </div>
           <div className="password">
             <ErrorMessage
-              name="userPassword"
+              name="password"
               component="div"
             />
             <span>Password</span>
             <Field
               placeholder="password"
-              name="userPassword"
+              name="password"
               type="password"
             />
           </div>
