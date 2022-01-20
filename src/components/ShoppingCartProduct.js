@@ -7,9 +7,9 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { addCourseToShoppingCart } from '../store/actions/userActions';
+import { removeCourseFromShoppingCart } from '../store/actions/userActions';
 
-const Product = ({
+const ShoppingCartProduct = ({
   title,
   img,
   price,
@@ -24,12 +24,12 @@ const Product = ({
   );
   let checkIfTheCourseInCart = null;
 
-  if (loggedUser) {
-    checkIfTheCourseInCart =
-      loggedUser.shoppingCart.find(
-        courseId => courseId === id
-      );
-  }
+  //   if (loggedUser) {
+  //     checkIfTheCourseInCart =
+  //       loggedUser.shoppingCart.find(
+  //         courseId => courseId === id
+  //       );
+  //   }
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -55,11 +55,11 @@ const Product = ({
           <button
             onClick={() => {
               dispatch(
-                addCourseToShoppingCart(id)
+                removeCourseFromShoppingCart(id)
               );
             }}
           >
-            <span>Buy</span>
+            <span>delete</span>
           </button>
         )
       ) : (
@@ -69,4 +69,4 @@ const Product = ({
   );
 };
 
-export default Product;
+export default ShoppingCartProduct;

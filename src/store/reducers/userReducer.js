@@ -38,40 +38,33 @@ const changeLoginStatus = (state, action) => {
 };
 
 const buyCourse = (state, action) => {
-  const { newCourse } = action.payload;
   const loggedUser = state.find(
     user => user.logged === true
   );
   const checkIfTheCourseAlreadyThere =
     loggedUser.purchasedCourses.find(
-      course => course.id === newCourse.id
+      courseId => courseId === action.payload
     );
 
   return state.map(currentStateElement => {
     if (
-      currentStateElement.id !==
-        action.payload.id ||
+      currentStateElement.id !== loggedUser.id ||
       checkIfTheCourseAlreadyThere
     ) {
       return currentStateElement;
     }
 
-    const {
-      id,
-      login,
-      password,
-      logged,
-      shoppingCart,
-    } = currentStateElement;
+    const { id, login, password, logged } =
+      currentStateElement;
     return {
       id,
       login,
       password,
+      shoppingCart: [],
       purchasedCourses: [
-        ...loggedUser.courses,
-        ...newCourse,
+        ...loggedUser.purchasedCourses,
+        ...action.payload,
       ],
-      shoppingCart,
       logged,
     };
   });
@@ -91,10 +84,9 @@ const addCourseToShoppingCart = (
 
   return state.map(currentStateElement => {
     if (
-      currentStateElement.id !== loggedUser.id
+      currentStateElement.id !== loggedUser.id ||
+      checkIfTheCourseAlreadyThere
     ) {
-      return currentStateElement;
-    } else if (checkIfTheCourseAlreadyThere) {
       return currentStateElement;
     }
 
@@ -122,7 +114,44 @@ const addCourseToShoppingCart = (
 const removeCourseFromShoppingCart = (
   state,
   action
-) => {};
+) => {
+  const loggedUser = state.find(
+    user => user.logged === true
+  );
+  const checkIfTheCourseAlreadyThere =
+    loggedUser.shoppingCart.find(
+      courseId => courseId === action.payload
+    );
+
+  return state.map(currentStateElement => {
+    if (
+      currentStateElement.id !== loggedUser.id ||
+      checkIfTheCourseAlreadyThere
+    ) {
+      return currentStateElement;
+    }
+    console.log(action.payload.id);
+    const x = loggedUser.shoppingCart.filter(
+      item => item.id !== action.payload.id
+    );
+    console.log(x);
+    const {
+      id,
+      login,
+      password,
+      logged,
+      purchasedCourses,
+    } = currentStateElement;
+    return {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      shoppingCart: [x],
+      logged,
+    };
+  });
+};
 
 export const userReducer = (
   state = [

@@ -35,9 +35,9 @@ export const changeLoginStatus = (
   payload: { id, logged },
 });
 
-export const buyCourse = (id, newCourse) => ({
+export const buyCourse = courseId => ({
   type: BUY_COURSE,
-  payload: { id, newCourse },
+  payload: courseId,
 });
 
 export const addCourseToShoppingCart =

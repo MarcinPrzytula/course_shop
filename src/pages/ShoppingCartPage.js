@@ -9,7 +9,7 @@ import {
 
 import allCoursesList from '../store/allCoursesList.js';
 
-import UserProduct from '../components/UserProduct';
+import ShoppingCartProduct from '../components/ShoppingCartProduct';
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
@@ -32,7 +32,7 @@ const ShoppingCartPage = () => {
     renderCoursesToBuy =
       coursesInShoppingCart.map(
         ({ authors, img, price, title, id }) => (
-          <UserProduct
+          <ShoppingCartProduct
             key={id}
             id={id}
             authors={authors}

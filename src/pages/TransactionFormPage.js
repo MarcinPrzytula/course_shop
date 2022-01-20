@@ -11,29 +11,37 @@ import { buyCourse } from '../store/actions/userActions';
 import allCoursesList from '../store/allCoursesList';
 
 const TransactionFormPage = () => {
-  const { users, courses } = useSelector(
-    store => store
-  );
+  const users = useSelector(store => store.users);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const loggedUser = users.find(
     user => user.logged === true
   );
+  let coursesToBuy = null;
+  let coursesToBuyId = null;
 
-  const coursesToBuy = allCoursesList.filter(
-    item =>
-      courses.find(item2 => item2.id === item.id)
-  );
+  if (loggedUser) {
+    coursesToBuy = allCoursesList.filter(course =>
+      loggedUser.shoppingCart.find(
+        shoppingCartCourseId =>
+          shoppingCartCourseId === course.id
+      )
+    );
+    coursesToBuyId = coursesToBuy.map(
+      item => item.id
+    );
+  }
 
-  console.log(loggedUser);
-  console.log(courses);
   return (
     <>
       <div>
         <span>
           You want to purchase a total of{' '}
-          {courses.length} courses
+          {loggedUser
+            ? loggedUser.shoppingCart.length
+            : 0}{' '}
+          courses
         </span>
       </div>
       <button
@@ -41,10 +49,7 @@ const TransactionFormPage = () => {
           loggedUser
             ? () => {
                 dispatch(
-                  buyCourse(
-                    loggedUser.id,
-                    coursesToBuy
-                  )
+                  buyCourse(coursesToBuyId)
                 );
                 history.push('/user_panel');
               }

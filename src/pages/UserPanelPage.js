@@ -4,44 +4,48 @@ import UserProduct from '../components/UserProduct';
 import '../styles/UserPanelPage.scss';
 
 import { useSelector } from 'react-redux';
+import allCoursesList from '../store/allCoursesList';
 
 const UserPanelPage = () => {
   const users = useSelector(store => store.users);
 
-  const loggedUser = users.filter(
+  const loggedUser = users.find(
     user => user.logged === true
   );
 
-  let loggedUserCourses = '';
-  //   console.log(loggedUser);
-  if (loggedUser.length > 0) {
-    loggedUserCourses =
-      loggedUser[0].purchasedCourses.map(
-        ({ authors, img, price, title, id }) => (
-          <UserProduct
-            key={id}
-            id={id}
-            authors={authors}
-            img={img}
-            title={title}
-            price={price}
-          />
-        )
-      );
-  }
+  let loggedUserCourses = null;
 
   let mainPage =
     'Zaloguj się aby wyświetlić swoje kursy';
-  if (loggedUser.length > 0) {
+
+  if (loggedUser) {
+    loggedUserCourses = allCoursesList.filter(
+      course =>
+        loggedUser.purchasedCourses.find(
+          purchasedCourseId =>
+            purchasedCourseId === course.id
+        )
+    );
+
+    const render = loggedUserCourses.map(
+      ({ authors, img, price, title, id }) => (
+        <UserProduct
+          key={id}
+          id={id}
+          authors={authors}
+          img={img}
+          title={title}
+          price={price}
+        />
+      )
+    );
+
     mainPage =
       loggedUserCourses.length > 0
-        ? loggedUserCourses
-        : `Zalogowałeś się jako --->  ${
-            loggedUser.length > 0
-              ? loggedUser[0].login
-              : null
-          }  <--- ale nie masz żadnych kursów`;
+        ? render
+        : `Zalogowałeś się jako --->  ${loggedUser.login}  <--- ale nie masz żadnych kursów`;
   }
+
   return (
     <>
       <div className="userPanel_productList">

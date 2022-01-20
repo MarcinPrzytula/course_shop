@@ -22,7 +22,6 @@ import '../styles/LoginPage.scss';
 function LoginPage() {
   const users = useSelector(store => store.users);
   const dispatch = useDispatch();
-  console.log(users);
 
   const history = useHistory();
 
