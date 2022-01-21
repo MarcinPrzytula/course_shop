@@ -23,10 +23,15 @@ const Product = ({
     user => user.logged === true
   );
   let checkIfTheCourseInCart = null;
+  let checkIfTheCourseIsBought = null;
 
   if (loggedUser) {
     checkIfTheCourseInCart =
       loggedUser.shoppingCart.find(
+        courseId => courseId === id
+      );
+    checkIfTheCourseIsBought =
+      loggedUser.purchasedCourses.find(
         courseId => courseId === id
       );
   }
@@ -51,6 +56,8 @@ const Product = ({
       {loggedUser ? (
         checkIfTheCourseInCart ? (
           'The course has been added to the cart'
+        ) : checkIfTheCourseIsBought ? (
+          'bought'
         ) : (
           <button
             onClick={() => {

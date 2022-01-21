@@ -46,10 +46,8 @@ export const addCourseToShoppingCart =
     payload: courseId,
   });
 
-export const removeCourseFromShoppingCart = (
-  id,
-  newCourse
-) => ({
-  type: REMOVE_COURSE_FROM_SHOPPING_CART,
-  payload: { id, newCourse },
-});
+export const removeCourseFromShoppingCart =
+  courseId => ({
+    type: REMOVE_COURSE_FROM_SHOPPING_CART,
+    payload: courseId,
+  });

@@ -118,23 +118,23 @@ const removeCourseFromShoppingCart = (
   const loggedUser = state.find(
     user => user.logged === true
   );
-  const checkIfTheCourseAlreadyThere =
-    loggedUser.shoppingCart.find(
-      courseId => courseId === action.payload
+  //   const checkIfTheCourseAlreadyThere =
+  //     loggedUser.shoppingCart.find(
+  //       courseId => courseId === action.payload
+  //     );
+
+  const newShoppingCart =
+    loggedUser.shoppingCart.filter(
+      item => item !== action.payload
     );
 
   return state.map(currentStateElement => {
     if (
-      currentStateElement.id !== loggedUser.id ||
-      checkIfTheCourseAlreadyThere
+      currentStateElement.id !== loggedUser.id
     ) {
       return currentStateElement;
     }
-    console.log(action.payload.id);
-    const x = loggedUser.shoppingCart.filter(
-      item => item.id !== action.payload.id
-    );
-    console.log(x);
+
     const {
       id,
       login,
@@ -147,7 +147,7 @@ const removeCourseFromShoppingCart = (
       login,
       password,
       purchasedCourses,
-      shoppingCart: [x],
+      shoppingCart: [...newShoppingCart],
       logged,
     };
   });
