@@ -5,20 +5,20 @@ import '../styles/Navigation.scss';
 const list = [
   {
     name: 'Main page',
-    path: 'course_shop/',
+    path: '/',
     exact: true,
   },
   {
     name: 'Products list',
-    path: 'course_shop/products',
+    path: '/products',
   },
   {
     name: 'User Panel',
-    path: 'course_shop/user_panel',
+    path: '/user_panel',
   },
   {
     name: 'Shopping Cart',
-    path: 'course_shop/shopping_cart',
+    path: '/shopping_cart',
   },
 ];
 

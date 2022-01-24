@@ -9,10 +9,10 @@ import {
 
 import { changeLoginStatus } from '../store/actions/userActions';
 const list = [
-  { name: 'Log in', path: 'course_shop/login' },
+  { name: 'Log in', path: '/login' },
   {
     name: 'Registration',
-    path: 'course_shop/registration',
+    path: '/registration',
   },
 ];
 
