@@ -17,7 +17,7 @@ const list = [
     name: ProductListPage,
     path: '/products',
   },
-  { name: LoginPage, path: 'login' },
+  { name: LoginPage, path: '/login' },
   {
     name: RegistrationPage,
     path: '/registration',

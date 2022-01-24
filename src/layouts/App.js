@@ -13,7 +13,7 @@ import '../styles/App.css';
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="app_wrapper">
           <div className="menu_wrapper">
             <Navigation />
