@@ -18,7 +18,7 @@ const list = [
   },
   {
     name: 'Shopping Cart',
-    path: '/shopping_cart',
+    path: 'course_shop/shopping_cart',
   },
 ];
 
