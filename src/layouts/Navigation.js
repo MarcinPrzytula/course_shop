@@ -3,9 +3,19 @@ import { NavLink } from 'react-router-dom';
 import '../styles/Navigation.scss';
 
 const list = [
-  { name: 'Main page', path: '/', exact: true },
-  { name: 'Products list', path: '/products' },
-  { name: 'User Panel', path: '/user_panel' },
+  {
+    name: 'Main page',
+    path: 'course_shop/',
+    exact: true,
+  },
+  {
+    name: 'Products list',
+    path: 'course_shop/products',
+  },
+  {
+    name: 'User Panel',
+    path: 'course_shop/user_panel',
+  },
   {
     name: 'Shopping Cart',
     path: '/shopping_cart',
