@@ -5,7 +5,15 @@ import '../styles/HomePage.css';
 const HomePage = () => {
   return (
     <>
-      <div>home page</div>;
+      <div>
+        Hello! My name is Marcin. I started
+        learning front-end in January 2019 with
+        HTML and CSS. This project is my most
+        extensive project, it shows what I have
+        learned so far. The project is being
+        developed, Currently, I am not focusing on
+        the appearance but on the functionalities.
+      </div>
     </>
   );
 };

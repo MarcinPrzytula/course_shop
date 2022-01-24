@@ -15,8 +15,7 @@ const UserPanelPage = () => {
 
   let loggedUserCourses = null;
 
-  let mainPage =
-    'Zaloguj się aby wyświetlić swoje kursy';
+  let mainPage = 'Log in to view your courses';
 
   if (loggedUser) {
     loggedUserCourses = allCoursesList.filter(
@@ -43,7 +42,7 @@ const UserPanelPage = () => {
     mainPage =
       loggedUserCourses.length > 0
         ? render
-        : `Zalogowałeś się jako --->  ${loggedUser.login}  <--- ale nie masz żadnych kursów`;
+        : `You are logged in as ${loggedUser.login}  but you don't have any courses`;
   }
 
   return (

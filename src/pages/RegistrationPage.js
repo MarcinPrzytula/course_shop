@@ -22,7 +22,7 @@ function RegistrationPage() {
   const registrationSuccessful = values => {
     dispatch(addUser(values));
     alert(
-      `Gratulacje! Konto zostało założone, twój login to:  ${values.login} , zapamiętaj swoje hasło i nigdy go nikomu nie podawaj!`
+      `Congratulations! An account has been created, your login is: ${values.login}, remember your password and never give it to anyone!`
     );
   };
 
@@ -40,13 +40,12 @@ function RegistrationPage() {
 
         if (values.login.length < 3) {
           errors.login =
-            'Wprowadz login (minimum 3 znaki)';
+            'Enter login (minimum 3 characters)';
         } else if (values.password.length < 4) {
           errors.password =
-            'Wprowadz haslo (minimum 4 znaki)';
+            'Enter password (minimum 4 characters)';
         } else if (validation.length) {
-          errors.login =
-            'Nazwa użytkownika jest zajęta';
+          errors.login = 'Username is taken';
         }
         return errors;
       }}

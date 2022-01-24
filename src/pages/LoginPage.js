@@ -70,7 +70,7 @@ function LoginPage() {
       validationData.loggedUser =
         returnTheUserIfTheExists;
       setErrorActive(true);
-    } else return console.log(' puste wykonanie');
+    } else return console.log('empty execution');
   };
 
   //   useEffect(() => {
@@ -84,10 +84,10 @@ function LoginPage() {
 
     if (values.formLogin.length < 3) {
       errors.formLogin =
-        'Wprowadz login (minimum 3 znaki)';
+        'Enter login (minimum 3 characters)';
     } else if (values.formPassword.length < 4) {
       errors.formPassword =
-        'Wprowadz haslo (minimum 4 znaki)';
+        'Enter password (minimum 4 characters)';
     }
     return errors;
   };
@@ -112,8 +112,8 @@ function LoginPage() {
           <div className="login">
             {errorActive ? (
               <div>
-                Podano złą nazwę użytkownika lub
-                hasło
+                The wrong username or password was
+                entered
               </div>
             ) : null}
 

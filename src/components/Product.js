@@ -19,22 +19,41 @@ const Product = ({
   const users = useSelector(store => store.users);
   const dispatch = useDispatch();
 
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
-  let checkIfTheCourseInCart = null;
-  let checkIfTheCourseIsBought = null;
+  const render = () => {
+    const loggedUser = users.find(
+      user => user.logged === true
+    );
 
-  if (loggedUser) {
-    checkIfTheCourseInCart =
-      loggedUser.shoppingCart.find(
-        courseId => courseId === id
-      );
-    checkIfTheCourseIsBought =
-      loggedUser.purchasedCourses.find(
-        courseId => courseId === id
-      );
-  }
+    if (loggedUser) {
+      const checkIfTheCourseInCart =
+        loggedUser.shoppingCart.find(
+          courseId => courseId === id
+        );
+      const checkIfTheCourseIsBought =
+        loggedUser.purchasedCourses.find(
+          courseId => courseId === id
+        );
+      if (checkIfTheCourseInCart) {
+        return 'The course has been added to the cart';
+      } else if (checkIfTheCourseIsBought) {
+        return 'You already have this course';
+      } else
+        return (
+          <button
+            onClick={() => {
+              dispatch(
+                addCourseToShoppingCart(id)
+              );
+            }}
+          >
+            <span>
+              Add the product to your cart
+            </span>
+          </button>
+        );
+    } else
+      return 'Log in if you want to buy a course';
+  };
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -53,25 +72,7 @@ const Product = ({
         <span>{authors}</span>
       </div>
 
-      {loggedUser ? (
-        checkIfTheCourseInCart ? (
-          'The course has been added to the cart'
-        ) : checkIfTheCourseIsBought ? (
-          'bought'
-        ) : (
-          <button
-            onClick={() => {
-              dispatch(
-                addCourseToShoppingCart(id)
-              );
-            }}
-          >
-            <span>Buy</span>
-          </button>
-        )
-      ) : (
-        'Log in if you want to buy a course'
-      )}
+      {render()}
     </div>
   );
 };

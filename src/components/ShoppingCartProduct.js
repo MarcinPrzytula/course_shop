@@ -59,7 +59,7 @@ const ShoppingCartProduct = ({
               );
             }}
           >
-            <span>delete</span>
+            <span>Remove from cart</span>
           </button>
         )
       ) : (
