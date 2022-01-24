@@ -65,7 +65,7 @@ const ShoppingCartPage = () => {
         </>
       );
     } else if (
-      coursesInShoppingCart.length == 0 &&
+      coursesInShoppingCart.length === 0 &&
       loggedUser
     ) {
       return " You haven't added any product to your cart yet";

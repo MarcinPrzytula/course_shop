@@ -8,12 +8,16 @@ import TransactionFormPage from '../pages/TransactionFormPage';
 import ErrorPage from '../pages/ErrorPage';
 
 const list = [
-  { name: HomePage, path: '/', exact: true },
+  {
+    name: HomePage,
+    path: '/',
+    exact: true,
+  },
   {
     name: ProductListPage,
     path: '/products',
   },
-  { name: LoginPage, path: '/login' },
+  { name: LoginPage, path: 'login' },
   {
     name: RegistrationPage,
     path: '/registration',
