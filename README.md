@@ -1,4 +1,4 @@
-# Live [Here](https://marcinprzytula.github.io/course_shop/git)
+# Live [Here](https://marcinprzytula.github.io/course_shop)
 
 # Getting Started with Create React App
 
