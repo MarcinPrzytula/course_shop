@@ -1,43 +1,54 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {
+  useLocation,
+  NavLink,
+} from 'react-router-dom';
 import '../styles/Navigation.scss';
 
-const list = [
-  {
-    name: 'Main page',
-    path: '/',
-    exact: true,
-  },
-  {
-    name: 'Products list',
-    path: '/products',
-  },
-  {
-    name: 'User Panel',
-    path: '/user_panel',
-  },
-  {
-    name: 'Shopping Cart',
-    path: '/shopping_cart',
-  },
-];
-
-const menu = list.map(item => (
-  <li
-    className="navigation__item-wraper"
-    key={item.name}
-  >
-    <NavLink
-      className="navigation__item"
-      to={item.path}
-      exact={item.exact ? item.exact : false}
-    >
-      {item.name}
-    </NavLink>
-  </li>
-));
-
 const Navigation = () => {
+  const location = useLocation();
+
+  const getNavLinkClass = path => {
+    return location.pathname === path
+      ? 'navigation__item-wraper active'
+      : 'navigation__item-wraper';
+  };
+
+  const list = [
+    {
+      name: 'Main page',
+      path: '/',
+      exact: true,
+    },
+    {
+      name: 'Products list',
+      path: '/products',
+    },
+    {
+      name: 'User Panel',
+      path: '/user_panel',
+    },
+    {
+      name: 'Shopping Cart',
+      path: '/shopping_cart',
+    },
+  ];
+
+  const menu = list.map(item => (
+    <li
+      className={getNavLinkClass(item.path)}
+      key={item.name}
+    >
+      <NavLink
+        className="navigation__item"
+        to={item.path}
+        exact={item.exact ? item.exact : false}
+      >
+        {item.name}
+      </NavLink>
+    </li>
+  ));
+
   const hamburgerActive = () => {
     const navigation = document.querySelector(
       '.navigation__list'
