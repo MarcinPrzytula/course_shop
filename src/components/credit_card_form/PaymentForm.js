@@ -8,10 +8,6 @@ import {
   formatExpirationDate,
 } from './cardUtils';
 
-import { useHistory } from 'react-router-dom';
-import { buyCourse } from '../../store/actions/userActions';
-import allCoursesList from '../../store/allCoursesList';
-
 const submit = () => {
   console.log('x');
 };
