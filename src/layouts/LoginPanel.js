@@ -6,8 +6,10 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { changeLoginStatus } from '../store/actions/userActions';
+
 const list = [
   { name: 'Log in', path: '/login' },
   {
@@ -34,6 +36,7 @@ const menu = list.map(item => (
 const LoginPanel = () => {
   const dispatch = useDispatch();
   const users = useSelector(store => store.users);
+  const history = useHistory();
 
   const userLogged = users.filter(
     ({ logged }) => logged === true
@@ -50,6 +53,7 @@ const LoginPanel = () => {
                 false
               )
             );
+            history.push('/login');
           }}
         >
           Log out

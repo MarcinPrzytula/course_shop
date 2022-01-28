@@ -29,7 +29,7 @@ const Navigation = () => {
       path: '/user_panel',
     },
     {
-      name: 'Shopping Cart',
+      name: 'Shopping ct',
       path: '/shopping_cart',
     },
   ];

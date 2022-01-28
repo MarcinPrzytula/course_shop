@@ -7,15 +7,18 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import {
-  Formik,
-  Field,
-  ErrorMessage,
-} from 'formik';
-
 import { useHistory } from 'react-router-dom';
 import { buyCourse } from '../store/actions/userActions';
 import allCoursesList from '../store/allCoursesList';
+
+import Styles from '../components/credit_card_form/styles';
+import { Form, Field } from 'react-final-form';
+import Card from '../components/credit_card_form/Card';
+import {
+  formatCreditCardNumber,
+  formatCVC,
+  formatExpirationDate,
+} from '../components/credit_card_form/cardUtils';
 
 const TransactionFormPage = () => {
   const users = useSelector(store => store.users);
@@ -40,11 +43,14 @@ const TransactionFormPage = () => {
     );
   }
   const submit = () => {
-    console.log('x');
     if (loggedUser) {
       dispatch(buyCourse(coursesToBuyId));
       history.push('/user_panel');
-    } else return null;
+    } else {
+      alert(
+        'First add something to the shopping cart u fucking idiot'
+      );
+    }
   };
 
   return (
@@ -58,121 +64,90 @@ const TransactionFormPage = () => {
           courses
         </span>
       </div>
-      <Formik
-        initialValues={{
-          cardHolderName: '',
-          cardNumber: '',
-          expirationDate: '',
-          securityCode: '',
-        }}
-        validate={values => {
-          const errors = {};
-          console.log(values.cardNumber.length);
-          if (values.cardHolderName.length < 2) {
-            errors.cardHolderName =
-              'Enter the name of the cardholder';
-          } else if (
-            values.cardNumber.length !== 16
-          ) {
-            errors.cardNumber =
-              'Enter the 16-digit card number';
-          } else if (
-            values.expirationDate.length !== 4
-          ) {
-            errors.expirationDate =
-              'Enter expiration year';
-          } else if (
-            values.securityCode.length !== 3
-          ) {
-            errors.securityCode =
-              'Enter the 3 digit pin';
-          }
-          console.log(errors);
-          return errors;
-        }}
-        onSubmit={(
-          values,
-          { setSubmitting, resetForm }
-        ) => {
-          submit(values);
-          resetForm();
-        }}
-      >
-        {({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
-            <div className="cardHolderName">
-              <div>
-                <ErrorMessage
-                  name="cardHolderName"
-                  component="div"
+      <Styles>
+        <Form
+          onSubmit={submit}
+          render={({
+            handleSubmit,
+            form,
+            submitting,
+            pristine,
+            values,
+            active,
+          }) => {
+            return (
+              <form onSubmit={handleSubmit}>
+                <Card
+                  number={values.number || ''}
+                  name={values.name || ''}
+                  expiry={values.expiry || ''}
+                  cvc={values.cvc || ''}
+                  focused={active}
                 />
-              </div>
-              <span>Card holder:</span>
-              <Field
-                name="cardHolderName"
-                placeholder="name card holder"
-              />
-            </div>
-
-            <div className="cardNumber">
-              <ErrorMessage
-                name="cardNumber"
-                component="div"
-              />
-              <span>Card number:</span>
-              <Field
-                name="cardNumber"
-                placeholder="16-dig card number"
-                // type="number"
-              />
-            </div>
-
-            <div className="expirationDate">
-              <ErrorMessage
-                name="expirationDate"
-                component="div"
-              />
-              <span>Expiration card date:</span>
-              <Field
-                name="expirationDate"
-                placeholder="Date of expiration card"
-              />
-            </div>
-
-            <div className="securityCode">
-              <ErrorMessage
-                name="securityCode"
-                component="div"
-              />
-              <span>Security code: </span>
-              <Field
-                name="securityCode"
-                type="password"
-                placeholder="3-dig security card code"
-              />
-            </div>
-
-            <button type="submit">
-              Pay by card
-            </button>
-          </form>
-        )}
-      </Formik>
-      {/* <button
-        onClick={
-          loggedUser
-            ? () => {
-                dispatch(
-                  buyCourse(coursesToBuyId)
-                );
-                history.push('/user_panel');
-              }
-            : null
-        }
-      >
-        {' '}
-        Purchase and pay
-      </button> */}
+                <div>
+                  <Field
+                    required
+                    name="number"
+                    component="input"
+                    type="text"
+                    pattern="[\d| ]{16,22}"
+                    placeholder="Card Number"
+                    format={
+                      formatCreditCardNumber
+                    }
+                  />
+                </div>
+                <div>
+                  <Field
+                    required
+                    name="name"
+                    component="input"
+                    type="text"
+                    placeholder="Name"
+                  />
+                </div>
+                <div>
+                  <Field
+                    required
+                    name="expiry"
+                    component="input"
+                    type="text"
+                    pattern="\d\d/\d\d"
+                    placeholder="Valid Thru"
+                    format={formatExpirationDate}
+                  />
+                  <Field
+                    required
+                    name="cvc"
+                    component="input"
+                    type="text"
+                    pattern="\d{3,4}"
+                    placeholder="CVC"
+                    format={formatCVC}
+                  />
+                </div>
+                <div className="buttons">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={form.reset}
+                    disabled={
+                      submitting || pristine
+                    }
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+            );
+          }}
+        />
+      </Styles>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../styles/HomePage.css';
+import PaymentForm from '../components/credit_card_form/PaymentForm';
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
         developed, Currently, I am not focusing on
         the appearance but on the functionalities.
       </div>
+      <PaymentForm />
     </>
   );
 };
