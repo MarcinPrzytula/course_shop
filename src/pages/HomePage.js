@@ -15,7 +15,6 @@ const HomePage = () => {
         developed, Currently, I am not focusing on
         the appearance but on the functionalities.
       </div>
-      <PaymentForm />
     </>
   );
 };
