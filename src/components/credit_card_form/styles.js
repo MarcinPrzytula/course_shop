@@ -121,6 +121,7 @@ export default styled.div`
         margin-left: 15px;
         border: 1px solid #ccc;
         border-radius: 3px;
+        overflow: hidden;
         &[disabled] {
           background: #eee;
         }

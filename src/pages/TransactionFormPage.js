@@ -47,9 +47,7 @@ const TransactionFormPage = () => {
       dispatch(buyCourse(coursesToBuyId));
       history.push('/user_panel');
     } else {
-      alert(
-        'First add something to the shopping cart u fucking idiot'
-      );
+      history.push('/login');
     }
   };
 

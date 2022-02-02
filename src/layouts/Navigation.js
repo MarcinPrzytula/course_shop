@@ -34,10 +34,21 @@ const Navigation = () => {
     },
   ];
 
+  const hamburgerActive = () => {
+    const navigation = document.querySelector(
+      '.navigation__list'
+    );
+
+    navigation.classList.toggle(
+      'navigation__activeBurger'
+    );
+  };
+
   const menu = list.map(item => (
     <li
       className={getNavLinkClass(item.path)}
       key={item.name}
+      onClick={hamburgerActive}
     >
       <NavLink
         className="navigation__item"
@@ -48,16 +59,6 @@ const Navigation = () => {
       </NavLink>
     </li>
   ));
-
-  const hamburgerActive = () => {
-    const navigation = document.querySelector(
-      '.navigation__list'
-    );
-
-    navigation.classList.toggle(
-      'navigation__activeBurger'
-    );
-  };
 
   return (
     <>
