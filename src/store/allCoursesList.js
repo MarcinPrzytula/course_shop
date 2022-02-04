@@ -4,7 +4,7 @@ import vid1 from '../videos/vid1.mp4';
 
 const allCoursesList = [
   {
-    authors: ['Marcin 1'],
+    authors: 'Marcin 1',
     id: uuid(),
     img: img1,
     vid: vid1,
@@ -12,7 +12,7 @@ const allCoursesList = [
     title: 'Course 1',
   },
   {
-    authors: ['Marcin 2'],
+    authors: 'Marcin 2',
     id: uuid(),
     img: img1,
     vid: vid1,
@@ -20,7 +20,7 @@ const allCoursesList = [
     title: 'Course 2',
   },
   {
-    authors: ['Marcin 3'],
+    authors: 'Marcin 3',
     id: uuid(),
     img: img1,
     vid: vid1,
@@ -28,7 +28,7 @@ const allCoursesList = [
     title: 'Course 3',
   },
   {
-    authors: ['Marcin 4'],
+    authors: 'Marcin 4',
     id: uuid(),
     img: img1,
     vid: vid1,
@@ -36,7 +36,7 @@ const allCoursesList = [
     title: 'Course 4',
   },
   {
-    authors: ['Marcin 5'],
+    authors: 'Marcin 5',
     id: uuid(),
     img: img1,
     vid: vid1,

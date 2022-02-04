@@ -1,6 +1,6 @@
 import HomePage from '../pages/HomePage';
 import ProductsListPage from '../pages/ProductsListPage';
-import ProductPage from '../pages/ProductPage';
+import SelectedProductPage from '../pages/SelectedProductPage';
 import LoginPage from '../pages/LoginPage';
 import RegistrationPage from '../pages/RegistrationPage.js';
 import UserPanelPage from '../pages/UserPanelPage';
@@ -19,8 +19,8 @@ const list = [
     path: '/products',
   },
   {
-    name: ProductPage,
-    path: '/product',
+    name: SelectedProductPage,
+    path: '/selected_product',
   },
   { name: LoginPage, path: '/login' },
   {

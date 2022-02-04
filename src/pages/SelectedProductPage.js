@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
 
 import { useSelector } from 'react-redux';
 import allCoursesList from '../store/allCoursesList';
+import SelectedProduct from '../components/SelectedProduct';
 
 import '../styles/Product.scss';
 
-const ProductPage = () => {
+const SelectedProductPage = () => {
   const users = useSelector(store => store.users);
 
   const loggedUser = users.find(
@@ -17,10 +17,14 @@ const ProductPage = () => {
     course =>
       course.id === loggedUser.selectedCourse
   );
-
+  const { title, vid, authors } = selectedCourse;
   return (
-    <div className="product">produkt id</div>
+    <SelectedProduct
+      title={title}
+      vid={vid}
+      authors={authors}
+    />
   );
 };
 
-export default ProductPage;
+export default SelectedProductPage;

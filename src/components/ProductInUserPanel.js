@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
 
 import { useHistory } from 'react-router-dom';
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { selectCourse } from '../store/actions/userActions';
 
 import '../styles/Product.scss';
@@ -20,7 +16,6 @@ const ProductInUserPanel = ({
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const users = useSelector(store => store.users);
   return (
     <div className="product">
       <div className="product__title">
@@ -40,7 +35,7 @@ const ProductInUserPanel = ({
       <button
         onClick={() => {
           dispatch(selectCourse(id));
-          history.push('/product');
+          history.push('/selected_product');
         }}
       >
         Go to the course

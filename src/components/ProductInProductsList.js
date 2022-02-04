@@ -1,7 +1,6 @@
 import React from 'react';
 
 import '../styles/Product.scss';
-import ReactPlayer from 'react-player';
 
 import {
   useSelector,
