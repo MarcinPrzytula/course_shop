@@ -1,5 +1,5 @@
 import React from 'react';
-import UserProduct from '../components/UserProduct';
+import ProductInUserPanel from '../components/ProductInUserPanel';
 
 import '../styles/UserPanelPage.scss';
 
@@ -27,12 +27,20 @@ const UserPanelPage = () => {
     );
 
     const render = loggedUserCourses.map(
-      ({ authors, img, price, title, id }) => (
-        <UserProduct
+      ({
+        authors,
+        img,
+        vid,
+        price,
+        title,
+        id,
+      }) => (
+        <ProductInUserPanel
           key={id}
           id={id}
           authors={authors}
           img={img}
+          vid={vid}
           title={title}
           price={price}
         />

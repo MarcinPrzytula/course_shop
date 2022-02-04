@@ -1,5 +1,6 @@
 import HomePage from '../pages/HomePage';
-import ProductListPage from '../pages/ProductListPage';
+import ProductsListPage from '../pages/ProductsListPage';
+import ProductPage from '../pages/ProductPage';
 import LoginPage from '../pages/LoginPage';
 import RegistrationPage from '../pages/RegistrationPage.js';
 import UserPanelPage from '../pages/UserPanelPage';
@@ -14,8 +15,12 @@ const list = [
     exact: true,
   },
   {
-    name: ProductListPage,
+    name: ProductsListPage,
     path: '/products',
+  },
+  {
+    name: ProductPage,
+    path: '/product',
   },
   { name: LoginPage, path: '/login' },
   {

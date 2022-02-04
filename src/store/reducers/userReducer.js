@@ -4,6 +4,7 @@ import {
   BUY_COURSE,
   ADD_COURSE_TO_SHOPPING_CART,
   REMOVE_COURSE_FROM_SHOPPING_CART,
+  SELECT_COURSE,
 } from '../actions/userActions.js';
 
 import { v4 as uuid } from 'uuid';
@@ -25,6 +26,7 @@ const changeLoginStatus = (state, action) => {
       password,
       purchasedCourses,
       shoppingCart,
+      selectedCourse,
     } = currentStateElement;
     return {
       id,
@@ -33,6 +35,7 @@ const changeLoginStatus = (state, action) => {
       purchasedCourses,
       shoppingCart,
       logged,
+      selectedCourse,
     };
   });
 };
@@ -54,8 +57,13 @@ const buyCourse = (state, action) => {
       return currentStateElement;
     }
 
-    const { id, login, password, logged } =
-      currentStateElement;
+    const {
+      id,
+      login,
+      password,
+      logged,
+      selectedCourse,
+    } = currentStateElement;
     return {
       id,
       login,
@@ -66,6 +74,43 @@ const buyCourse = (state, action) => {
         ...action.payload,
       ],
       logged,
+      selectedCourse,
+    };
+  });
+};
+
+const selectCourse = (state, action) => {
+  const loggedUser = state.find(
+    user => user.logged === true
+  );
+  // const checkIfTheCourseAlreadyThere =
+  //   loggedUser.shoppingCart.find(
+  //     courseId => courseId === action.payload
+  //   );
+
+  return state.map(currentStateElement => {
+    if (
+      currentStateElement.id !== loggedUser.id
+    ) {
+      return currentStateElement;
+    }
+
+    const {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      logged,
+      shoppingCart,
+    } = currentStateElement;
+    return {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      shoppingCart,
+      logged,
+      selectedCourse: action.payload,
     };
   });
 };
@@ -96,6 +141,7 @@ const addCourseToShoppingCart = (
       password,
       logged,
       purchasedCourses,
+      selectedCourse,
     } = currentStateElement;
     return {
       id,
@@ -107,6 +153,7 @@ const addCourseToShoppingCart = (
         action.payload,
       ],
       logged,
+      selectedCourse,
     };
   });
 };
@@ -118,10 +165,6 @@ const removeCourseFromShoppingCart = (
   const loggedUser = state.find(
     user => user.logged === true
   );
-  //   const checkIfTheCourseAlreadyThere =
-  //     loggedUser.shoppingCart.find(
-  //       courseId => courseId === action.payload
-  //     );
 
   const newShoppingCart =
     loggedUser.shoppingCart.filter(
@@ -141,6 +184,7 @@ const removeCourseFromShoppingCart = (
       password,
       logged,
       purchasedCourses,
+      selectedCourse,
     } = currentStateElement;
     return {
       id,
@@ -149,6 +193,7 @@ const removeCourseFromShoppingCart = (
       purchasedCourses,
       shoppingCart: [...newShoppingCart],
       logged,
+      selectedCourse,
     };
   });
 };
@@ -162,6 +207,7 @@ export const userReducer = (
       purchasedCourses: [],
       shoppingCart: [],
       logged: false,
+      selectedCourse: '',
     },
   ],
   action
@@ -183,6 +229,8 @@ export const userReducer = (
         state,
         action
       );
+    case SELECT_COURSE:
+      return selectCourse(state, action);
     default:
       console.warn(
         `Nie mamy akcji typu ${action.type}`

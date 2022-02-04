@@ -7,6 +7,7 @@ export const ADD_COURSE_TO_SHOPPING_CART =
   'ADD_COURSE_TO_SHOPPING_CART';
 export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
+export const SELECT_COURSE = 'SELECT_COURSE';
 
 export const addUser = ({
   id = uuid(),
@@ -15,6 +16,7 @@ export const addUser = ({
   purchasedCourses = [],
   shoppingCart = [],
   logged = false,
+  selectedCourse = '',
 }) => ({
   type: ADD_USER,
   payload: {
@@ -24,6 +26,7 @@ export const addUser = ({
     purchasedCourses,
     shoppingCart,
     logged,
+    selectedCourse,
   },
 });
 
@@ -51,3 +54,8 @@ export const removeCourseFromShoppingCart =
     type: REMOVE_COURSE_FROM_SHOPPING_CART,
     payload: courseId,
   });
+
+export const selectCourse = courseId => ({
+  type: SELECT_COURSE,
+  payload: courseId,
+});

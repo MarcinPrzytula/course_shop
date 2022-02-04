@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import allCoursesList from '../store/allCoursesList.js';
 
-import ShoppingCartProduct from '../components/ShoppingCartProduct';
+import ProductInShoppingCart from '../components/ProductInShoppingCart';
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
@@ -44,7 +44,7 @@ const ShoppingCartPage = () => {
                 title,
                 id,
               }) => (
-                <ShoppingCartProduct
+                <ProductInShoppingCart
                   key={id}
                   id={id}
                   authors={authors}
