@@ -29,17 +29,27 @@
     display: none;
   }
 }
+.desktopOnly {
+  display: block;
+}
+.telOnly {
+  display: none;
+}
 
 @media (max-width: 574px) {
+  .telOnly {
+    display: block;
+  }
+  .desktopOnly {
+    display: none;
+  }
   .navigation {
-    max-width: 70%;
+    width: 40%;
     &__list {
-      display: none;
       flex-direction: column;
       list-style: none;
       background-color: grey;
       opacity: 0.9;
-      width: 50%;
       height: 20vh;
     }
     &__item-wraper {

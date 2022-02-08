@@ -1,4 +1,8 @@
-import React from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   useLocation,
   NavLink,
@@ -6,6 +10,13 @@ import {
 import '../styles/Navigation.scss';
 
 const Navigation = () => {
+  // Create a ref that we add to the element for which we want to detect outside clicks
+  const ref = useRef();
+  // State for our modal
+  const [isModalOpen, setModalOpen] =
+    useState(false);
+  // Call hook passing in the ref and a function to call on outside click
+
   const location = useLocation();
 
   const getNavLinkClass = path => {
@@ -34,21 +45,57 @@ const Navigation = () => {
     },
   ];
 
-  const hamburgerActive = () => {
-    const navigation = document.querySelector(
-      '.navigation__list'
+  useOnClickOutside(ref, () =>
+    setModalOpen(false)
+  );
+  // Hook
+  function useOnClickOutside(ref, handler) {
+    useEffect(
+      () => {
+        const listener = event => {
+          // Do nothing if clicking ref's element or descendent elements
+          if (
+            !ref.current ||
+            ref.current.contains(event.target)
+          ) {
+            return;
+          }
+          handler(event);
+        };
+        document.addEventListener(
+          'mousedown',
+          listener
+        );
+        document.addEventListener(
+          'touchstart',
+          listener
+        );
+        return () => {
+          document.removeEventListener(
+            'mousedown',
+            listener
+          );
+          document.removeEventListener(
+            'touchstart',
+            listener
+          );
+        };
+      },
+      // Add ref and handler to effect dependencies
+      // It's worth noting that because passed in handler is a new ...
+      // ... function on every render that will cause this effect ...
+      // ... callback/cleanup to run every render. It's not a big deal ...
+      // ... but to optimize you can wrap handler in useCallback before ...
+      // ... passing it into this hook.
+      [ref, handler]
     );
-
-    navigation.classList.toggle(
-      'navigation__activeBurger'
-    );
-  };
+  }
 
   const menu = list.map(item => (
     <li
       className={getNavLinkClass(item.path)}
       key={item.name}
-      onClick={hamburgerActive}
+      onClick={() => setModalOpen(false)}
     >
       <NavLink
         className="navigation__item"
@@ -62,13 +109,27 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="navigation">
-        <button
-          className="navigation__burger"
-          onClick={hamburgerActive}
-        >
-          <span className="fa fa-bars"></span>
-        </button>
+      <nav
+        ref={ref}
+        className="navigation telOnly"
+      >
+        {isModalOpen ? (
+          <>
+            <ul className="navigation__list">
+              {menu}
+            </ul>
+          </>
+        ) : (
+          <button
+            className="navigation__burger"
+            onClick={() => setModalOpen(true)}
+          >
+            <span className="fa fa-bars"></span>
+          </button>
+        )}
+      </nav>
+
+      <nav className="navigation desktopOnly">
         <ul className="navigation__list">
           {menu}
         </ul>
