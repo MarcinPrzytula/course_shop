@@ -1,17 +1,35 @@
 .product {
   border: 1px solid black;
-  height: 330px;
-  width: 220px;
+  height: 400px;
+  width: 300px;
   padding: 5px;
   margin: 5px;
   text-align: center;
-
+  &__title {
+    padding: 5px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  &__price {
+    padding: 5px;
+  }
+  &__authors {
+    padding: 5px;
+  }
+  &__rating {
+    padding: 5px;
+    &_panel {
+      padding: 5px;
+    }
+  }
+  &__status {
+    padding-top: 10px;
+    font-weight: bold;
+  }
   &__img {
-    width: 210px;
     height: 210px;
     position: relative;
     overflow: hidden;
-    // text-align: center;
   }
 
   img {

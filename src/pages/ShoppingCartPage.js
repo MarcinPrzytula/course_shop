@@ -4,13 +4,14 @@ import '../styles/ShoppingCartPage.scss';
 
 import { useSelector } from 'react-redux';
 
-import allCoursesList from '../store/allCoursesList.js';
-
 import ProductInShoppingCart from '../components/ProductInShoppingCart';
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
-  const users = useSelector(store => store.users);
+  const { users, courses } = useSelector(
+    store => store
+  );
+
   const history = useHistory();
 
   const render = () => {
@@ -21,12 +22,12 @@ const ShoppingCartPage = () => {
     let coursesInShoppingCart = [];
 
     if (loggedUser) {
-      coursesInShoppingCart =
-        allCoursesList.filter(item =>
+      coursesInShoppingCart = courses.filter(
+        item =>
           loggedUser.shoppingCart.find(
             item2 => item2 === item.id
           )
-        );
+      );
     }
 
     if (

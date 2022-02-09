@@ -1,19 +1,21 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import allCoursesList from '../store/allCoursesList';
+
 import SelectedProduct from '../components/SelectedProduct';
 
 import '../styles/Product.scss';
 
 const SelectedProductPage = () => {
-  const users = useSelector(store => store.users);
+  const { users, courses } = useSelector(
+    store => store
+  );
 
   const loggedUser = users.find(
     user => user.logged === true
   );
 
-  const selectedCourse = allCoursesList.find(
+  const selectedCourse = courses.find(
     course =>
       course.id === loggedUser.selectedCourse
   );

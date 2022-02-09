@@ -4,10 +4,11 @@ import ProductInUserPanel from '../components/ProductInUserPanel';
 import '../styles/UserPanelPage.scss';
 
 import { useSelector } from 'react-redux';
-import allCoursesList from '../store/allCoursesList';
 
 const UserPanelPage = () => {
-  const users = useSelector(store => store.users);
+  const { users, courses } = useSelector(
+    store => store
+  );
 
   const loggedUser = users.find(
     user => user.logged === true
@@ -18,12 +19,11 @@ const UserPanelPage = () => {
   let mainPage = 'Log in to view your courses';
 
   if (loggedUser) {
-    loggedUserCourses = allCoursesList.filter(
-      course =>
-        loggedUser.purchasedCourses.find(
-          purchasedCourseId =>
-            purchasedCourseId === course.id
-        )
+    loggedUserCourses = courses.filter(course =>
+      loggedUser.purchasedCourses.find(
+        purchasedCourseId =>
+          purchasedCourseId === course.id
+      )
     );
 
     const render = loggedUserCourses.map(

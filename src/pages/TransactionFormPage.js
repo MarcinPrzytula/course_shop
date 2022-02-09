@@ -9,7 +9,6 @@ import {
 
 import { useHistory } from 'react-router-dom';
 import { buyCourse } from '../store/actions/userActions';
-import allCoursesList from '../store/allCoursesList';
 
 import Styles from '../components/credit_card_form/styles';
 import { Form, Field } from 'react-final-form';
@@ -21,7 +20,9 @@ import {
 } from '../components/credit_card_form/cardUtils';
 
 const TransactionFormPage = () => {
-  const users = useSelector(store => store.users);
+  const { users, courses } = useSelector(
+    store => store
+  );
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -32,7 +33,7 @@ const TransactionFormPage = () => {
   let coursesToBuyId = null;
 
   if (loggedUser) {
-    coursesToBuy = allCoursesList.filter(course =>
+    coursesToBuy = courses.filter(course =>
       loggedUser.shoppingCart.find(
         shoppingCartCourseId =>
           shoppingCartCourseId === course.id

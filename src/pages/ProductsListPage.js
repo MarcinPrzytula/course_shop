@@ -3,16 +3,24 @@ import '../styles/ProductsListPage.scss';
 
 import ProductInProductsList from '../components/ProductInProductsList';
 
-import allCoursesList from '../store/allCoursesList';
 import { useSelector } from 'react-redux';
 
 const ProductsListPage = () => {
   const courses = useSelector(
     store => store.courses
   );
+
   const [productsList, setProductList] = useState(
     courses.map(
-      ({ authors, img, price, title, id }) => (
+      ({
+        authors,
+        img,
+        price,
+        title,
+        id,
+        rating,
+        category,
+      }) => (
         <ProductInProductsList
           key={id}
           id={id}
@@ -20,33 +28,30 @@ const ProductsListPage = () => {
           img={img}
           title={title}
           price={price}
+          rating={rating}
+          category={category}
         />
       )
     )
   );
 
-  //   let productsList = allCoursesList.map(
-  //     ({ authors, img, price, title, id }) => (
-  //       <ProductInProductsList
-  //         key={id}
-  //         id={id}
-  //         authors={authors}
-  //         img={img}
-  //         title={title}
-  //         price={price}
-  //       />
-  //     )
-  //   );
-
   const searchCourse = value => {
-    const X = courses.filter(item =>
+    const filterCourses = courses.filter(item =>
       item.title
         .toLowerCase()
         .includes(value.toLowerCase())
     );
     setProductList(
-      X.map(
-        ({ authors, img, price, title, id }) => (
+      filterCourses.map(
+        ({
+          authors,
+          img,
+          price,
+          title,
+          id,
+          rating,
+          category,
+        }) => (
           <ProductInProductsList
             key={id}
             id={id}
@@ -54,18 +59,32 @@ const ProductsListPage = () => {
             img={img}
             title={title}
             price={price}
+            rating={rating}
+            category={category}
           />
         )
       )
     );
   };
   const selectCategory = value => {
-    const X = courses.filter(
+    let filterCourses = courses.filter(
       item => item.category === value
     );
+
+    if (value === 'all') {
+      filterCourses = courses;
+    }
     setProductList(
-      X.map(
-        ({ authors, img, price, title, id }) => (
+      filterCourses.map(
+        ({
+          authors,
+          img,
+          price,
+          title,
+          id,
+          rating,
+          category,
+        }) => (
           <ProductInProductsList
             key={id}
             id={id}
@@ -73,6 +92,8 @@ const ProductsListPage = () => {
             img={img}
             title={title}
             price={price}
+            rating={rating}
+            category={category}
           />
         )
       )
@@ -116,6 +137,15 @@ const ProductsListPage = () => {
               }
             >
               Languages
+            </span>
+          </li>
+          <li>
+            <span
+              onClick={() =>
+                selectCategory('all')
+              }
+            >
+              All category
             </span>
           </li>
         </ul>

@@ -232,10 +232,6 @@ export const userReducer = (
     case SELECT_COURSE:
       return selectCourse(state, action);
     default:
-      console.warn(
-        `Nie mamy akcji typu ${action.type}`
-      );
-
-      return state;
   }
+  return state;
 };
