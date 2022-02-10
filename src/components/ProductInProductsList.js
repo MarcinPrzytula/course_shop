@@ -7,6 +7,12 @@ import {
   useDispatch,
 } from 'react-redux';
 
+import {
+  Formik,
+  Field,
+  ErrorMessage,
+} from 'formik';
+
 import { addCourseToShoppingCart } from '../store/actions/userActions';
 import { addRating } from '../store/actions/courseActions';
 
@@ -32,10 +38,16 @@ const ProductInProductsList = ({
   );
 
   let checkIfTheUserHasRated = '';
+  let checkIfTheCourseIsBought = '';
+
   if (loggedUser) {
     checkIfTheUserHasRated =
       actuallyCourse.rating.find(
         item => item.userId === loggedUser.id
+      );
+    checkIfTheCourseIsBought =
+      loggedUser.purchasedCourses.find(
+        courseId => courseId === id
       );
   }
 
@@ -72,13 +84,17 @@ const ProductInProductsList = ({
   };
 
   const ratingPanel = () => {
-    if (loggedUser && !checkIfTheUserHasRated) {
+    if (
+      loggedUser &&
+      !checkIfTheUserHasRated &&
+      checkIfTheCourseIsBought
+    ) {
       return (
         <>
           <span>Add rating for 1 to 5: </span>
 
           <span
-            class="fa fa-star checked"
+            className="fa fa-star checked"
             onClick={() => {
               dispatch(
                 addRating(id, loggedUser.id, 1)
@@ -86,7 +102,7 @@ const ProductInProductsList = ({
             }}
           ></span>
           <span
-            class="fa fa-star "
+            className="fa fa-star "
             onClick={() => {
               dispatch(
                 addRating(id, loggedUser.id, 2)
@@ -94,7 +110,7 @@ const ProductInProductsList = ({
             }}
           ></span>
           <span
-            class="fa fa-star checked"
+            className="fa fa-star checked"
             onClick={() => {
               dispatch(
                 addRating(id, loggedUser.id, 3)
@@ -102,7 +118,7 @@ const ProductInProductsList = ({
             }}
           ></span>
           <span
-            class="fa fa-star checked"
+            className="fa fa-star checked"
             onClick={() => {
               dispatch(
                 addRating(id, loggedUser.id, 4)
@@ -110,7 +126,7 @@ const ProductInProductsList = ({
             }}
           ></span>
           <span
-            class="fa fa-star checked"
+            className="fa fa-star checked"
             onClick={() => {
               dispatch(
                 addRating(id, loggedUser.id, 5)
@@ -144,7 +160,9 @@ const ProductInProductsList = ({
       ).toFixed(2)}`;
     }
   };
-
+  const addComment = values => {
+    console.log(values);
+  };
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -173,7 +191,47 @@ const ProductInProductsList = ({
           <span>{viewRating()}</span>
         </div>
       </div>
-      <div className="product__comment"></div>
+      <div className="product__comment">
+        <Formik
+          initialValues={{
+            formValue: '',
+          }}
+          validate={formValue => {
+            const errors = {};
+            if (formValue.length < 3) {
+              errors.formValue =
+                'Enter login (minimum 3 characters)';
+            }
+            return errors;
+          }}
+          onSubmit={(
+            values,
+            { setSubmitting, resetForm }
+          ) => {
+            addComment(values);
+            resetForm();
+          }}
+        >
+          {({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <div className="formValue">
+                <span>Comment:</span>
+                <ErrorMessage
+                  name="formValue"
+                  component="div"
+                />
+                <Field
+                  name="formValue"
+                  placeholder="add your opinion"
+                />
+              </div>
+              <button type="submit">
+                Submit
+              </button>
+            </form>
+          )}
+        </Formik>
+      </div>
       <div className="product__status">
         {courseStatus()}
       </div>

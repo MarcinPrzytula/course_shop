@@ -1,4 +1,4 @@
-import HomePage from '../pages/HomePage';
+// import HomePage from '../pages/HomePage';
 import ProductsListPage from '../pages/ProductsListPage';
 import SelectedProductPage from '../pages/SelectedProductPage';
 import LoginPage from '../pages/LoginPage';
@@ -10,14 +10,14 @@ import ErrorPage from '../pages/ErrorPage';
 
 const list = [
   {
-    name: HomePage,
+    name: ProductsListPage,
     path: '/',
     exact: true,
   },
-  {
-    name: ProductsListPage,
-    path: '/products',
-  },
+  //   {
+  //     name: ProductsListPage,
+  //     path: '/products',
+  //   },
   {
     name: SelectedProductPage,
     path: '/selected_product',

@@ -3,11 +3,20 @@ import {
   useEffect,
   useRef,
 } from 'react';
+
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
+
 import {
   useLocation,
   NavLink,
 } from 'react-router-dom';
 import '../styles/Navigation.scss';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   // Create a ref that we add to the element for which we want to detect outside clicks
@@ -18,30 +27,46 @@ const Navigation = () => {
   // Call hook passing in the ref and a function to call on outside click
 
   const location = useLocation();
+  const { users, courses } = useSelector(
+    store => store
+  );
+  const loggedUser = users.find(
+    user => user.logged === true
+  );
 
   const getNavLinkClass = path => {
     return location.pathname === path
       ? 'navigation__item-wraper active'
       : 'navigation__item-wraper';
   };
-
+  const shoppingCartIcon =
+    loggedUser?.shoppingCart.length > 0 ? (
+      <div className="navigation__cart navigation__shoppingCtActive">
+        <FontAwesomeIcon icon={faCartPlus} />
+      </div>
+    ) : (
+      <div className="navigation__cart ">
+        <FontAwesomeIcon icon={faCartPlus} />
+      </div>
+    );
   const list = [
-    {
-      name: 'Main page',
-      path: '/',
-      exact: true,
-    },
+    // {
+    //   name: 'Main page',
+    //   path: '/',
+    //   exact: true,
+    // },
     {
       name: 'Products list',
-      path: '/products',
+      path: '/',
     },
     {
       name: 'User Panel',
       path: '/user_panel',
     },
     {
-      name: 'Shopping ct',
+      name: ``,
       path: '/shopping_cart',
+      isShoppingCartt: true,
     },
   ];
 
@@ -98,11 +123,13 @@ const Navigation = () => {
       onClick={() => setModalOpen(false)}
     >
       <NavLink
-        className="navigation__item"
+        className="navigation__item "
         to={item.path}
         exact={item.exact ? item.exact : false}
       >
-        {item.name}
+        {item.isShoppingCartt
+          ? shoppingCartIcon
+          : item.name}
       </NavLink>
     </li>
   ));
@@ -134,6 +161,7 @@ const Navigation = () => {
           {menu}
         </ul>
       </nav>
+      <div></div>
     </>
   );
 };

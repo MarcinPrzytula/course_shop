@@ -28,6 +28,12 @@
   &__burger {
     display: none;
   }
+  &__cart {
+    font-size: 20px;
+  }
+  &__shoppingCtActive {
+    color: red;
+  }
 }
 .desktopOnly {
   display: block;
@@ -71,10 +77,8 @@
       border: none;
       font-size: 20px;
     }
-    .navigation__activeBurger {
-      display: flex;
-      position: relative;
-      z-index: 2;
+    &__cart {
+      font-size: 20px;
     }
   }
 }
