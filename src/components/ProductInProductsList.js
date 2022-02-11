@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
 import '../styles/Product.scss';
 
@@ -15,7 +18,8 @@ import {
 
 import { addCourseToShoppingCart } from '../store/actions/userActions';
 import { addRating } from '../store/actions/courseActions';
-
+import StarRatings from 'react-star-ratings';
+import Foo from './Star';
 const ProductInProductsList = ({
   title,
   img,
@@ -37,6 +41,7 @@ const ProductInProductsList = ({
     course => course.id === id
   );
 
+  //   const {checkIfTheUserHasRated, setcheckIfTheUserHasRated} = useState("")
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 
@@ -45,6 +50,7 @@ const ProductInProductsList = ({
       actuallyCourse.rating.find(
         item => item.userId === loggedUser.id
       );
+    console.log(checkIfTheUserHasRated);
     checkIfTheCourseIsBought =
       loggedUser.purchasedCourses.find(
         courseId => courseId === id
@@ -84,85 +90,75 @@ const ProductInProductsList = ({
   };
 
   const ratingPanel = () => {
-    if (
-      loggedUser &&
-      !checkIfTheUserHasRated &&
-      checkIfTheCourseIsBought
-    ) {
-      return (
-        <>
-          <span>Add rating for 1 to 5: </span>
-
-          <span
-            className="fa fa-star checked"
-            onClick={() => {
-              dispatch(
-                addRating(id, loggedUser.id, 1)
-              );
-            }}
-          ></span>
-          <span
-            className="fa fa-star "
-            onClick={() => {
-              dispatch(
-                addRating(id, loggedUser.id, 2)
-              );
-            }}
-          ></span>
-          <span
-            className="fa fa-star checked"
-            onClick={() => {
-              dispatch(
-                addRating(id, loggedUser.id, 3)
-              );
-            }}
-          ></span>
-          <span
-            className="fa fa-star checked"
-            onClick={() => {
-              dispatch(
-                addRating(id, loggedUser.id, 4)
-              );
-            }}
-          ></span>
-          <span
-            className="fa fa-star checked"
-            onClick={() => {
-              dispatch(
-                addRating(id, loggedUser.id, 5)
-              );
-            }}
-          ></span>
-        </>
-      );
-    } else if (
-      loggedUser &&
-      checkIfTheUserHasRated
-    ) {
-      return `You have rated the course on ${checkIfTheUserHasRated.rating}`;
-    }
-  };
-
-  const viewRating = () => {
     let x = 0;
+    let score = 0;
 
     actuallyCourse.rating.forEach(item => {
       x += item.rating;
     });
+    score =
+      x / actuallyCourse.rating.length.toFixed(2);
 
-    if (actuallyCourse.rating.length === 0) {
-      return 'The course has not yet been evaluated';
-    } else {
-      return `Average rating of ${
-        actuallyCourse.rating.length
-      } opinions: ${(
-        x / actuallyCourse.rating.length
-      ).toFixed(2)}`;
+    if (isNaN(score)) {
+      score = 0;
+    }
+    if (
+      loggedUser &&
+      checkIfTheCourseIsBought &&
+      !checkIfTheUserHasRated
+    ) {
+      return (
+        <>
+          <StarRatings
+            rating={rating}
+            starRatedColor="blue"
+            changeRating={e => {
+              setRating(e);
+              dispatch(
+                addRating(id, loggedUser.id, e)
+              );
+            }}
+            numberOfStars={5}
+            name="rating"
+            starDimension="30px"
+            starSpacing="5px"
+          />
+          <div>
+            {score}/5 Opinions(
+            {actuallyCourse.rating.length})
+          </div>
+        </>
+      );
+    } else if (
+      (loggedUser && !checkIfTheCourseIsBought) ||
+      !loggedUser ||
+      checkIfTheUserHasRated
+    ) {
+      return (
+        <>
+          <StarRatings
+            rating={scoreD}
+            starRatedColor="blue"
+            numberOfStars={5}
+            name="rating"
+            starDimension="30px"
+            starSpacing="5px"
+          />
+          <div>
+            {score}/5 Opinions(
+            {actuallyCourse.rating.length})
+          </div>
+        </>
+      );
     }
   };
+
   const addComment = values => {
     console.log(values);
   };
+  const [rating, setRating] = useState(0);
+  const [scoreD, setScoreD] = useState(0);
+
   return (
     <div className="product">
       <div className="product__video"></div>
@@ -187,9 +183,7 @@ const ProductInProductsList = ({
         <div className="product__rating_panel">
           {ratingPanel()}
         </div>
-        <div className="product__ratingBoard">
-          <span>{viewRating()}</span>
-        </div>
+        <div className="rating"></div>
       </div>
       <div className="product__comment">
         <Formik
