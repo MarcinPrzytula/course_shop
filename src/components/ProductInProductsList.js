@@ -127,9 +127,6 @@ const ProductInProductsList = ({
             starRatedColor="blue"
             changeRating={e => {
               setRating(e);
-              dispatch(
-                addRating(id, loggedUser.id, e)
-              );
             }}
             numberOfStars={5}
             name="rating"
@@ -168,6 +165,9 @@ const ProductInProductsList = ({
   };
 
   const addComment = values => {
+    dispatch(
+      addRating(id, loggedUser.id, rating)
+    );
     console.log(values);
   };
 
@@ -192,20 +192,17 @@ const ProductInProductsList = ({
         <span>{authors}</span>
       </div>
       <div className="product__rating">
-        <div className="product__rating_panel">
-          <StarRatings
-            rating={score}
-            starRatedColor="blue"
-            numberOfStars={5}
-            name="rating"
-            starDimension="30px"
-            starSpacing="5px"
-          />
-
-          <div>
-            {score}/5 Opinions(
-            {actuallyCourse.rating.length})
-          </div>
+        <StarRatings
+          rating={score}
+          starRatedColor="blue"
+          numberOfStars={5}
+          name="rating"
+          starDimension="30px"
+          starSpacing="5px"
+        />
+        <div>
+          {score}/5 Opinions(
+          {actuallyCourse.rating.length})
         </div>
       </div>
       {loggedUser &&
@@ -240,13 +237,13 @@ const ProductInProductsList = ({
                 starRatedColor="blue"
                 changeRating={e => {
                   setRating(e);
-                  dispatch(
-                    addRating(
-                      id,
-                      loggedUser.id,
-                      e
-                    )
-                  );
+                  //   dispatch(
+                  //     addRating(
+                  //       id,
+                  //       loggedUser.id,
+                  //       e
+                  //     )
+                  //   );
                 }}
                 numberOfStars={5}
                 name="rating"
