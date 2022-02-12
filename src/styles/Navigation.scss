@@ -82,3 +82,21 @@
     }
   }
 }
+
+.overlay {
+  position: fixed;
+  top: 20;
+  left: 20;
+  right: 20;
+  bottom: 20;
+  background-color: rebeccapurple;
+}
+.modal {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}

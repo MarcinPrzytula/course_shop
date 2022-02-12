@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 import '../styles/Product.scss';
 
@@ -37,6 +39,8 @@ const ProductInProductsList = ({
     course => course.id === id
   );
   const [rating, setRating] = useState(0);
+  const [showEditModal, setShowEditModal] =
+    useState(false);
   //   const {checkIfTheUserHasRated, setcheckIfTheUserHasRated} = useState("")
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
@@ -189,97 +193,109 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">
         <div className="product__rating_panel">
-          {/* {ratingPanel()} */}
-          {(loggedUser &&
-            !checkIfTheCourseIsBought) ||
-          !loggedUser ||
-          checkIfTheUserHasRated ? (
-            <>
-              <div>
-                bar component score: {score}
-              </div>
-              <StarRatings
-                rating={score}
-                starRatedColor="blue"
-                numberOfStars={5}
-                name="rating"
-                starDimension="30px"
-                starSpacing="5px"
-              />
-            </>
-          ) : null}
-          {loggedUser &&
-          checkIfTheCourseIsBought &&
-          !checkIfTheUserHasRated ? (
-            <>
-              <span>rating component</span>
-              <StarRatings
-                rating={rating}
-                starRatedColor="blue"
-                changeRating={e => {
-                  setRating(e);
-                  dispatch(
-                    addRating(
-                      id,
-                      loggedUser.id,
-                      e
-                    )
-                  );
-                }}
-                numberOfStars={5}
-                name="rating"
-                starDimension="30px"
-                starSpacing="5px"
-              />
-            </>
-          ) : null}
+          <div>bar component score: {score}</div>
+          <StarRatings
+            rating={score}
+            starRatedColor="blue"
+            numberOfStars={5}
+            name="rating"
+            starDimension="30px"
+            starSpacing="5px"
+          />
+
           <div>
             {score}/5 Opinions(
             {actuallyCourse.rating.length})
           </div>
         </div>
       </div>
-      <div className="product__comment">
-        <Formik
-          initialValues={{
-            formValue: '',
-          }}
-          validate={formValue => {
-            const errors = {};
-            if (formValue.length < 3) {
-              errors.formValue =
-                'Enter login (minimum 3 characters)';
-            }
-            return errors;
-          }}
-          onSubmit={(
-            values,
-            { setSubmitting, resetForm }
-          ) => {
-            addComment(values);
-            resetForm();
-          }}
-        >
-          {({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
-              <div className="formValue">
-                <span>Comment:</span>
-                <ErrorMessage
-                  name="formValue"
-                  component="div"
-                />
-                <Field
-                  name="formValue"
-                  placeholder="add your opinion"
-                />
-              </div>
-              <button type="submit">
-                Submit
-              </button>
-            </form>
-          )}
-        </Formik>
-      </div>
+      {loggedUser &&
+      checkIfTheCourseIsBought &&
+      !checkIfTheUserHasRated ? (
+        <div id="modal">
+          <button
+            onClick={() => setShowEditModal(true)}
+          >
+            Rating and comment this course
+          </button>
+          <Modal
+            ariaHideApp={false}
+            className="modal"
+            //   overlayClassName="overlay"
+            isOpen={showEditModal}
+            // onRequestClose={() =>
+            //   setShowEditModal(false)
+            // }
+            //   contentLabel="Rat this course"
+          >
+            <button
+              onClick={() =>
+                setShowEditModal(false)
+              }
+            >
+              Close Modal
+            </button>
+
+            <span>rating component</span>
+            <StarRatings
+              rating={rating}
+              starRatedColor="blue"
+              changeRating={e => {
+                setRating(e);
+                dispatch(
+                  addRating(id, loggedUser.id, e)
+                );
+              }}
+              numberOfStars={5}
+              name="rating"
+              starDimension="30px"
+              starSpacing="5px"
+            />
+
+            <div className="product__comment">
+              <Formik
+                initialValues={{
+                  formValue: '',
+                }}
+                validate={formValue => {
+                  const errors = {};
+                  if (formValue.length < 3) {
+                    errors.formValue =
+                      'Enter login (minimum 3 characters)';
+                  }
+                  return errors;
+                }}
+                onSubmit={(
+                  values,
+                  { setSubmitting, resetForm }
+                ) => {
+                  addComment(values);
+                  resetForm();
+                }}
+              >
+                {({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <div className="formValue">
+                      <span>Comment:</span>
+                      <ErrorMessage
+                        name="formValue"
+                        component="div"
+                      />
+                      <Field
+                        name="formValue"
+                        placeholder="add your opinion"
+                      />
+                    </div>
+                    <button type="submit">
+                      Submit
+                    </button>
+                  </form>
+                )}
+              </Formik>
+            </div>
+          </Modal>
+        </div>
+      ) : null}
       <div className="product__status">
         {courseStatus()}
       </div>
