@@ -193,7 +193,6 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">
         <div className="product__rating_panel">
-          <div>bar component score: {score}</div>
           <StarRatings
             rating={score}
             starRatedColor="blue"
@@ -233,25 +232,28 @@ const ProductInProductsList = ({
                 setShowEditModal(false)
               }
             >
-              Close Modal
+              X
             </button>
-
-            <span>rating component</span>
-            <StarRatings
-              rating={rating}
-              starRatedColor="blue"
-              changeRating={e => {
-                setRating(e);
-                dispatch(
-                  addRating(id, loggedUser.id, e)
-                );
-              }}
-              numberOfStars={5}
-              name="rating"
-              starDimension="30px"
-              starSpacing="5px"
-            />
-
+            <div className="product__rating">
+              <StarRatings
+                rating={rating}
+                starRatedColor="blue"
+                changeRating={e => {
+                  setRating(e);
+                  dispatch(
+                    addRating(
+                      id,
+                      loggedUser.id,
+                      e
+                    )
+                  );
+                }}
+                numberOfStars={5}
+                name="rating"
+                starDimension="30px"
+                starSpacing="5px"
+              />
+            </div>
             <div className="product__comment">
               <Formik
                 initialValues={{
