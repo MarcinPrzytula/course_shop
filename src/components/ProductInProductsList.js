@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
 import '../styles/Product.scss';
 
@@ -19,7 +16,6 @@ import {
 import { addCourseToShoppingCart } from '../store/actions/userActions';
 import { addRating } from '../store/actions/courseActions';
 import StarRatings from 'react-star-ratings';
-import Foo from './Star';
 const ProductInProductsList = ({
   title,
   img,
@@ -40,7 +36,7 @@ const ProductInProductsList = ({
   const actuallyCourse = courses.find(
     course => course.id === id
   );
-
+  const [rating, setRating] = useState(0);
   //   const {checkIfTheUserHasRated, setcheckIfTheUserHasRated} = useState("")
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
@@ -88,7 +84,18 @@ const ProductInProductsList = ({
     } else
       return 'Log in if you want to buy a course';
   };
+  let x = 0;
+  let score = 0;
 
+  actuallyCourse.rating.forEach(item => {
+    x += item.rating;
+  });
+  score =
+    x / actuallyCourse.rating.length.toFixed(2);
+
+  if (isNaN(score)) {
+    score = 0;
+  }
   const ratingPanel = () => {
     let x = 0;
     let score = 0;
@@ -102,6 +109,7 @@ const ProductInProductsList = ({
     if (isNaN(score)) {
       score = 0;
     }
+
     if (
       loggedUser &&
       checkIfTheCourseIsBought &&
@@ -109,6 +117,7 @@ const ProductInProductsList = ({
     ) {
       return (
         <>
+          rating component
           <StarRatings
             rating={rating}
             starRatedColor="blue"
@@ -136,8 +145,9 @@ const ProductInProductsList = ({
     ) {
       return (
         <>
+          <div>bar component score: {score}</div>
           <StarRatings
-            rating={scoreD}
+            rating={score}
             starRatedColor="blue"
             numberOfStars={5}
             name="rating"
@@ -156,8 +166,6 @@ const ProductInProductsList = ({
   const addComment = values => {
     console.log(values);
   };
-  const [rating, setRating] = useState(0);
-  const [scoreD, setScoreD] = useState(0);
 
   return (
     <div className="product">
@@ -181,9 +189,55 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">
         <div className="product__rating_panel">
-          {ratingPanel()}
+          {/* {ratingPanel()} */}
+          {(loggedUser &&
+            !checkIfTheCourseIsBought) ||
+          !loggedUser ||
+          checkIfTheUserHasRated ? (
+            <>
+              <div>
+                bar component score: {score}
+              </div>
+              <StarRatings
+                rating={score}
+                starRatedColor="blue"
+                numberOfStars={5}
+                name="rating"
+                starDimension="30px"
+                starSpacing="5px"
+              />
+            </>
+          ) : null}
+          {loggedUser &&
+          checkIfTheCourseIsBought &&
+          !checkIfTheUserHasRated ? (
+            <>
+              <span>rating component</span>
+              <StarRatings
+                rating={rating}
+                starRatedColor="blue"
+                changeRating={e => {
+                  setRating(e);
+                  dispatch(
+                    addRating(
+                      id,
+                      loggedUser.id,
+                      e
+                    )
+                  );
+                }}
+                numberOfStars={5}
+                name="rating"
+                starDimension="30px"
+                starSpacing="5px"
+              />
+            </>
+          ) : null}
+          <div>
+            {score}/5 Opinions(
+            {actuallyCourse.rating.length})
+          </div>
         </div>
-        <div className="rating"></div>
       </div>
       <div className="product__comment">
         <Formik
