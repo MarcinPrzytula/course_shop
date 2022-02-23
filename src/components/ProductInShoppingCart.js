@@ -53,6 +53,7 @@ const ProductInShoppingCart = ({
           'The course has been added to the cart'
         ) : (
           <button
+            className="product__button"
             onClick={() => {
               dispatch(
                 removeCourseFromShoppingCart(id)

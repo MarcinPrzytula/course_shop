@@ -41,7 +41,7 @@ const ProductInProductsList = ({
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] =
     useState(false);
-  //   const {checkIfTheUserHasRated, setcheckIfTheUserHasRated} = useState("")
+
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 
@@ -74,6 +74,7 @@ const ProductInProductsList = ({
       } else
         return (
           <button
+            className="product__button"
             onClick={() => {
               dispatch(
                 addCourseToShoppingCart(id)
@@ -88,18 +89,19 @@ const ProductInProductsList = ({
     } else
       return 'Log in if you want to buy a course';
   };
-  let x = 0;
-  let score = 0;
 
-  actuallyCourse.rating.forEach(item => {
-    x += item.rating;
-  });
-  score =
-    x / actuallyCourse.rating.length.toFixed(2);
+  //   let x = 0;
+  //   let score = 0;
 
-  if (isNaN(score)) {
-    score = 0;
-  }
+  //   actuallyCourse.rating.forEach(item => {
+  //     x += item.rating;
+  //   });
+  //   score =
+  //     x / actuallyCourse.rating.length.toFixed(2);
+
+  //   if (isNaN(score)) {
+  //     score = 0;
+  //   }
   const ratingPanel = () => {
     let x = 0;
     let score = 0;
@@ -114,54 +116,23 @@ const ProductInProductsList = ({
       score = 0;
     }
 
-    if (
-      loggedUser &&
-      checkIfTheCourseIsBought &&
-      !checkIfTheUserHasRated
-    ) {
-      return (
-        <>
-          rating component
-          <StarRatings
-            rating={rating}
-            starRatedColor="blue"
-            changeRating={e => {
-              setRating(e);
-            }}
-            numberOfStars={5}
-            name="rating"
-            starDimension="30px"
-            starSpacing="5px"
-          />
-          <div>
-            {score}/5 Opinions(
-            {actuallyCourse.rating.length})
-          </div>
-        </>
-      );
-    } else if (
-      (loggedUser && !checkIfTheCourseIsBought) ||
-      !loggedUser ||
-      checkIfTheUserHasRated
-    ) {
-      return (
-        <>
-          <div>bar component score: {score}</div>
-          <StarRatings
-            rating={score}
-            starRatedColor="blue"
-            numberOfStars={5}
-            name="rating"
-            starDimension="30px"
-            starSpacing="5px"
-          />
-          <div>
-            {score}/5 Opinions(
-            {actuallyCourse.rating.length})
-          </div>
-        </>
-      );
-    }
+    return (
+      <>
+        <StarRatings
+          rating={score}
+          starRatedColor="blue"
+          starEmptyColor="white"
+          numberOfStars={5}
+          name="rating"
+          starDimension="30px"
+          starSpacing="5px"
+        />
+        <div>
+          {score}/5 Opinions(
+          {actuallyCourse.rating.length})
+        </div>
+      </>
+    );
   };
 
   const addComment = values => {
@@ -192,24 +163,18 @@ const ProductInProductsList = ({
         <span>{authors}</span>
       </div>
       <div className="product__rating">
-        <StarRatings
-          rating={score}
-          starRatedColor="blue"
-          numberOfStars={5}
-          name="rating"
-          starDimension="30px"
-          starSpacing="5px"
-        />
-        <div>
+        {ratingPanel()}
+        {/* <div>
           {score}/5 Opinions(
           {actuallyCourse.rating.length})
-        </div>
+        </div> */}
       </div>
       {loggedUser &&
       checkIfTheCourseIsBought &&
       !checkIfTheUserHasRated ? (
         <div id="modal">
           <button
+            className="product__button"
             onClick={() => setShowEditModal(true)}
           >
             Rating and comment this course
@@ -225,6 +190,7 @@ const ProductInProductsList = ({
             //   contentLabel="Rat this course"
           >
             <button
+              className="product__button"
               onClick={() =>
                 setShowEditModal(false)
               }

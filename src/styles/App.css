@@ -4,7 +4,9 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
-
+body {
+  background: rgb(211, 208, 208);
+}
 .app_wrapper {
   margin: 0 auto;
   max-width: 1200px;

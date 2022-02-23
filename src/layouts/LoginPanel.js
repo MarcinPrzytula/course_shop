@@ -46,6 +46,7 @@ const LoginPanel = () => {
     <nav className="panel">
       {userLogged.length > 0 ? (
         <button
+          className="panel__button"
           onClick={() => {
             dispatch(
               changeLoginStatus(

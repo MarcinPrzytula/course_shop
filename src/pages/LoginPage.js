@@ -61,7 +61,7 @@ function LoginPage() {
           validationData.loggedUser.logged
         )
       );
-      history.push('/user_panel');
+      history.push('/');
     } else if (
       userLoginData &&
       returnTheUserIfTheExists === undefined
@@ -123,7 +123,7 @@ function LoginPage() {
                 component="div"
               />
             </div>
-            <div>
+            <div className="loginPage__loginWrapper">
               <ErrorMessage
                 name="formLogin"
                 component="div"
@@ -132,6 +132,7 @@ function LoginPage() {
 
             <span>Login</span>
             <Field
+              className="loginPage__input"
               name="formLogin"
               placeholder="login"
             />
@@ -143,6 +144,7 @@ function LoginPage() {
             />
             <span>Password</span>
             <Field
+              className="loginPage__input"
               placeholder="password"
               name="formPassword"
               type="password"

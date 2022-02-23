@@ -57,6 +57,7 @@ const ShoppingCartPage = () => {
             )}
           </div>
           <button
+            className="shoppingCart__button"
             onClick={() => {
               history.push('/transaction_form');
             }}

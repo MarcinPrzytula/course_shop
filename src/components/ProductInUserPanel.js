@@ -33,6 +33,7 @@ const ProductInUserPanel = ({
         <span>{authors}</span>
       </div>
       <button
+        className="product__button"
         onClick={() => {
           dispatch(selectCourse(id));
           history.push('/selected_product');

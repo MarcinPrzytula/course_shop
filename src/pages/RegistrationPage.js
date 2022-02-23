@@ -66,6 +66,7 @@ function RegistrationPage() {
             />
             <span>Login</span>
             <Field
+              className="registrationPage__input"
               name="login"
               placeholder="login"
             />
@@ -77,6 +78,7 @@ function RegistrationPage() {
             />
             <span>Password</span>
             <Field
+              className="registrationPage__input"
               placeholder="password"
               name="password"
               type="password"
