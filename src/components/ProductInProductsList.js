@@ -41,6 +41,8 @@ const ProductInProductsList = ({
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] =
     useState(false);
+  const [showEditModal2, setShowEditModal2] =
+    useState(false);
 
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
@@ -90,18 +92,6 @@ const ProductInProductsList = ({
       return 'Log in if you want to buy a course';
   };
 
-  //   let x = 0;
-  //   let score = 0;
-
-  //   actuallyCourse.rating.forEach(item => {
-  //     x += item.rating;
-  //   });
-  //   score =
-  //     x / actuallyCourse.rating.length.toFixed(2);
-
-  //   if (isNaN(score)) {
-  //     score = 0;
-  //   }
   const ratingPanel = () => {
     let x = 0;
     let score = 0;
@@ -130,6 +120,37 @@ const ProductInProductsList = ({
         <div>
           {score}/5 Opinions(
           {actuallyCourse.rating.length})
+        </div>
+        <div id="modal">
+          <button
+            className="product__button"
+            onClick={() =>
+              setShowEditModal2(true)
+            }
+          >
+            View opinions
+          </button>
+
+          <Modal
+            ariaHideApp={false}
+            className="modal"
+            //   overlayClassName="overlay"
+            isOpen={showEditModal2}
+            // onRequestClose={() =>
+            //   setShowEditModal(false)
+            // }
+            //   contentLabel="Rat this course"
+          >
+            <button
+              className="product__button"
+              onClick={() =>
+                setShowEditModal2(false)
+              }
+            >
+              X
+            </button>
+            all comments
+          </Modal>
         </div>
       </>
     );
@@ -164,10 +185,6 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">
         {ratingPanel()}
-        {/* <div>
-          {score}/5 Opinions(
-          {actuallyCourse.rating.length})
-        </div> */}
       </div>
       {loggedUser &&
       checkIfTheCourseIsBought &&
@@ -179,6 +196,7 @@ const ProductInProductsList = ({
           >
             Rating and comment this course
           </button>
+
           <Modal
             ariaHideApp={false}
             className="modal"
@@ -203,13 +221,6 @@ const ProductInProductsList = ({
                 starRatedColor="blue"
                 changeRating={e => {
                   setRating(e);
-                  //   dispatch(
-                  //     addRating(
-                  //       id,
-                  //       loggedUser.id,
-                  //       e
-                  //     )
-                  //   );
                 }}
                 numberOfStars={5}
                 name="rating"

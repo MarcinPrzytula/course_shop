@@ -24,12 +24,6 @@ const ProductInShoppingCart = ({
   );
   let checkIfTheCourseInCart = null;
 
-  //   if (loggedUser) {
-  //     checkIfTheCourseInCart =
-  //       loggedUser.shoppingCart.find(
-  //         courseId => courseId === id
-  //       );
-  //   }
   return (
     <div className="product">
       <div className="product__video"></div>

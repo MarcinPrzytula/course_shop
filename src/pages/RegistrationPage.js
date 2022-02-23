@@ -84,7 +84,12 @@ function RegistrationPage() {
               type="password"
             />
           </div>
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="registrationPage__button"
+          >
+            Submit
+          </button>
         </form>
       )}
     </Formik>

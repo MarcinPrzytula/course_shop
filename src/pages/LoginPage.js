@@ -150,7 +150,12 @@ function LoginPage() {
               type="password"
             />
           </div>
-          <button type="submit">Submit</button>
+          <button
+            className="loginPage__button"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       )}
     </Formik>
