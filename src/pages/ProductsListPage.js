@@ -9,6 +9,10 @@ const ProductsListPage = () => {
   const courses = useSelector(
     store => store.courses
   );
+  const [
+    selectCategoryActive,
+    setSelectCategoryActive,
+  ] = useState('');
 
   const [productsList, setProductList] = useState(
     courses.map(
@@ -99,18 +103,9 @@ const ProductsListPage = () => {
       )
     );
   };
-  return (
-    <>
-      <div>
-        <input
-          type="text"
-          id="myInput"
-          onChange={e =>
-            searchCourse(e.target.value)
-          }
-          placeholder="Search for names.."
-        />
-
+  const renderCategoryList = () => {
+    return (
+      <div className="productList__categoryContainer">
         <ul id="myUL">
           <li>
             <span
@@ -150,6 +145,32 @@ const ProductsListPage = () => {
           </li>
         </ul>
       </div>
+    );
+  };
+  return (
+    <>
+      <div>
+        <input
+          type="text"
+          id="myInput"
+          onChange={e =>
+            searchCourse(e.target.value)
+          }
+          placeholder="Search for names.."
+        />
+      </div>
+      {selectCategoryActive ? (
+        renderCategoryList()
+      ) : (
+        <button
+          onClick={() =>
+            setSelectCategoryActive(true)
+          }
+        >
+          Open category list
+        </button>
+      )}
+
       <div className="productsList">
         {productsList}
       </div>

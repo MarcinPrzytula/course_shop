@@ -2,9 +2,13 @@ import React from 'react';
 
 import '../styles/ShoppingCartPage.scss';
 
-import { useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 
-import ProductInShoppingCart from '../components/ProductInShoppingCart';
+import { removeCourseFromShoppingCart } from '../store/actions/userActions';
+
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
@@ -13,6 +17,7 @@ const ShoppingCartPage = () => {
   );
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const render = () => {
     const loggedUser = users.find(
@@ -45,14 +50,43 @@ const ShoppingCartPage = () => {
                 title,
                 id,
               }) => (
-                <ProductInShoppingCart
-                  key={id}
-                  id={id}
-                  authors={authors}
-                  img={img}
-                  title={title}
-                  price={price}
-                />
+                <>
+                  <div className="shoppingCart__product-container">
+                    <div className="shoppingCart__product-title">
+                      <span>{title}</span>
+                    </div>
+                    <div className="shoppingCart__product-img-container">
+                      <img
+                        className="shoppingCart__product-img"
+                        src={img}
+                        alt="product "
+                      />
+                    </div>
+                    <div className="shoppingCart__product-price">
+                      <span>Price: </span>
+                      <span>{price}</span>
+                    </div>
+                    <div className="shoppingCart__product-author">
+                      <span>Authors: </span>
+                      <span>{authors}</span>
+                    </div>
+
+                    <button
+                      className="shoppingCart__product-button"
+                      onClick={() => {
+                        dispatch(
+                          removeCourseFromShoppingCart(
+                            id
+                          )
+                        );
+                      }}
+                    >
+                      <span>
+                        Remove from cart
+                      </span>
+                    </button>
+                  </div>
+                </>
               )
             )}
           </div>
