@@ -5,6 +5,7 @@
   padding: 15px 5px;
   margin: 5px;
   text-align: center;
+
   &__button {
     background-color: black;
     border: 1px solid black;
@@ -17,6 +18,15 @@
     transition: 0.3s;
     &:hover {
       background-color: white;
+      color: black;
+    }
+  }
+
+  &__biggerButton {
+    font-size: 20px;
+    color: yellow;
+    &:hover {
+      background-color: yellow;
       color: black;
     }
   }

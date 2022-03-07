@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ProductsListPage.scss';
 
-import ProductInProductsList from '../components/ProductInProductsList';
+import Product from '../components/Product';
 
 import { useSelector } from 'react-redux';
 
@@ -25,7 +25,7 @@ const ProductsListPage = () => {
         rating,
         category,
       }) => (
-        <ProductInProductsList
+        <Product
           key={id}
           id={id}
           authors={authors}
@@ -56,7 +56,7 @@ const ProductsListPage = () => {
           rating,
           category,
         }) => (
-          <ProductInProductsList
+          <Product
             key={id}
             id={id}
             authors={authors}
@@ -89,7 +89,7 @@ const ProductsListPage = () => {
           rating,
           category,
         }) => (
-          <ProductInProductsList
+          <Product
             key={id}
             id={id}
             authors={authors}

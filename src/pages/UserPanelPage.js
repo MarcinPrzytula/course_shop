@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductInUserPanel from '../components/ProductInUserPanel';
+import Product from '../components/Product';
 
 import '../styles/UserPanelPage.scss';
 
@@ -35,7 +35,7 @@ const UserPanelPage = () => {
         title,
         id,
       }) => (
-        <ProductInUserPanel
+        <Product
           key={id}
           id={id}
           authors={authors}

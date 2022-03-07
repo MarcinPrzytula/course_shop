@@ -14,8 +14,11 @@ import {
   Field,
   ErrorMessage,
 } from 'formik';
-
-import { addCourseToShoppingCart } from '../store/actions/userActions';
+import { useHistory } from 'react-router-dom';
+import {
+  addCourseToShoppingCart,
+  selectCourse,
+} from '../store/actions/userActions';
 import { addRating } from '../store/actions/courseActions';
 import StarRatings from 'react-star-ratings';
 const ProductInProductsList = ({
@@ -32,9 +35,8 @@ const ProductInProductsList = ({
   const loggedUser = users.find(
     user => user.logged === true
   );
-
+  const history = useHistory();
   const dispatch = useDispatch();
-
   const actuallyCourse = courses.find(
     course => course.id === id
   );
@@ -69,10 +71,31 @@ const ProductInProductsList = ({
         loggedUser.purchasedCourses.find(
           courseId => courseId === id
         );
+
       if (checkIfTheCourseInCart) {
         return 'The course has been added to the cart';
+      } else if (
+        checkIfTheCourseIsBought &&
+        window.location.pathname ===
+          '/course_shop/user_panel'
+      ) {
+        return (
+          <button
+            className="product__button product__biggerButton"
+            onClick={() => {
+              dispatch(selectCourse(id));
+              history.push('/selected_product');
+            }}
+          >
+            Go to the course
+          </button>
+        );
       } else if (checkIfTheCourseIsBought) {
-        return 'You already have this course';
+        return (
+          <span>
+            You already have this course
+          </span>
+        );
       } else
         return (
           <button
