@@ -4,10 +4,11 @@ export const ADD_COMMENT = 'CHANGE_COMMENT';
 export const addRating = (
   courseId,
   userId,
-  rating
+  rating,
+  comment
 ) => ({
   type: ADD_RATING,
-  payload: { courseId, userId, rating },
+  payload: { courseId, userId, rating, comment },
 });
 
 export const addComment = (id, comment) => ({

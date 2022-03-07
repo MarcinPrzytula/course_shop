@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-// import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
-
-import '../styles/Product.scss';
 
 import {
   useSelector,
   useDispatch,
 } from 'react-redux';
 
+import { useHistory } from 'react-router-dom';
+import { addRating } from '../store/actions/courseActions';
+import {
+  addCourseToShoppingCart,
+  selectCourse,
+} from '../store/actions/userActions';
+
+import Modal from 'react-modal';
 import {
   Formik,
   Field,
   ErrorMessage,
 } from 'formik';
-import { useHistory } from 'react-router-dom';
-import {
-  addCourseToShoppingCart,
-  selectCourse,
-} from '../store/actions/userActions';
-import { addRating } from '../store/actions/courseActions';
+
 import StarRatings from 'react-star-ratings';
+
+import '../styles/Product.scss';
+
 const ProductInProductsList = ({
   title,
   img,
@@ -29,23 +31,26 @@ const ProductInProductsList = ({
   id,
   category,
 }) => {
-  const { users, courses } = useSelector(
-    store => store
-  );
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
   const history = useHistory();
   const dispatch = useDispatch();
-  const actuallyCourse = courses.find(
-    course => course.id === id
-  );
+
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] =
     useState(false);
   const [showEditModal2, setShowEditModal2] =
     useState(false);
 
+  const { users, courses } = useSelector(
+    store => store
+  );
+  const loggedUser = users.find(
+    user => user.logged === true
+  );
+
+  const actuallyCourse = courses.find(
+    course => course.id === id
+  );
+  console.log(actuallyCourse);
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 
@@ -54,7 +59,6 @@ const ProductInProductsList = ({
       actuallyCourse.rating.find(
         item => item.userId === loggedUser.id
       );
-    console.log(checkIfTheUserHasRated);
     checkIfTheCourseIsBought =
       loggedUser.purchasedCourses.find(
         courseId => courseId === id
@@ -115,7 +119,7 @@ const ProductInProductsList = ({
       return 'Log in if you want to buy a course';
   };
 
-  const ratingPanel = () => {
+  const ratingBoard = () => {
     let x = 0;
     let score = 0;
 
@@ -157,12 +161,7 @@ const ProductInProductsList = ({
           <Modal
             ariaHideApp={false}
             className="modal"
-            //   overlayClassName="overlay"
             isOpen={showEditModal2}
-            // onRequestClose={() =>
-            //   setShowEditModal(false)
-            // }
-            //   contentLabel="Rat this course"
           >
             <button
               className="product__button"
@@ -172,46 +171,41 @@ const ProductInProductsList = ({
             >
               X
             </button>
-            all comments
+            <div className="product__commentsList">
+              {actuallyCourse.rating.length > 0
+                ? actuallyCourse.rating.map(
+                    ({
+                      rating,
+                      comment,
+                      userId,
+                    }) => {
+                      const user = users.find(
+                        user => user.id === userId
+                      );
+                      return (
+                        <div key={comment}>
+                          author: {user.login} /
+                          comment: {comment} /
+                          rating: {rating}
+                        </div>
+                      );
+                    }
+                  )
+                : 'dont have opinions'}
+            </div>
           </Modal>
         </div>
       </>
     );
   };
 
-  const addComment = values => {
-    dispatch(
-      addRating(id, loggedUser.id, rating)
-    );
-    console.log(values);
-  };
-
-  return (
-    <div className="product">
-      <div className="product__video"></div>
-      <div className="product__title">
-        <span>
-          {title} ({category})
-        </span>
-      </div>
-
-      <div className="product__img">
-        <img src={img} alt="product " />
-      </div>
-      <div className="product__price">
-        <span>Price: </span>
-        <span>{price}</span>
-      </div>
-      <div className="product__authors">
-        <span>Authors: </span>
-        <span>{authors}</span>
-      </div>
-      <div className="product__rating">
-        {ratingPanel()}
-      </div>
-      {loggedUser &&
+  const userRatingPanel = () => {
+    if (
+      loggedUser &&
       checkIfTheCourseIsBought &&
-      !checkIfTheUserHasRated ? (
+      !checkIfTheUserHasRated
+    ) {
+      return (
         <div id="modal">
           <button
             className="product__button"
@@ -223,12 +217,7 @@ const ProductInProductsList = ({
           <Modal
             ariaHideApp={false}
             className="modal"
-            //   overlayClassName="overlay"
             isOpen={showEditModal}
-            // onRequestClose={() =>
-            //   setShowEditModal(false)
-            // }
-            //   contentLabel="Rat this course"
           >
             <button
               className="product__button"
@@ -268,7 +257,14 @@ const ProductInProductsList = ({
                   values,
                   { setSubmitting, resetForm }
                 ) => {
-                  addComment(values);
+                  dispatch(
+                    addRating(
+                      id,
+                      loggedUser.id,
+                      rating,
+                      values
+                    )
+                  );
                   resetForm();
                 }}
               >
@@ -294,7 +290,41 @@ const ProductInProductsList = ({
             </div>
           </Modal>
         </div>
-      ) : null}
+      );
+    } else if (
+      loggedUser &&
+      checkIfTheCourseIsBought &&
+      checkIfTheUserHasRated
+    ) {
+      return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
+    }
+  };
+
+  return (
+    <div className="product">
+      <div className="product__video"></div>
+      <div className="product__title">
+        <span>
+          {title} ({category})
+        </span>
+      </div>
+
+      <div className="product__img">
+        <img src={img} alt="product " />
+      </div>
+      <div className="product__price">
+        <span>Price: </span>
+        <span>{price}</span>
+      </div>
+      <div className="product__authors">
+        <span>Authors: </span>
+        <span>{authors}</span>
+      </div>
+      <div className="product__rating">
+        {ratingBoard()}
+      </div>
+      {userRatingPanel()}
+
       <div className="product__status">
         {courseStatus()}
       </div>

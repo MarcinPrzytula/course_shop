@@ -30,13 +30,13 @@ const addRating = (state, action) => {
       price,
       title,
       category,
-      comment,
       rating,
     } = currentStateElement;
 
     const newRating = {
       userId: action.payload.userId,
       rating: action.payload.rating,
+      comment: action.payload.comment.formValue,
     };
     return {
       authors,
@@ -46,7 +46,7 @@ const addRating = (state, action) => {
       price,
       title,
       category,
-      comment,
+
       rating: [...rating, newRating],
     };
   });
@@ -63,7 +63,6 @@ export const courseReducer = (
       title: 'Course 1',
       category: 'languages',
       rating: [],
-      comments: '',
     },
     {
       authors: 'Marcin 2',
@@ -85,7 +84,6 @@ export const courseReducer = (
       title: 'Course 3',
       category: 'maths',
       rating: [],
-      comments: '',
     },
     {
       authors: 'Marcin 4',
@@ -107,7 +105,6 @@ export const courseReducer = (
       title: 'Course 5',
       category: 'programming',
       rating: [],
-      comments: '',
     },
   ],
   action

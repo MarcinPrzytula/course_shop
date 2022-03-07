@@ -10,8 +10,8 @@ const ProductsListPage = () => {
     store => store.courses
   );
   const [
-    selectCategoryActive,
-    setSelectCategoryActive,
+    toggleCategoryList,
+    setToggleCategoryList,
   ] = useState('');
 
   const [productsList, setProductList] = useState(
@@ -159,18 +159,23 @@ const ProductsListPage = () => {
           placeholder="Search for names.."
         />
       </div>
-      {selectCategoryActive ? (
-        renderCategoryList()
-      ) : (
-        <button
-          onClick={() =>
-            setSelectCategoryActive(true)
-          }
-        >
-          Open category list
-        </button>
-      )}
 
+      <button
+        className="productsList__button"
+        onClick={() =>
+          setToggleCategoryList(
+            !toggleCategoryList
+          )
+        }
+      >
+        {toggleCategoryList
+          ? 'Close category list'
+          : 'Open category list'}
+      </button>
+
+      {toggleCategoryList
+        ? renderCategoryList()
+        : null}
       <div className="productsList">
         {productsList}
       </div>

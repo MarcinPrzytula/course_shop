@@ -34,6 +34,7 @@ const UserPanelPage = () => {
         price,
         title,
         id,
+        category,
       }) => (
         <Product
           key={id}
@@ -43,6 +44,7 @@ const UserPanelPage = () => {
           vid={vid}
           title={title}
           price={price}
+          category={category}
         />
       )
     );
