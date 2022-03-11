@@ -1,6 +1,6 @@
 import React, {
   useState,
-  //   useEffect,
+  useEffect,
 } from 'react';
 import {
   Formik,
@@ -17,9 +17,22 @@ import { changeLoginStatus } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
+import axios from 'axios';
+
 import '../styles/LoginPage.scss';
 
 function LoginPage() {
+  //   const fetchUsers = async () => {
+  //     const res = await axios.get(
+  //       'http://localhost:3001/api/users'
+  //     );
+  //     console.log(res.data);
+  //   };
+
+  //   useEffect(() => {
+  //     fetchUsers();
+  //   });
+
   const users = useSelector(store => store.users);
   const dispatch = useDispatch();
 
@@ -72,12 +85,6 @@ function LoginPage() {
       setErrorActive(true);
     } else return console.log('empty execution');
   };
-
-  //   useEffect(() => {
-  //     if (isLogged.length > 0) {
-  //       history.push('/user_panel');
-  //     }
-  //   }, []);
 
   const validateForm = values => {
     const errors = {};

@@ -9,6 +9,24 @@ import {
 
 import { v4 as uuid } from 'uuid';
 
+import axios from 'axios';
+
+const addUsertoDB = async values => {
+  const newValues = {
+    id: '10857eda-899a-4d3c-a8d0-50db9bd215b3',
+    login: 'mamaa',
+    password: 'mama',
+    purchasedCourses: [],
+    shoppingCart: [],
+    logged: false,
+    selectedCourse: [],
+  };
+  const res = await axios.post(
+    'http://localhost:3001/api/users',
+    values
+  );
+};
+
 const changeLoginStatus = (state, action) => {
   return state.map(currentStateElement => {
     if (
@@ -198,6 +216,10 @@ const removeCourseFromShoppingCart = (
   });
 };
 
+const addNewUser = (state, action) => {
+  addUsertoDB(action.payload);
+  return [...state, action.payload];
+};
 export const userReducer = (
   state = [
     {
@@ -207,14 +229,15 @@ export const userReducer = (
       purchasedCourses: [],
       shoppingCart: [],
       logged: false,
-      selectedCourse: '',
+      selectedCourse: [],
     },
   ],
   action
 ) => {
   switch (action.type) {
     case ADD_USER:
-      return [...state, action.payload];
+      //   return [...state, action.payload];
+      return addNewUser(state, action);
     case CHANGE_LOGIN_STATUS:
       return changeLoginStatus(state, action);
     case BUY_COURSE:

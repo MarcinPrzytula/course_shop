@@ -18,6 +18,7 @@ const SelectedProductPage = () => {
     course =>
       course.id === loggedUser.selectedCourse
   );
+
   const { title, vid, authors } = selectedCourse;
   return (
     <div className="container">

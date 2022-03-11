@@ -13,14 +13,18 @@ import {
   ErrorMessage,
 } from 'formik';
 
+import axios from 'axios';
+
 import '../styles/RegistrationPage.scss';
 
 function RegistrationPage() {
   const users = useSelector(store => store.users);
 
   const dispatch = useDispatch();
+
   const registrationSuccessful = values => {
     dispatch(addUser(values));
+
     alert(
       `Congratulations! An account has been created, your login is: ${values.login}, remember your password and never give it to anyone!`
     );

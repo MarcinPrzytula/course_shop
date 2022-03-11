@@ -50,7 +50,7 @@ const ProductInProductsList = ({
   const actuallyCourse = courses.find(
     course => course.id === id
   );
-  console.log(actuallyCourse);
+
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 

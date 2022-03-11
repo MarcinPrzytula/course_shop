@@ -4,10 +4,7 @@ import {
   useRef,
 } from 'react';
 
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   useLocation,
@@ -27,9 +24,7 @@ const Navigation = () => {
   // Call hook passing in the ref and a function to call on outside click
 
   const location = useLocation();
-  const { users, courses } = useSelector(
-    store => store
-  );
+  const { users } = useSelector(store => store);
   const loggedUser = users.find(
     user => user.logged === true
   );
