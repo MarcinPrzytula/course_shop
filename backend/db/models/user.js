@@ -22,11 +22,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   logged: {
-    type: Number,
+    type: Boolean,
     required: true,
   },
   selectedCourse: {
-    type: Array,
+    type: String,
     required: true,
   },
 });

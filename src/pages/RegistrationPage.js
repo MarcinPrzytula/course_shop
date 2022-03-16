@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   useDispatch,
   useSelector,
@@ -13,12 +11,11 @@ import {
   ErrorMessage,
 } from 'formik';
 
-import axios from 'axios';
-
 import '../styles/RegistrationPage.scss';
 
 function RegistrationPage() {
   const users = useSelector(store => store.users);
+  console.log(users);
 
   const dispatch = useDispatch();
 

@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
+import React, { useState } from 'react';
 import {
   Formik,
   Field,
@@ -17,30 +14,15 @@ import { changeLoginStatus } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
-import axios from 'axios';
-
 import '../styles/LoginPage.scss';
 
 function LoginPage() {
-  //   const fetchUsers = async () => {
-  //     const res = await axios.get(
-  //       'http://localhost:3001/api/users'
-  //     );
-  //     console.log(res.data);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchUsers();
-  //   });
-
   const users = useSelector(store => store.users);
+
   const dispatch = useDispatch();
 
   const history = useHistory();
-
-  //   const isLogged = users.filter(
-  //     ({ logged }) => logged === true
-  //   );
+  console.log(users);
 
   const validationData = {
     loggedUser: '',
@@ -74,6 +56,7 @@ function LoginPage() {
           validationData.loggedUser.logged
         )
       );
+
       history.push('/');
     } else if (
       userLoginData &&

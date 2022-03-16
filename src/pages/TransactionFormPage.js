@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/HomePage.css';
+import '../styles/TransactionFormPage.scss';
 
 import {
   useSelector,

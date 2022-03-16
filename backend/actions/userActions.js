@@ -26,7 +26,6 @@ module.exports = {
   //dodawanie użytkownika
   async addUser(req, res) {
     let newUser;
-    console.log(req.body);
     try {
       newUser = new User(req.body);
       await newUser.save();
@@ -40,17 +39,15 @@ module.exports = {
 
   //edytowanie użytkownika
   async updateUser(req, res) {
-    const title = req.body.title;
-    const body = req.body.body;
-    const id = req.params.id;
+    const { id, logged } = req.body;
 
-    const updateUser = await User.findOne({
-      _id: id,
+    let updateUser = await User.findOne({
+      id,
     });
 
-    updateUser.title = title;
-    updateUser.body = body;
-    await updateUser.save();
+    updateUser.logged = logged;
+
+    updateUser.save();
 
     res.status(201).json(updateUser);
   },

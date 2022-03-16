@@ -1,4 +1,6 @@
 import { v4 as uuid } from 'uuid';
+
+export const FETCH_USERS_DATA = 'FETCH_USER_DATA';
 export const ADD_USER = 'ADD_USER';
 export const CHANGE_LOGIN_STATUS =
   'CHANGE_LOGIN_STATUS';
@@ -9,6 +11,11 @@ export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
 
+export const fetchUsersData = data => ({
+  type: FETCH_USERS_DATA,
+  payload: data,
+});
+
 export const addUser = ({
   id = uuid(),
   login,
@@ -16,7 +23,7 @@ export const addUser = ({
   purchasedCourses = [],
   shoppingCart = [],
   logged = false,
-  selectedCourse = '',
+  selectedCourse = ' ',
 }) => ({
   type: ADD_USER,
   payload: {

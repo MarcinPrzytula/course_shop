@@ -39,10 +39,10 @@ const ProductInProductsList = ({
     useState(false);
   const [showEditModal2, setShowEditModal2] =
     useState(false);
-
   const { users, courses } = useSelector(
     store => store
   );
+
   const loggedUser = users.find(
     user => user.logged === true
   );

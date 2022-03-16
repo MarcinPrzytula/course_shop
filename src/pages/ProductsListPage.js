@@ -3,9 +3,27 @@ import '../styles/ProductsListPage.scss';
 
 import Product from '../components/Product';
 
-import { useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
+import { fetchUsersData } from '../store/actions/userActions';
+
+import axios from 'axios';
 
 const ProductsListPage = () => {
+  const dispatch = useDispatch();
+  const fetchUsers = async () => {
+    const res = await axios.get(
+      'http://localhost:3001/api/users'
+    );
+
+    dispatch(fetchUsersData(res.data));
+    console.log(res.data);
+  };
+
+  fetchUsers();
+
   const courses = useSelector(
     store => store.courses
   );

@@ -1,4 +1,5 @@
 import {
+  FETCH_USERS_DATA,
   ADD_USER,
   CHANGE_LOGIN_STATUS,
   BUY_COURSE,
@@ -11,17 +12,15 @@ import { v4 as uuid } from 'uuid';
 
 import axios from 'axios';
 
+const findDBuser = async value => {
+  await axios.put(
+    `http://localhost:3001/api/users/${value.id}`,
+    value
+  );
+};
+
 const addUsertoDB = async values => {
-  const newValues = {
-    id: '10857eda-899a-4d3c-a8d0-50db9bd215b3',
-    login: 'mamaa',
-    password: 'mama',
-    purchasedCourses: [],
-    shoppingCart: [],
-    logged: false,
-    selectedCourse: [],
-  };
-  const res = await axios.post(
+  await axios.post(
     'http://localhost:3001/api/users',
     values
   );
@@ -46,6 +45,19 @@ const changeLoginStatus = (state, action) => {
       shoppingCart,
       selectedCourse,
     } = currentStateElement;
+
+    const value = {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      shoppingCart,
+      selectedCourse,
+      logged,
+    };
+
+    findDBuser(value);
+
     return {
       id,
       login,
@@ -101,10 +113,6 @@ const selectCourse = (state, action) => {
   const loggedUser = state.find(
     user => user.logged === true
   );
-  // const checkIfTheCourseAlreadyThere =
-  //   loggedUser.shoppingCart.find(
-  //     courseId => courseId === action.payload
-  //   );
 
   return state.map(currentStateElement => {
     if (
@@ -220,6 +228,10 @@ const addNewUser = (state, action) => {
   addUsertoDB(action.payload);
   return [...state, action.payload];
 };
+const fetchUserData = (state, action) => {
+  return action.payload;
+};
+
 export const userReducer = (
   state = [
     {
@@ -229,12 +241,14 @@ export const userReducer = (
       purchasedCourses: [],
       shoppingCart: [],
       logged: false,
-      selectedCourse: [],
+      selectedCourse: ' ',
     },
   ],
   action
 ) => {
   switch (action.type) {
+    case FETCH_USERS_DATA:
+      return fetchUserData(state, action);
     case ADD_USER:
       //   return [...state, action.payload];
       return addNewUser(state, action);
