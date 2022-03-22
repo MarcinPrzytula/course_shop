@@ -34,7 +34,8 @@ const ShoppingCartPage = () => {
           )
       );
     }
-
+    console.log(courses);
+    console.log(loggedUser.shoppingCart);
     if (
       coursesInShoppingCart.length > 0 &&
       loggedUser

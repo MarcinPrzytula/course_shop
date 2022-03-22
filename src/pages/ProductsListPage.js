@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import '../styles/ProductsListPage.scss';
 
 import Product from '../components/Product';
@@ -9,20 +12,12 @@ import {
 } from 'react-redux';
 import { fetchUsersData } from '../store/actions/userActions';
 
-import axios from 'axios';
-
 const ProductsListPage = () => {
   const dispatch = useDispatch();
-  const fetchUsers = async () => {
-    const res = await axios.get(
-      'http://localhost:3001/api/users'
-    );
 
-    dispatch(fetchUsersData(res.data));
-    console.log(res.data);
-  };
-
-  fetchUsers();
+  useEffect(() => {
+    dispatch(fetchUsersData());
+  }, []);
 
   const courses = useSelector(
     store => store.courses

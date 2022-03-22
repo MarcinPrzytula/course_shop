@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 
 export const FETCH_USERS_DATA = 'FETCH_USER_DATA';
 export const ADD_USER = 'ADD_USER';
@@ -11,10 +12,21 @@ export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
 
-export const fetchUsersData = data => ({
-  type: FETCH_USERS_DATA,
-  payload: data,
-});
+// export const fetchUsersData = data => ({
+//   type: FETCH_USERS_DATA,
+//   payload: data,
+// });
+export const fetchUsersData =
+  () => async dispatch => {
+    const res = await axios.get(
+      'http://localhost:3001/api/users'
+    );
+
+    dispatch({
+      type: FETCH_USERS_DATA,
+      payload: res.data,
+    });
+  };
 
 export const addUser = ({
   id = uuid(),

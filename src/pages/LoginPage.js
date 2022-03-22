@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+  useEffect,
+} from 'react';
 import {
   Formik,
   Field,
@@ -10,7 +13,10 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { changeLoginStatus } from '../store/actions/userActions';
+import {
+  changeLoginStatus,
+  fetchUsersData,
+} from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
@@ -20,9 +26,11 @@ function LoginPage() {
   const users = useSelector(store => store.users);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsersData());
+  }, []);
 
   const history = useHistory();
-  console.log(users);
 
   const validationData = {
     loggedUser: '',

@@ -39,13 +39,19 @@ module.exports = {
 
   //edytowanie użytkownika
   async updateUser(req, res) {
-    const { id, logged } = req.body;
-
-    let updateUser = await User.findOne({
+    const {
       id,
-    });
+      logged,
+      purchasedCourses,
+      shoppingCart,
+    } = req.body;
+
+    let updateUser = await User.findOne({ id });
 
     updateUser.logged = logged;
+    updateUser.purchasedCourses =
+      purchasedCourses;
+    updateUser.shoppingCart = shoppingCart;
 
     updateUser.save();
 

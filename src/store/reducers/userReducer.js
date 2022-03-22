@@ -12,7 +12,7 @@ import { v4 as uuid } from 'uuid';
 
 import axios from 'axios';
 
-const findDBuser = async value => {
+const editDbUser = async value => {
   await axios.put(
     `http://localhost:3001/api/users/${value.id}`,
     value
@@ -56,7 +56,7 @@ const changeLoginStatus = (state, action) => {
       logged,
     };
 
-    findDBuser(value);
+    editDbUser(value);
 
     return {
       id,
@@ -94,6 +94,19 @@ const buyCourse = (state, action) => {
       logged,
       selectedCourse,
     } = currentStateElement;
+    const value = {
+      id,
+      login,
+      password,
+      logged,
+      shoppingCart: [],
+      purchasedCourses: [
+        ...loggedUser.purchasedCourses,
+        ...action.payload,
+      ],
+      selectedCourse,
+    };
+    editDbUser(value);
     return {
       id,
       login,
@@ -169,6 +182,20 @@ const addCourseToShoppingCart = (
       purchasedCourses,
       selectedCourse,
     } = currentStateElement;
+
+    const value = {
+      id,
+      login,
+      password,
+      purchasedCourses,
+      shoppingCart: [
+        ...loggedUser.shoppingCart,
+        action.payload,
+      ],
+      selectedCourse,
+      logged,
+    };
+    editDbUser(value);
     return {
       id,
       login,
@@ -229,6 +256,7 @@ const addNewUser = (state, action) => {
   return [...state, action.payload];
 };
 const fetchUserData = (state, action) => {
+  console.log(action.payload);
   return action.payload;
 };
 
