@@ -164,7 +164,7 @@ const ProductInProductsList = ({
             isOpen={showEditModal2}
           >
             <button
-              className="product__button"
+              className="product__button product__button-right"
               onClick={() =>
                 setShowEditModal2(false)
               }
@@ -183,10 +183,21 @@ const ProductInProductsList = ({
                         user => user.id === userId
                       );
                       return (
-                        <div key={comment}>
-                          author: {user.login} /
-                          comment: {comment} /
-                          rating: {rating}
+                        <div
+                          className="product__commentList_userComment"
+                          key={comment}
+                        >
+                          <div>
+                            author: {user.login}{' '}
+                          </div>
+                          comment:
+                          <div className="product__commentList_userComment_input">
+                            {comment}
+                          </div>
+                          <div>
+                            {' '}
+                            rating: {rating}
+                          </div>
                         </div>
                       );
                     }
@@ -220,7 +231,7 @@ const ProductInProductsList = ({
             isOpen={showEditModal}
           >
             <button
-              className="product__button"
+              className="product__button product__button product__button-right"
               onClick={() =>
                 setShowEditModal(false)
               }
@@ -228,6 +239,9 @@ const ProductInProductsList = ({
               X
             </button>
             <div className="product__rating">
+              <div className="product__title">
+                Ratio:
+              </div>
               <StarRatings
                 rating={rating}
                 starRatedColor="blue"
@@ -271,17 +285,24 @@ const ProductInProductsList = ({
                 {({ handleSubmit }) => (
                   <form onSubmit={handleSubmit}>
                     <div className="formValue">
-                      <span>Comment:</span>
+                      <div className="product__title">
+                        Comment:
+                      </div>
                       <ErrorMessage
                         name="formValue"
                         component="div"
                       />
                       <Field
+                        className="product__formInput"
                         name="formValue"
                         placeholder="add your opinion"
+                        component="textarea"
                       />
                     </div>
-                    <button type="submit">
+                    <button
+                      className="product__button"
+                      type="submit"
+                    >
                       Submit
                     </button>
                   </form>
@@ -302,11 +323,11 @@ const ProductInProductsList = ({
 
   return (
     <div className="product">
-      <div className="product__video"></div>
       <div className="product__title">
-        <span>
-          {title} ({category})
-        </span>
+        <span>{title}</span>
+      </div>
+      <div className="product__category">
+        <span>({category})</span>
       </div>
 
       <div className="product__img">
