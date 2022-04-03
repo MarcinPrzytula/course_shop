@@ -24,7 +24,9 @@ const editDbUser = async value => {
 
 const addUsertoDB = async values => {
   await axios.post(
-    `${
+    console.log(
+      `'${process.env.REACT_APP_API}api/users'`
+    )`${
       process.env.REACT_APP_API
         ? `'${process.env.REACT_APP_API}api/users'`
         : 'http://localhost:3001/api/users'
