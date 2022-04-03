@@ -11,7 +11,7 @@ export const ADD_COURSE_TO_SHOPPING_CART =
 export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
-
+console.log(process.env.REACT_APP_API);
 // export const fetchUsersData = data => ({
 //   type: FETCH_USERS_DATA,
 //   payload: data,
@@ -19,7 +19,8 @@ export const SELECT_COURSE = 'SELECT_COURSE';
 export const fetchUsersData =
   () => async dispatch => {
     const res = await axios.get(
-      'http://localhost:3001/api/users'
+      process.env.REACT_APP_API ||
+        'http://localhost:3001/api/users'
     );
 
     dispatch({

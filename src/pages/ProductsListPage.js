@@ -17,7 +17,7 @@ const ProductsListPage = () => {
 
   useEffect(() => {
     dispatch(fetchUsersData());
-  }, []);
+  }, [dispatch]);
 
   const courses = useSelector(
     store => store.courses

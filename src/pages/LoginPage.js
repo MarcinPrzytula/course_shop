@@ -28,7 +28,7 @@ function LoginPage() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsersData());
-  }, []);
+  }, [dispatch]);
 
   const history = useHistory();
 
