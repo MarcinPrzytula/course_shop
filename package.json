@@ -39,7 +39,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "set REACT_APP_API=https://shrouded-temple-52756.herokuapp.com/ && react-scripts build",
+    "build": "set REACT_APP_API=https://shrouded-temple-52756.herokuapp.com/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
