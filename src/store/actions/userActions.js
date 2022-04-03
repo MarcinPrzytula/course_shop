@@ -12,6 +12,7 @@ export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
 console.log(process.env.REACT_APP_API);
+console.log(process.env.PORT);
 // export const fetchUsersData = data => ({
 //   type: FETCH_USERS_DATA,
 //   payload: data,
