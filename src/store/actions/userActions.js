@@ -19,8 +19,10 @@ console.log(process.env.REACT_APP_API);
 export const fetchUsersData =
   () => async dispatch => {
     const res = await axios.get(
-      process.env.REACT_APP_API ||
-        'http://localhost:3001/api/users'
+      `${
+        process.env.REACT_APP_API ||
+        'http://localhost:3001/'
+      }api/users`
     );
 
     dispatch({
