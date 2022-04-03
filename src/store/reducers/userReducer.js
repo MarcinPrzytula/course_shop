@@ -12,22 +12,23 @@ import { v4 as uuid } from 'uuid';
 
 import axios from 'axios';
 
-const editDbUser = async value => {
-  await axios.put(
-    `${process.env.REACT_APP_API.trim()}api/users/${
-      value.id
-    }` ||
-      `http://localhost:3001/api/users/${value.id}`,
-    value
-  );
+const editDbUser = async values => {
+  const URL = process.env.REACT_APP_API
+    ? `${process.env.REACT_APP_API.trim()}api/users/${
+        values.id
+      }`
+    : `http://localhost:3001/api/users/${values.id}`;
+
+  await axios.put(URL, values);
 };
 
 const addUsertoDB = async values => {
-  await axios.post(
-    `${process.env.REACT_APP_API.trim()}api/users` ||
-      'http://localhost:3001/api/users',
-    values
-  );
+  const URL = process.env.REACT_APP_API
+    ? `${process.env.REACT_APP_API.trim()}api/users/${
+        values.id
+      }`
+    : `http://localhost:3001/api/users/${values.id}`;
+  await axios.post(URL, values);
 };
 
 const changeLoginStatus = (state, action) => {
