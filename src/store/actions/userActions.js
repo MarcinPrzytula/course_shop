@@ -12,21 +12,17 @@ export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
 console.log(process.env.REACT_APP_API);
-console.log(process.env.PORT);
+
 // export const fetchUsersData = data => ({
 //   type: FETCH_USERS_DATA,
 //   payload: data,
 // });
+const URL = process.env.REACT_APP_API
+  ? `${process.env.REACT_APP_API.trim()}api/users`
+  : 'http://localhost:3001/api/users';
 export const fetchUsersData =
   () => async dispatch => {
-    const res = await axios.get(
-      //   'https://shrouded-temple-52756.herokuapp.com/api/users'
-      `${process.env.REACT_APP_API.trim()}api/users` ||
-        'http://localhost:3001/api/users'
-      //   process.env.REACT_APP_API
-      //     ? `'${process.env.REACT_APP_API.trim()}api/users'`
-      //     : 'http://localhost:3001/api/users'
-    );
+    const res = await axios.get(URL);
 
     dispatch({
       type: FETCH_USERS_DATA,
