@@ -14,21 +14,18 @@ import axios from 'axios';
 
 const editDbUser = async value => {
   await axios.put(
-    process.env.REACT_APP_API
-      ? `'${process.env.REACT_APP_API.trim()}api/users/${
-          value.id
-        }'`
-      : `http://localhost:3001/api/users/${value.id}`,
-
+    `${process.env.REACT_APP_API.trim()}api/users/${
+      value.id
+    }` ||
+      `http://localhost:3001/api/users/${value.id}`,
     value
   );
 };
 
 const addUsertoDB = async values => {
   await axios.post(
-    process.env.REACT_APP_API
-      ? `'${process.env.REACT_APP_API.trim()}api/users'`
-      : 'http://localhost:3001/api/users',
+    `${process.env.REACT_APP_API.trim()}api/users` ||
+      'http://localhost:3001/api/users',
     values
   );
 };
