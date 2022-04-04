@@ -24,10 +24,9 @@ const editDbUser = async values => {
 
 const addUsertoDB = async values => {
   const URL = process.env.REACT_APP_API
-    ? `${process.env.REACT_APP_API.trim()}api/users/${
-        values.id
-      }`
-    : `http://localhost:3001/api/users/${values.id}`;
+    ? `${process.env.REACT_APP_API.trim()}api/users`
+    : `http://localhost:3001/api/users`;
+
   await axios.post(URL, values);
 };
 
@@ -260,6 +259,7 @@ const addNewUser = (state, action) => {
   addUsertoDB(action.payload);
   return [...state, action.payload];
 };
+
 const fetchUserData = (state, action) => {
   console.log(action.payload);
   return action.payload;
