@@ -255,8 +255,8 @@ const removeCourseFromShoppingCart = (
   });
 };
 
-const addNewUser = (state, action) => {
-  addUsertoDB(action.payload);
+const addUser = (state, action) => {
+  //   addUsertoDB(action.payload);
   return [...state, action.payload];
 };
 
@@ -284,7 +284,7 @@ export const userReducer = (
       return fetchUserData(state, action);
     case ADD_USER:
       //   return [...state, action.payload];
-      return addNewUser(state, action);
+      return addUser(state, action);
     case CHANGE_LOGIN_STATUS:
       return changeLoginStatus(state, action);
     case BUY_COURSE:

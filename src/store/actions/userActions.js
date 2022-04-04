@@ -20,6 +20,7 @@ console.log(process.env.REACT_APP_API);
 const URL = process.env.REACT_APP_API
   ? `${process.env.REACT_APP_API.trim()}api/users`
   : 'http://localhost:3001/api/users';
+
 export const fetchUsersData =
   () => async dispatch => {
     const res = await axios.get(URL);
@@ -28,6 +29,23 @@ export const fetchUsersData =
       type: FETCH_USERS_DATA,
       payload: res.data,
     });
+  };
+
+export const addUsertoDB =
+  values => async dispatch => {
+    const x = {
+      id: uuid(),
+      login: values.login,
+      password: values.password,
+      purchasedCourses: [],
+      shoppingCart: [],
+      logged: false,
+      selectedCourse: ' ',
+    };
+
+    console.log(x);
+
+    await axios.post(URL, x);
   };
 
 export const addUser = ({

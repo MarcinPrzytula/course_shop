@@ -3,7 +3,10 @@ import {
   useSelector,
 } from 'react-redux';
 
-import { addUser } from '../store/actions/userActions';
+import {
+  addUser,
+  addUsertoDB,
+} from '../store/actions/userActions';
 
 import {
   Formik,
@@ -15,11 +18,11 @@ import '../styles/RegistrationPage.scss';
 
 function RegistrationPage() {
   const users = useSelector(store => store.users);
-  console.log(users);
 
   const dispatch = useDispatch();
 
   const registrationSuccessful = values => {
+    dispatch(addUsertoDB(values));
     dispatch(addUser(values));
 
     alert(

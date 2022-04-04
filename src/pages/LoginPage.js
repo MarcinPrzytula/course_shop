@@ -26,6 +26,7 @@ function LoginPage() {
   const users = useSelector(store => store.users);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchUsersData());
   }, [dispatch]);
