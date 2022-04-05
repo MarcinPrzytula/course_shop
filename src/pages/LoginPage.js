@@ -68,7 +68,7 @@ function LoginPage() {
       //   alert('You are logged now!');
       setTimeout(() => {
         history.push('/');
-      }, 3);
+      }, 3000);
     } else if (
       userLoginData &&
       returnTheUserIfTheExists === undefined
