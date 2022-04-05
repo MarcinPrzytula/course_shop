@@ -66,7 +66,7 @@ function LoginPage() {
         )
       );
 
-      history.push('/');
+      //   history.push('/');
     } else if (
       userLoginData &&
       returnTheUserIfTheExists === undefined
