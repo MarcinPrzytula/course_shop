@@ -65,7 +65,7 @@ function LoginPage() {
           validationData.loggedUser.logged
         )
       );
-      alert('You are logged now!');
+      //   alert('You are logged now!');
       setTimeout(() => {
         history.push('/');
       }, 3);
