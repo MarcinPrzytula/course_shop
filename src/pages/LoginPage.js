@@ -65,8 +65,10 @@ function LoginPage() {
           validationData.loggedUser.logged
         )
       );
-
-      //   history.push('/');
+      alert('You are logged now!');
+      setTimeout(() => {
+        history.push('/');
+      }, 3);
     } else if (
       userLoginData &&
       returnTheUserIfTheExists === undefined
