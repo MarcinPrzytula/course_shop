@@ -5,20 +5,17 @@ import {
 
 import img1 from '../../assets/images/img1.PNG';
 import vid1 from '../../assets/videos/vid1.mp4';
-import { v4 as uuid } from 'uuid';
 
 const addRating = (state, action) => {
   return state.map(currentStateElement => {
     if (
-      currentStateElement.id !==
-      action.payload.courseId
+      currentStateElement.id !== action.payload.courseId
     ) {
       return currentStateElement;
     }
 
     const x = currentStateElement.rating.filter(
-      item =>
-        item.userId === action.payload.userId
+      item => item.userId === action.payload.userId
     );
     if (x.length > 0) return currentStateElement;
 

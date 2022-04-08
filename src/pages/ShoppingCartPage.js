@@ -2,54 +2,33 @@ import React from 'react';
 
 import '../styles/ShoppingCartPage.scss';
 
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { removeCourseFromShoppingCart } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
 const ShoppingCartPage = () => {
-  const { users, courses } = useSelector(
-    store => store
-  );
+  const { user, courses } = useSelector(store => store);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
   const render = () => {
-    const loggedUser = users.find(
-      user => user.logged === true
-    );
-
     let coursesInShoppingCart = [];
 
-    if (loggedUser) {
-      coursesInShoppingCart = courses.filter(
-        item =>
-          loggedUser.shoppingCart.find(
-            item2 => item2 === item.id
-          )
+    if (user) {
+      coursesInShoppingCart = courses.filter(item =>
+        user.shoppingCart.find(item2 => item2 === item.id)
       );
     }
 
-    if (
-      coursesInShoppingCart.length > 0 &&
-      loggedUser
-    ) {
+    if (coursesInShoppingCart.length > 0 && user) {
       return (
         <>
           <div className="shoppingCart_productList">
             {coursesInShoppingCart.map(
-              ({
-                authors,
-                img,
-                price,
-                title,
-                id,
-              }) => (
+              ({ authors, img, price, title, id }) => (
                 <div
                   key={id}
                   className="shoppingCart__product-container"
@@ -77,9 +56,7 @@ const ShoppingCartPage = () => {
                     className="shoppingCart__product-button"
                     onClick={() => {
                       dispatch(
-                        removeCourseFromShoppingCart(
-                          id
-                        )
+                        removeCourseFromShoppingCart(id)
                       );
                     }}
                   >
@@ -99,10 +76,7 @@ const ShoppingCartPage = () => {
           </button>
         </>
       );
-    } else if (
-      coursesInShoppingCart.length === 0 &&
-      loggedUser
-    ) {
+    } else if (coursesInShoppingCart.length === 0 && user) {
       return " You haven't added any product to your cart yet";
     } else
       return 'Log in if you want to have access to the product basket';

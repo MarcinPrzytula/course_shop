@@ -1,83 +1,41 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
-import {
-  Formik,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import React, { useEffect } from 'react';
+import { Formik, Field, ErrorMessage } from 'formik';
 
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import {
-  changeLoginStatus,
-  fetchUsersData,
-} from '../store/actions/userActions';
+import { fetchUserData } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
 import '../styles/LoginPage.scss';
 
-function LoginPage() {
-  const users = useSelector(store => store.users);
+import axios from 'axios';
 
+function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsersData());
+    dispatch(fetchUserData());
   }, [dispatch]);
 
   const history = useHistory();
 
-  const validationData = {
-    loggedUser: '',
-    login: '',
-  };
-
-  const [errorActive, setErrorActive] =
-    useState(false);
+  const errorActive = null;
 
   const submit = userLoginData => {
-    const { formLogin, formPassword } =
-      userLoginData;
-
-    const returnTheUserIfTheExists = users.find(
-      ({ login, password }) =>
-        login === formLogin &&
-        password === formPassword
-    );
-
-    if (
-      userLoginData &&
-      returnTheUserIfTheExists
-    ) {
-      returnTheUserIfTheExists.logged = true;
-      validationData.login = 'successful';
-      validationData.loggedUser =
-        returnTheUserIfTheExists;
-      dispatch(
-        changeLoginStatus(
-          validationData.loggedUser.id,
-          validationData.loggedUser.logged
-        )
-      );
-      //   alert('You are logged now!');
-      setTimeout(() => {
-        history.push('/');
-      }, 3000);
-    } else if (
-      userLoginData &&
-      returnTheUserIfTheExists === undefined
-    ) {
-      validationData.login = 'failed';
-      validationData.loggedUser =
-        returnTheUserIfTheExists;
-      setErrorActive(true);
-    } else return console.log('empty execution');
+    const { formLogin, formPassword } = userLoginData;
+    axios({
+      method: 'post',
+      data: {
+        username: formLogin,
+        password: formPassword,
+      },
+      withCredentials: true,
+      url: 'http://localhost:3001/api/login',
+    }).then(res => {
+      console.log(res.data);
+    });
+    history.push('/');
   };
 
   const validateForm = values => {
@@ -100,10 +58,7 @@ function LoginPage() {
         formPassword: '',
       }}
       validate={values => validateForm(values)}
-      onSubmit={(
-        values,
-        { setSubmitting, resetForm }
-      ) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         submit(values);
         resetForm();
       }}
@@ -113,8 +68,7 @@ function LoginPage() {
           <div className="login">
             {errorActive ? (
               <div>
-                The wrong username or password was
-                entered
+                The wrong username or password was entered
               </div>
             ) : null}
 

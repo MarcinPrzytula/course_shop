@@ -6,23 +6,16 @@ import '../styles/UserPanelPage.scss';
 import { useSelector } from 'react-redux';
 
 const UserPanelPage = () => {
-  const { users, courses } = useSelector(
-    store => store
-  );
-
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
-
+  const { user, courses } = useSelector(store => store);
+  console.log(user);
   let loggedUserCourses = null;
 
   let mainPage = 'Log in to view your courses';
 
-  if (loggedUser) {
+  if (user) {
     loggedUserCourses = courses.filter(course =>
-      loggedUser.purchasedCourses.find(
-        purchasedCourseId =>
-          purchasedCourseId === course.id
+      user.purchasedCourses.find(
+        purchasedCourseId => purchasedCourseId === course.id
       )
     );
 
@@ -52,7 +45,7 @@ const UserPanelPage = () => {
     mainPage =
       loggedUserCourses.length > 0
         ? render
-        : `You are logged in as ${loggedUser.login}  but you don't have any courses`;
+        : `You are logged in as ${user.login}  but you don't have any courses`;
   }
 
   return (

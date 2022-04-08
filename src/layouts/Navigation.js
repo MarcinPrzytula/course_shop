@@ -1,15 +1,8 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-} from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import {
-  useLocation,
-  NavLink,
-} from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import '../styles/Navigation.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,16 +12,16 @@ const Navigation = () => {
   // Create a ref that we add to the element for which we want to detect outside clicks
   const ref = useRef();
   // State for our modal
-  const [isModalOpen, setModalOpen] =
-    useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
   // Call hook passing in the ref and a function to call on outside click
 
   const location = useLocation();
   const { users } = useSelector(store => store);
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
+  //   const loggedUser = users.find(
+  //     user => user.logged === true
+  //   );
 
+  const loggedUser = users;
   const getNavLinkClass = path => {
     return location.pathname === path
       ? 'navigation__item-wraper active'
@@ -65,9 +58,7 @@ const Navigation = () => {
     },
   ];
 
-  useOnClickOutside(ref, () =>
-    setModalOpen(false)
-  );
+  useOnClickOutside(ref, () => setModalOpen(false));
   // Hook
   function useOnClickOutside(ref, handler) {
     useEffect(
@@ -82,14 +73,8 @@ const Navigation = () => {
           }
           handler(event);
         };
-        document.addEventListener(
-          'mousedown',
-          listener
-        );
-        document.addEventListener(
-          'touchstart',
-          listener
-        );
+        document.addEventListener('mousedown', listener);
+        document.addEventListener('touchstart', listener);
         return () => {
           document.removeEventListener(
             'mousedown',
@@ -131,15 +116,10 @@ const Navigation = () => {
 
   return (
     <>
-      <nav
-        ref={ref}
-        className="navigation telOnly"
-      >
+      <nav ref={ref} className="navigation telOnly">
         {isModalOpen ? (
           <>
-            <ul className="navigation__list">
-              {menu}
-            </ul>
+            <ul className="navigation__list">{menu}</ul>
           </>
         ) : (
           <button
@@ -152,9 +132,7 @@ const Navigation = () => {
       </nav>
 
       <nav className="navigation desktopOnly">
-        <ul className="navigation__list">
-          {menu}
-        </ul>
+        <ul className="navigation__list">{menu}</ul>
       </nav>
       <div></div>
     </>

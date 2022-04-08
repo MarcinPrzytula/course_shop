@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 import { addRating } from '../store/actions/courseActions';
@@ -13,11 +10,7 @@ import {
 } from '../store/actions/userActions';
 
 import Modal from 'react-modal';
-import {
-  Formik,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 
 import StarRatings from 'react-star-ratings';
 
@@ -35,17 +28,10 @@ const ProductInProductsList = ({
   const dispatch = useDispatch();
 
   const [rating, setRating] = useState(0);
-  const [showEditModal, setShowEditModal] =
-    useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showEditModal2, setShowEditModal2] =
     useState(false);
-  const { users, courses } = useSelector(
-    store => store
-  );
-
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
+  const { user, courses } = useSelector(store => store);
 
   const actuallyCourse = courses.find(
     course => course.id === id
@@ -54,25 +40,22 @@ const ProductInProductsList = ({
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 
-  if (loggedUser) {
-    checkIfTheUserHasRated =
-      actuallyCourse.rating.find(
-        item => item.userId === loggedUser.id
-      );
-    checkIfTheCourseIsBought =
-      loggedUser.purchasedCourses.find(
-        courseId => courseId === id
-      );
+  if (user) {
+    checkIfTheUserHasRated = actuallyCourse.rating.find(
+      item => item.userId === user._id
+    );
+    checkIfTheCourseIsBought = user.purchasedCourses.find(
+      courseId => courseId === id
+    );
   }
 
   const courseStatus = () => {
-    if (loggedUser) {
-      const checkIfTheCourseInCart =
-        loggedUser.shoppingCart.find(
-          courseId => courseId === id
-        );
+    if (user) {
+      const checkIfTheCourseInCart = user.shoppingCart.find(
+        courseId => courseId === id
+      );
       const checkIfTheCourseIsBought =
-        loggedUser.purchasedCourses.find(
+        user.purchasedCourses.find(
           courseId => courseId === id
         );
 
@@ -95,28 +78,19 @@ const ProductInProductsList = ({
           </button>
         );
       } else if (checkIfTheCourseIsBought) {
-        return (
-          <span>
-            You already have this course
-          </span>
-        );
+        return <span>You already have this course</span>;
       } else
         return (
           <button
             className="product__button"
             onClick={() => {
-              dispatch(
-                addCourseToShoppingCart(id)
-              );
+              dispatch(addCourseToShoppingCart(id));
             }}
           >
-            <span>
-              Add the product to your cart
-            </span>
+            <span>Add the product to your cart</span>
           </button>
         );
-    } else
-      return 'Log in if you want to buy a course';
+    } else return 'Log in if you want to buy a course';
   };
 
   const ratingBoard = () => {
@@ -126,8 +100,7 @@ const ProductInProductsList = ({
     actuallyCourse.rating.forEach(item => {
       x += item.rating;
     });
-    score =
-      x / actuallyCourse.rating.length.toFixed(2);
+    score = x / actuallyCourse.rating.length.toFixed(2);
 
     if (isNaN(score)) {
       score = 0;
@@ -151,9 +124,7 @@ const ProductInProductsList = ({
         <div id="modal">
           <button
             className="product__button"
-            onClick={() =>
-              setShowEditModal2(true)
-            }
+            onClick={() => setShowEditModal2(true)}
           >
             View opinions
           </button>
@@ -165,21 +136,15 @@ const ProductInProductsList = ({
           >
             <button
               className="product__button product__button-right"
-              onClick={() =>
-                setShowEditModal2(false)
-              }
+              onClick={() => setShowEditModal2(false)}
             >
               X
             </button>
             <div className="product__commentsList">
               {actuallyCourse.rating.length > 0
                 ? actuallyCourse.rating.map(
-                    ({
-                      rating,
-                      comment,
-                      userId,
-                    }) => {
-                      const user = users.find(
+                    ({ rating, comment, userId }) => {
+                      const userX = user.find(
                         user => user.id === userId
                       );
                       return (
@@ -187,17 +152,12 @@ const ProductInProductsList = ({
                           className="product__commentList_userComment"
                           key={comment}
                         >
-                          <div>
-                            author: {user.login}{' '}
-                          </div>
+                          <div>author: {userX.login} </div>
                           comment:
                           <div className="product__commentList_userComment_input">
                             {comment}
                           </div>
-                          <div>
-                            {' '}
-                            rating: {rating}
-                          </div>
+                          <div> rating: {rating}</div>
                         </div>
                       );
                     }
@@ -212,7 +172,7 @@ const ProductInProductsList = ({
 
   const userRatingPanel = () => {
     if (
-      loggedUser &&
+      user &&
       checkIfTheCourseIsBought &&
       !checkIfTheUserHasRated
     ) {
@@ -232,16 +192,12 @@ const ProductInProductsList = ({
           >
             <button
               className="product__button product__button product__button-right"
-              onClick={() =>
-                setShowEditModal(false)
-              }
+              onClick={() => setShowEditModal(false)}
             >
               X
             </button>
             <div className="product__rating">
-              <div className="product__title">
-                Ratio:
-              </div>
+              <div className="product__title">Ratio:</div>
               <StarRatings
                 rating={rating}
                 starRatedColor="blue"
@@ -272,12 +228,7 @@ const ProductInProductsList = ({
                   { setSubmitting, resetForm }
                 ) => {
                   dispatch(
-                    addRating(
-                      id,
-                      loggedUser.id,
-                      rating,
-                      values
-                    )
+                    addRating(id, user._id, rating, values)
                   );
                   resetForm();
                 }}
@@ -313,7 +264,7 @@ const ProductInProductsList = ({
         </div>
       );
     } else if (
-      loggedUser &&
+      user &&
       checkIfTheCourseIsBought &&
       checkIfTheUserHasRated
     ) {
@@ -341,9 +292,7 @@ const ProductInProductsList = ({
         <span>Authors: </span>
         <span>{authors}</span>
       </div>
-      <div className="product__rating">
-        {ratingBoard()}
-      </div>
+      <div className="product__rating">{ratingBoard()}</div>
       {userRatingPanel()}
 
       <div className="product__status">

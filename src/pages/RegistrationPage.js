@@ -1,29 +1,27 @@
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import {
-  addUser,
-  addUsertoDB,
-} from '../store/actions/userActions';
-
-import {
-  Formik,
-  Field,
-  ErrorMessage,
-} from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 
 import '../styles/RegistrationPage.scss';
 
-function RegistrationPage() {
-  const users = useSelector(store => store.users);
+import axios from 'axios';
 
-  const dispatch = useDispatch();
+function RegistrationPage() {
+  const user = useSelector(store => store.users);
 
   const registrationSuccessful = values => {
-    dispatch(addUsertoDB(values));
-    dispatch(addUser(values));
+    axios({
+      method: 'post',
+      data: {
+        username: values.login,
+        password: values.password,
+      },
+      withCredentials: true,
+      url: 'http://localhost:3001/api/register',
+    }).then(res => {
+      console.log(typeof res.data);
+      if (res.data === 'User Already Exsists') return;
+    });
 
     alert(
       `Congratulations! An account has been created, your login is: ${values.login}, remember your password and never give it to anyone!`
@@ -38,9 +36,6 @@ function RegistrationPage() {
       }}
       validate={values => {
         const errors = {};
-        const validation = users.filter(
-          item => item.login === values.login
-        );
 
         if (values.login.length < 3) {
           errors.login =
@@ -48,15 +43,10 @@ function RegistrationPage() {
         } else if (values.password.length < 4) {
           errors.password =
             'Enter password (minimum 4 characters)';
-        } else if (validation.length) {
-          errors.login = 'Username is taken';
         }
         return errors;
       }}
-      onSubmit={(
-        values,
-        { setSubmitting, resetForm }
-      ) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         registrationSuccessful(values);
         resetForm();
       }}
@@ -64,10 +54,7 @@ function RegistrationPage() {
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <div className="login">
-            <ErrorMessage
-              name="login"
-              component="div"
-            />
+            <ErrorMessage name="login" component="div" />
             <span>Login</span>
             <Field
               className="registrationPage__input"
@@ -76,10 +63,7 @@ function RegistrationPage() {
             />
           </div>
           <div className="password">
-            <ErrorMessage
-              name="password"
-              component="div"
-            />
+            <ErrorMessage name="password" component="div" />
             <span>Password</span>
             <Field
               className="registrationPage__input"

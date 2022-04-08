@@ -1,31 +1,45 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/ProductsListPage.scss';
 
 import Product from '../components/Product';
 
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
-import { fetchUsersData } from '../store/actions/userActions';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserData } from '../store/actions/userActions';
+import axios from 'axios';
 const ProductsListPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsersData());
+    dispatch(fetchUserData());
   }, [dispatch]);
 
-  const courses = useSelector(
-    store => store.courses
-  );
-  const [
-    toggleCategoryList,
-    setToggleCategoryList,
-  ] = useState('');
+  //   const x = () => {
+  //     axios({
+  //       method: 'GET',
+  //       withCredentials: true,
+  //       url: 'http://localhost:3001/api/logout',
+  //     }).then(res => {
+  //       //   setData(res.data);
+  //       console.log(res.data);
+  //     });
+  //   };
+  //   x();
+
+  const getUser = () => {
+    axios({
+      method: 'GET',
+      withCredentials: true,
+      url: 'http://localhost:3001/api/user',
+    }).then(res => {
+      //   setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  getUser();
+  const courses = useSelector(store => store.courses);
+  const [toggleCategoryList, setToggleCategoryList] =
+    useState('');
 
   const [productsList, setProductList] = useState(
     courses.map(
@@ -54,9 +68,7 @@ const ProductsListPage = () => {
 
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
-      item.title
-        .toLowerCase()
-        .includes(value.toLowerCase())
+      item.title.toLowerCase().includes(value.toLowerCase())
     );
     setProductList(
       filterCourses.map(
@@ -121,38 +133,26 @@ const ProductsListPage = () => {
       <div className="productList__categoryContainer">
         <ul id="myUL">
           <li>
-            <span
-              onClick={() =>
-                selectCategory('maths')
-              }
-            >
+            <span onClick={() => selectCategory('maths')}>
               Maths
             </span>
           </li>
           <li>
             <span
-              onClick={() =>
-                selectCategory('programming')
-              }
+              onClick={() => selectCategory('programming')}
             >
               Programming
             </span>
           </li>{' '}
           <li>
             <span
-              onClick={() =>
-                selectCategory('languages')
-              }
+              onClick={() => selectCategory('languages')}
             >
               Languages
             </span>
           </li>
           <li>
-            <span
-              onClick={() =>
-                selectCategory('all')
-              }
-            >
+            <span onClick={() => selectCategory('all')}>
               All category
             </span>
           </li>
@@ -166,9 +166,7 @@ const ProductsListPage = () => {
         <input
           type="text"
           id="myInput"
-          onChange={e =>
-            searchCourse(e.target.value)
-          }
+          onChange={e => searchCourse(e.target.value)}
           placeholder="Search for names.."
         />
       </div>
@@ -176,9 +174,7 @@ const ProductsListPage = () => {
       <button
         className="productsList__button"
         onClick={() =>
-          setToggleCategoryList(
-            !toggleCategoryList
-          )
+          setToggleCategoryList(!toggleCategoryList)
         }
       >
         {toggleCategoryList
@@ -186,12 +182,8 @@ const ProductsListPage = () => {
           : 'Open category list'}
       </button>
 
-      {toggleCategoryList
-        ? renderCategoryList()
-        : null}
-      <div className="productsList">
-        {productsList}
-      </div>
+      {toggleCategoryList ? renderCategoryList() : null}
+      <div className="productsList">{productsList}</div>
     </>
   );
 };
