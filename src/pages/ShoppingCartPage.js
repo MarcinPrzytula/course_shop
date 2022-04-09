@@ -19,7 +19,7 @@ const ShoppingCartPage = () => {
 
     if (user) {
       coursesInShoppingCart = courses.filter(item =>
-        user.shoppingCart.find(item2 => item2 === item.id)
+        user.shoppingCart.find(item2 => item2 === item._id)
       );
     }
 
@@ -28,9 +28,9 @@ const ShoppingCartPage = () => {
         <>
           <div className="shoppingCart_productList">
             {coursesInShoppingCart.map(
-              ({ authors, img, price, title, id }) => (
+              ({ authors, img, price, title, _id }) => (
                 <div
-                  key={id}
+                  key={_id}
                   className="shoppingCart__product-container"
                 >
                   <div className="shoppingCart__product-title">
@@ -56,7 +56,7 @@ const ShoppingCartPage = () => {
                     className="shoppingCart__product-button"
                     onClick={() => {
                       dispatch(
-                        removeCourseFromShoppingCart(id)
+                        removeCourseFromShoppingCart(_id)
                       );
                     }}
                   >

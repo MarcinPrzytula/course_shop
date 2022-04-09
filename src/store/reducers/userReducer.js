@@ -10,10 +10,10 @@ import axios from 'axios';
 
 const editDbUser = async values => {
   const URL = process.env.REACT_APP_API
-    ? `${process.env.REACT_APP_API.trim()}api/users/${
+    ? `${process.env.REACT_APP_API.trim()}api/user/${
         values._id
       }`
-    : `http://localhost:3001/api/users/${values._id}`;
+    : `http://localhost:3001/api/user/${values._id}`;
 
   await axios.put(URL, values);
 };
@@ -42,6 +42,7 @@ const selectCourse = (state, action) => {
   const newState = { ...state };
   newState.selectCourse = action.payload;
 
+  editDbUser(newState);
   return newState;
 };
 

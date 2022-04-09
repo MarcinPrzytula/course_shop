@@ -16,47 +16,51 @@ import StarRatings from 'react-star-ratings';
 
 import '../styles/Product.scss';
 
+// import img1 from '../../assets/images/img1.PNG';
+// import vid1 from '../../assets/videos/vid1.mp4';
+
 const ProductInProductsList = ({
   title,
-  img,
   price,
   authors,
-  id,
+  _id,
   category,
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  console.log(title, _id);
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditModal2, setShowEditModal2] =
     useState(false);
   const { user, courses } = useSelector(store => store);
 
+  console.log(courses);
+  console.log(user);
   const actuallyCourse = courses.find(
-    course => course.id === id
+    course => course._id === _id
   );
 
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
 
-  if (user) {
-    checkIfTheUserHasRated = actuallyCourse.rating.find(
-      item => item.userId === user._id
-    );
-    checkIfTheCourseIsBought = user.purchasedCourses.find(
-      courseId => courseId === id
-    );
-  }
+  //   if (user) {
+  //     checkIfTheUserHasRated = actuallyCourse.rating.find(
+  //       item => item.userId === user._id
+  //     );
+  //     checkIfTheCourseIsBought = user.purchasedCourses.find(
+  //       courseId => courseId === _id
+  //     );
+  //   }
 
   const courseStatus = () => {
     if (user) {
       const checkIfTheCourseInCart = user.shoppingCart.find(
-        courseId => courseId === id
+        courseId => courseId === _id
       );
       const checkIfTheCourseIsBought =
         user.purchasedCourses.find(
-          courseId => courseId === id
+          courseId => courseId === _id
         );
 
       if (checkIfTheCourseInCart) {
@@ -70,7 +74,7 @@ const ProductInProductsList = ({
           <button
             className="product__button product__biggerButton"
             onClick={() => {
-              dispatch(selectCourse(id));
+              dispatch(selectCourse(_id));
               history.push('/selected_product');
             }}
           >
@@ -84,7 +88,7 @@ const ProductInProductsList = ({
           <button
             className="product__button"
             onClick={() => {
-              dispatch(addCourseToShoppingCart(id));
+              dispatch(addCourseToShoppingCart(_id));
             }}
           >
             <span>Add the product to your cart</span>
@@ -144,15 +148,15 @@ const ProductInProductsList = ({
               {actuallyCourse.rating.length > 0
                 ? actuallyCourse.rating.map(
                     ({ rating, comment, userId }) => {
-                      const userX = user.find(
-                        user => user.id === userId
-                      );
+                      //   const whoGiveComment = user.find(
+                      //     user => user.id === userId
+                      //   );
                       return (
                         <div
                           className="product__commentList_userComment"
                           key={comment}
                         >
-                          <div>author: {userX.login} </div>
+                          <div>author: {user.login} </div>
                           comment:
                           <div className="product__commentList_userComment_input">
                             {comment}
@@ -228,7 +232,7 @@ const ProductInProductsList = ({
                   { setSubmitting, resetForm }
                 ) => {
                   dispatch(
-                    addRating(id, user._id, rating, values)
+                    addRating(_id, user._id, rating, values)
                   );
                   resetForm();
                 }}
@@ -282,7 +286,7 @@ const ProductInProductsList = ({
       </div>
 
       <div className="product__img">
-        <img src={img} alt="product " />
+        {/* <img src={img} alt="product " /> */}
       </div>
       <div className="product__price">
         <span>Price: </span>

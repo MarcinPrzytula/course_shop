@@ -6,25 +6,18 @@ import ReactPlayer from 'react-player';
 import '../styles/Product.scss';
 
 const SelectedProductPage = () => {
-  const { users, courses } = useSelector(
-    store => store
-  );
-
-  const loggedUser = users.find(
-    user => user.logged === true
-  );
+  const { user, courses } = useSelector(store => store);
 
   const selectedCourse = courses.find(
-    course =>
-      course.id === loggedUser.selectedCourse
+    course => course.id === user.selectedCourse
   );
 
   const { title, vid, authors } = selectedCourse;
   return (
     <div className="container">
       <span>
-        You are currently viewing the {title}{' '}
-        course by {authors}{' '}
+        You are currently viewing the {title} course by{' '}
+        {authors}{' '}
       </span>
 
       <div className="product__vid">

@@ -5,39 +5,42 @@ import Product from '../components/Product';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../store/actions/userActions';
-import axios from 'axios';
+import { fetchCoursesData } from '../store/actions/courseActions';
+
 const ProductsListPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUserData());
+    dispatch(fetchCoursesData());
   }, [dispatch]);
 
-  //   const x = () => {
+  //   const getUser = () => {
   //     axios({
   //       method: 'GET',
   //       withCredentials: true,
-  //       url: 'http://localhost:3001/api/logout',
+  //       url: 'http://localhost:3001/api/user',
   //     }).then(res => {
-  //       //   setData(res.data);
   //       console.log(res.data);
   //     });
   //   };
-  //   x();
 
-  const getUser = () => {
-    axios({
-      method: 'GET',
-      withCredentials: true,
-      url: 'http://localhost:3001/api/user',
-    }).then(res => {
-      //   setData(res.data);
-      console.log(res.data);
-    });
-  };
+  //   const getCourses = () => {
+  //     axios({
+  //       method: 'GET',
+  //       withCredentials: true,
+  //       url: 'http://localhost:3001/api/courses',
+  //     }).then(res => {
+  //       console.log(res.data);
+  //     });
+  //   };
 
-  getUser();
+  //   getCourses();
+
+  //   getUser();
+
   const courses = useSelector(store => store.courses);
+  console.log(courses);
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
 
@@ -45,18 +48,16 @@ const ProductsListPage = () => {
     courses.map(
       ({
         authors,
-        img,
         price,
         title,
-        id,
+        _id,
         rating,
         category,
       }) => (
         <Product
-          key={id}
-          id={id}
+          key={_id}
+          _id={_id}
           authors={authors}
-          img={img}
           title={title}
           price={price}
           rating={rating}
@@ -77,13 +78,13 @@ const ProductsListPage = () => {
           img,
           price,
           title,
-          id,
+          _id,
           rating,
           category,
         }) => (
           <Product
-            key={id}
-            id={id}
+            key={_id}
+            _id={_id}
             authors={authors}
             img={img}
             title={title}
@@ -95,6 +96,7 @@ const ProductsListPage = () => {
       )
     );
   };
+
   const selectCategory = value => {
     let filterCourses = courses.filter(
       item => item.category === value
@@ -110,13 +112,13 @@ const ProductsListPage = () => {
           img,
           price,
           title,
-          id,
+          _id,
           rating,
           category,
         }) => (
           <Product
-            key={id}
-            id={id}
+            key={_id}
+            _id={_id}
             authors={authors}
             img={img}
             title={title}

@@ -33,9 +33,14 @@ function LoginPage() {
       withCredentials: true,
       url: 'http://localhost:3001/api/login',
     }).then(res => {
-      console.log(res.data);
+      //   console.log(res.data);
+      if (res.data !== 'No User Exsist') {
+        console.log(res.data);
+        history.push('/');
+      } else {
+        alert('Invalid username or password');
+      }
     });
-    history.push('/');
   };
 
   const validateForm = values => {
