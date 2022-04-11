@@ -15,29 +15,28 @@ const UserPanelPage = () => {
   if (user) {
     loggedUserCourses = courses.filter(course =>
       user.purchasedCourses.find(
-        purchasedCourseId => purchasedCourseId === course.id
+        purchasedCourseId =>
+          purchasedCourseId === course._id
       )
     );
 
     const render = loggedUserCourses.map(
       ({
         authors,
-        img,
-        vid,
         price,
         title,
-        id,
+        _id,
         category,
+        rating,
       }) => (
         <Product
-          key={id}
-          id={id}
+          key={_id}
+          _id={_id}
           authors={authors}
-          img={img}
-          vid={vid}
           title={title}
           price={price}
           category={category}
+          rating={rating}
         />
       )
     );

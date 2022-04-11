@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeCourseFromShoppingCart } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
+import img from '../assets/images/img1.PNG';
 
 const ShoppingCartPage = () => {
   const { user, courses } = useSelector(store => store);
@@ -28,7 +29,7 @@ const ShoppingCartPage = () => {
         <>
           <div className="shoppingCart_productList">
             {coursesInShoppingCart.map(
-              ({ authors, img, price, title, _id }) => (
+              ({ authors, price, title, _id }) => (
                 <div
                   key={_id}
                   className="shoppingCart__product-container"

@@ -6,6 +6,7 @@ import Product from '../components/Product';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../store/actions/userActions';
 import { fetchCoursesData } from '../store/actions/courseActions';
+// import axios from 'axios';
 
 const ProductsListPage = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,8 @@ const ProductsListPage = () => {
   //     });
   //   };
 
-  //   const getCourses = () => {
-  //     axios({
+  //   const getCourses = async () => {
+  //     await axios({
   //       method: 'GET',
   //       withCredentials: true,
   //       url: 'http://localhost:3001/api/courses',
@@ -35,14 +36,26 @@ const ProductsListPage = () => {
   //     });
   //   };
 
-  //   getCourses();
-
   //   getUser();
+  let courses = null;
+  courses = useSelector(store => store.courses);
 
-  const courses = useSelector(store => store.courses);
-  console.log(courses);
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
+
+  const x = courses.map(
+    ({ authors, price, title, _id, rating, category }) => (
+      <Product
+        key={_id}
+        _id={_id}
+        authors={authors}
+        title={title}
+        price={price}
+        rating={rating}
+        category={category}
+      />
+    )
+  );
 
   const [productsList, setProductList] = useState(
     courses.map(
@@ -66,7 +79,8 @@ const ProductsListPage = () => {
       )
     )
   );
-
+  console.log(x);
+  console.log(productsList);
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
       item.title.toLowerCase().includes(value.toLowerCase())
@@ -105,6 +119,7 @@ const ProductsListPage = () => {
     if (value === 'all') {
       filterCourses = courses;
     }
+
     setProductList(
       filterCourses.map(
         ({
@@ -130,6 +145,7 @@ const ProductsListPage = () => {
       )
     );
   };
+
   const renderCategoryList = () => {
     return (
       <div className="productList__categoryContainer">
@@ -172,7 +188,6 @@ const ProductsListPage = () => {
           placeholder="Search for names.."
         />
       </div>
-
       <button
         className="productsList__button"
         onClick={() =>
@@ -183,9 +198,11 @@ const ProductsListPage = () => {
           ? 'Close category list'
           : 'Open category list'}
       </button>
-
       {toggleCategoryList ? renderCategoryList() : null}
-      <div className="productsList">{productsList}</div>
+      <div className="productsList">
+        {productsList.length > 0 ? productsList : x}
+      </div>
+      :
     </>
   );
 };

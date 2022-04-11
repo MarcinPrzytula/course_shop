@@ -20,7 +20,7 @@ const TransactionFormPage = () => {
   const { user, courses } = useSelector(store => store);
   const history = useHistory();
   const dispatch = useDispatch();
-
+  console.log(courses);
   let coursesToBuy = null;
   let coursesToBuyId = null;
 
@@ -28,10 +28,12 @@ const TransactionFormPage = () => {
     coursesToBuy = courses.filter(course =>
       user.shoppingCart.find(
         shoppingCartCourseId =>
-          shoppingCartCourseId === course.id
+          shoppingCartCourseId === course._id
       )
     );
-    coursesToBuyId = coursesToBuy.map(item => item.id);
+    console.log(coursesToBuy);
+    console.log(user.shoppingCart);
+    coursesToBuyId = coursesToBuy.map(item => item._id);
   }
   const submit = () => {
     if (user) {

@@ -34,6 +34,7 @@ const buyCourse = (state, action) => {
     ...action.payload,
   ];
 
+  newState.shoppingCart = [];
   editDbUser(newState);
   return newState;
 };

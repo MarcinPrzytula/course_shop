@@ -16,8 +16,8 @@ import StarRatings from 'react-star-ratings';
 
 import '../styles/Product.scss';
 
-// import img1 from '../../assets/images/img1.PNG';
-// import vid1 from '../../assets/videos/vid1.mp4';
+import img from '../assets/images/img1.PNG';
+// import vid from '../../assets/videos/vid1.mp4';
 
 const ProductInProductsList = ({
   title,
@@ -35,8 +35,6 @@ const ProductInProductsList = ({
     useState(false);
   const { user, courses } = useSelector(store => store);
 
-  console.log(courses);
-  console.log(user);
   const actuallyCourse = courses.find(
     course => course._id === _id
   );
@@ -286,7 +284,7 @@ const ProductInProductsList = ({
       </div>
 
       <div className="product__img">
-        {/* <img src={img} alt="product " /> */}
+        <img src={img} alt="product " />
       </div>
       <div className="product__price">
         <span>Price: </span>
