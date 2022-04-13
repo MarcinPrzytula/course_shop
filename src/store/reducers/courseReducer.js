@@ -1,49 +1,49 @@
 import {
   ADD_RATING,
-  ADD_COMMENT,
   FETCH_COURSES_DATA,
 } from '../actions/courseActions.js';
+
+import axios from 'axios';
+
+const editDbCourse = async values => {
+  const URL = process.env.REACT_APP_API
+    ? `${process.env.REACT_APP_API.trim()}api/course/${
+        values._id
+      }`
+    : `http://localhost:3001/api/course/${values._id}`;
+
+  await axios.put(URL, values);
+};
 
 const addRating = (state, action) => {
   return state.map(currentStateElement => {
     if (
-      currentStateElement.id !== action.payload.courseId
+      currentStateElement._id !== action.payload.courseId
     ) {
       return currentStateElement;
     }
 
-    const x = currentStateElement.rating.filter(
-      item => item.userId === action.payload.userId
-    );
-    if (x.length > 0) return currentStateElement;
+    const userHasAlreadyRated =
+      currentStateElement.rating.filter(
+        item => item.userLogin === action.payload.userLogin
+      );
+    console.log(userHasAlreadyRated);
+    if (userHasAlreadyRated.length > 0)
+      return currentStateElement;
 
-    const {
-      authors,
-      id,
-      img,
-      vid,
-      price,
-      title,
-      category,
-      rating,
-    } = currentStateElement;
+    const updateCourse = { ...currentStateElement };
 
     const newRating = {
-      userId: action.payload.userId,
+      userLogin: action.payload.userLogin,
       rating: action.payload.rating,
       comment: action.payload.comment.formValue,
     };
-    return {
-      authors,
-      id,
-      img,
-      vid,
-      price,
-      title,
-      category,
-
-      rating: [...rating, newRating],
-    };
+    updateCourse.rating = [
+      ...currentStateElement.rating,
+      newRating,
+    ];
+    editDbCourse(updateCourse);
+    return updateCourse;
   });
 };
 
@@ -56,8 +56,6 @@ export const courseReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_RATING:
       return addRating(state, action);
-    case ADD_COMMENT:
-      return [...state, action.payload];
     case FETCH_COURSES_DATA:
       return fetchCoursesData(state, action);
     default:

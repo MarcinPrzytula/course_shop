@@ -28,7 +28,7 @@ const ProductInProductsList = ({
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log(title, _id);
+
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditModal2, setShowEditModal2] =
@@ -41,26 +41,22 @@ const ProductInProductsList = ({
 
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
+  let checkIfTheCourseInCart = '';
 
-  //   if (user) {
-  //     checkIfTheUserHasRated = actuallyCourse.rating.find(
-  //       item => item.userId === user._id
-  //     );
-  //     checkIfTheCourseIsBought = user.purchasedCourses.find(
-  //       courseId => courseId === _id
-  //     );
-  //   }
+  if (user) {
+    checkIfTheCourseInCart = user.shoppingCart.find(
+      courseId => courseId === _id
+    );
+    checkIfTheCourseIsBought = user.purchasedCourses.find(
+      courseId => courseId === _id
+    );
+    checkIfTheUserHasRated = actuallyCourse.rating.find(
+      item => item.userLogin === user.login
+    );
+  }
 
   const courseStatus = () => {
     if (user) {
-      const checkIfTheCourseInCart = user.shoppingCart.find(
-        courseId => courseId === _id
-      );
-      const checkIfTheCourseIsBought =
-        user.purchasedCourses.find(
-          courseId => courseId === _id
-        );
-
       if (checkIfTheCourseInCart) {
         return 'The course has been added to the cart';
       } else if (
@@ -145,16 +141,13 @@ const ProductInProductsList = ({
             <div className="product__commentsList">
               {actuallyCourse.rating.length > 0
                 ? actuallyCourse.rating.map(
-                    ({ rating, comment, userId }) => {
-                      //   const whoGiveComment = user.find(
-                      //     user => user.id === userId
-                      //   );
+                    ({ rating, comment, userLogin }) => {
                       return (
                         <div
                           className="product__commentList_userComment"
                           key={comment}
                         >
-                          <div>author: {user.login} </div>
+                          <div>author: {userLogin} </div>
                           comment:
                           <div className="product__commentList_userComment_input">
                             {comment}
@@ -230,7 +223,12 @@ const ProductInProductsList = ({
                   { setSubmitting, resetForm }
                 ) => {
                   dispatch(
-                    addRating(_id, user._id, rating, values)
+                    addRating(
+                      _id,
+                      user.login,
+                      rating,
+                      values
+                    )
                   );
                   resetForm();
                 }}
@@ -296,7 +294,6 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">{ratingBoard()}</div>
       {userRatingPanel()}
-
       <div className="product__status">
         {courseStatus()}
       </div>

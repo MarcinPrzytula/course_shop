@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const ADD_RATING = 'ADD_RATING';
-export const ADD_COMMENT = 'CHANGE_COMMENT';
 export const FETCH_COURSES_DATA = 'FETCH_COURSES_DATA';
 
 const URL = process.env.REACT_APP_API
@@ -22,15 +21,10 @@ export const fetchCoursesData = () => async dispatch => {
 
 export const addRating = (
   courseId,
-  userId,
+  userLogin,
   rating,
   comment
 ) => ({
   type: ADD_RATING,
-  payload: { courseId, userId, rating, comment },
-});
-
-export const addComment = (id, comment) => ({
-  type: ADD_COMMENT,
-  payload: { id, comment },
+  payload: { courseId, userLogin, rating, comment },
 });

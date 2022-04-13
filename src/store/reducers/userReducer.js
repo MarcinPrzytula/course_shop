@@ -41,7 +41,7 @@ const buyCourse = (state, action) => {
 
 const selectCourse = (state, action) => {
   const newState = { ...state };
-  newState.selectCourse = action.payload;
+  newState.selectedCourse = action.payload;
 
   editDbUser(newState);
   return newState;

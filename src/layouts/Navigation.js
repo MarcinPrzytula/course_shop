@@ -9,55 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
+  // Import element ------------------------------------------------------------------------
   // Create a ref that we add to the element for which we want to detect outside clicks
   const ref = useRef();
   // State for our modal
   const [isModalOpen, setModalOpen] = useState(false);
   // Call hook passing in the ref and a function to call on outside click
-
-  const location = useLocation();
-  const { users } = useSelector(store => store);
-  //   const loggedUser = users.find(
-  //     user => user.logged === true
-  //   );
-
-  const loggedUser = users;
-  const getNavLinkClass = path => {
-    return location.pathname === path
-      ? 'navigation__item-wraper active'
-      : 'navigation__item-wraper';
-  };
-  const shoppingCartIcon =
-    loggedUser?.shoppingCart.length > 0 ? (
-      <div className="navigation__cart navigation__shoppingCtActive">
-        <FontAwesomeIcon icon={faCartPlus} />
-      </div>
-    ) : (
-      <div className="navigation__cart ">
-        <FontAwesomeIcon icon={faCartPlus} />
-      </div>
-    );
-  const list = [
-    // {
-    //   name: 'Main page',
-    //   path: '/',
-    //   exact: true,
-    // },
-    {
-      name: 'Products list',
-      path: '/',
-    },
-    {
-      name: 'User Panel',
-      path: '/user_panel',
-    },
-    {
-      name: ``,
-      path: '/shopping_cart',
-      isShoppingCartt: true,
-    },
-  ];
-
   useOnClickOutside(ref, () => setModalOpen(false));
   // Hook
   function useOnClickOutside(ref, handler) {
@@ -95,6 +52,55 @@ const Navigation = () => {
       [ref, handler]
     );
   }
+  // End import element -----------------------------------------------------------------------------
+
+  const location = useLocation();
+  const { user } = useSelector(store => store);
+  const list = [
+    {
+      name: 'Products list',
+      path: '/',
+    },
+    {
+      name: 'User Panel',
+      path: '/user_panel',
+    },
+    {
+      name: ``,
+      path: '/shopping_cart',
+      isShoppingCart: true,
+    },
+  ];
+
+  const getNavLinkClass = path => {
+    return location.pathname === path
+      ? 'navigation__item-wraper active'
+      : 'navigation__item-wraper';
+  };
+
+  const shoppingCartIcon = () => {
+    if (user) {
+      if (user.shoppingCart.length > 0) {
+        return (
+          <div className="navigation__cart navigation__shoppingCtActive">
+            <FontAwesomeIcon icon={faCartPlus} />
+          </div>
+        );
+      } else {
+        return (
+          <div className="navigation__cart ">
+            <FontAwesomeIcon icon={faCartPlus} />
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div className="navigation__cart ">
+          <FontAwesomeIcon icon={faCartPlus} />
+        </div>
+      );
+    }
+  };
 
   const menu = list.map(item => (
     <li
@@ -107,8 +113,8 @@ const Navigation = () => {
         to={item.path}
         exact={item.exact ? item.exact : false}
       >
-        {item.isShoppingCartt
-          ? shoppingCartIcon
+        {item.isShoppingCart
+          ? shoppingCartIcon()
           : item.name}
       </NavLink>
     </li>

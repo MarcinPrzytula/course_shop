@@ -5,14 +5,16 @@ import ReactPlayer from 'react-player';
 
 import '../styles/Product.scss';
 
+import vid from '../assets/videos/vid1.mp4';
+
 const SelectedProductPage = () => {
   const { user, courses } = useSelector(store => store);
 
   const selectedCourse = courses.find(
-    course => course.id === user.selectedCourse
+    course => course._id === user.selectedCourse
   );
 
-  const { title, vid, authors } = selectedCourse;
+  const { title, authors } = selectedCourse;
   return (
     <div className="container">
       <span>
