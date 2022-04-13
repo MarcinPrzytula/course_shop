@@ -39,11 +39,13 @@ const ProductsListPage = () => {
   //   getUser();
   let courses = null;
   courses = useSelector(store => store.courses);
+  const user = useSelector(store => store.user);
+  console.log(user);
 
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
 
-  const x = courses.map(
+  const firstRenderProducts = courses.map(
     ({ authors, price, title, _id, rating, category }) => (
       <Product
         key={_id}
@@ -79,8 +81,7 @@ const ProductsListPage = () => {
       )
     )
   );
-  console.log(x);
-  console.log(productsList);
+
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
       item.title.toLowerCase().includes(value.toLowerCase())
@@ -200,7 +201,9 @@ const ProductsListPage = () => {
       </button>
       {toggleCategoryList ? renderCategoryList() : null}
       <div className="productsList">
-        {productsList.length > 0 ? productsList : x}
+        {productsList.length > 0
+          ? productsList
+          : firstRenderProducts}
       </div>
       :
     </>
