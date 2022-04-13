@@ -37,9 +37,8 @@ function LoginPage() {
       withCredentials: true,
       url: URL,
     }).then(res => {
-      //   console.log(res.data);
+      console.log(res.data);
       if (res.data !== 'No User Exsist') {
-        console.log(res.data);
         history.push('/');
       } else {
         alert('Invalid username or password');
