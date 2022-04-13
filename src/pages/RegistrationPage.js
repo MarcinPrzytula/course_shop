@@ -10,6 +10,10 @@ function RegistrationPage() {
   const history = useHistory();
 
   const registrationSuccessful = values => {
+    const URL = process.env.REACT_APP_API
+      ? `${process.env.REACT_APP_API.trim()}api/register`
+      : `http://localhost:3001/api/register`;
+
     axios({
       method: 'post',
       data: {
@@ -17,7 +21,7 @@ function RegistrationPage() {
         password: values.password,
       },
       withCredentials: true,
-      url: 'http://localhost:3001/api/register',
+      url: URL,
     }).then(res => {
       if (res.data !== 'User Already Exsists') {
         console.log(res.data);

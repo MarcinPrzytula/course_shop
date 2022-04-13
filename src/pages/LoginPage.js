@@ -24,6 +24,10 @@ function LoginPage() {
 
   const submit = userLoginData => {
     const { formLogin, formPassword } = userLoginData;
+    const URL = process.env.REACT_APP_API
+      ? `${process.env.REACT_APP_API.trim()}api/login`
+      : `http://localhost:3001/api/login`;
+
     axios({
       method: 'post',
       data: {
@@ -31,7 +35,7 @@ function LoginPage() {
         password: formPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:3001/api/login',
+      url: URL,
     }).then(res => {
       //   console.log(res.data);
       if (res.data !== 'No User Exsist') {
