@@ -1,5 +1,5 @@
 import {
-  FETCH_USERS_DATA,
+  FETCH_USER_DATA,
   BUY_COURSE,
   ADD_COURSE_TO_SHOPPING_CART,
   REMOVE_COURSE_FROM_SHOPPING_CART,
@@ -77,13 +77,13 @@ const removeCourseFromShoppingCart = (state, action) => {
 };
 
 const fetchUserData = (state, action) => {
-  //   console.log(action.payload);
+  console.log(action.payload);
   return action.payload;
 };
 
 export const userReducer = (state = null, action) => {
   switch (action.type) {
-    case FETCH_USERS_DATA:
+    case FETCH_USER_DATA:
       return fetchUserData(state, action);
     case BUY_COURSE:
       return buyCourse(state, action);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const FETCH_USERS_DATA = 'FETCH_USER_DATA';
+export const FETCH_USER_DATA = 'FETCH_USER_DATA';
 export const BUY_COURSE = 'BUY_COURSE';
 export const ADD_COURSE_TO_SHOPPING_CART =
   'ADD_COURSE_TO_SHOPPING_CART';
@@ -20,10 +20,14 @@ export const fetchUserData = () => async dispatch => {
     url: URL,
   });
   dispatch({
-    type: FETCH_USERS_DATA,
+    type: FETCH_USER_DATA,
     payload: res.data,
   });
 };
+// export const fetchUserData = data => ({
+//   type: FETCH_USER_DATA,
+//   payload: data,
+// });
 
 export const buyCourse = courseId => ({
   type: BUY_COURSE,

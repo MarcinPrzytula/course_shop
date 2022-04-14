@@ -6,7 +6,7 @@ import Product from '../components/Product';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../store/actions/userActions';
 import { fetchCoursesData } from '../store/actions/courseActions';
-// import axios from 'axios';
+import axios from 'axios';
 
 const ProductsListPage = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const ProductsListPage = () => {
   //       console.log(res.data);
   //     });
   //   };
-
+  //   getUser();
   //   const getCourses = async () => {
   //     await axios({
   //       method: 'GET',
@@ -36,7 +36,6 @@ const ProductsListPage = () => {
   //     });
   //   };
 
-  //   getUser();
   let courses = null;
   courses = useSelector(store => store.courses);
   const user = useSelector(store => store.user);
