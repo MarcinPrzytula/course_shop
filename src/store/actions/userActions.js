@@ -17,6 +17,7 @@ export const fetchUserData = () => async dispatch => {
   const res = await axios({
     method: 'GET',
     withCredentials: true,
+    credentials: 'include',
     url: URL,
   });
   dispatch({
