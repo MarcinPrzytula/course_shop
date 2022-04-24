@@ -34,7 +34,7 @@ const ProductInProductsList = ({
   const [showEditModal2, setShowEditModal2] =
     useState(false);
   const { user, courses } = useSelector(store => store);
-
+  console.loh(user);
   const actuallyCourse = courses.find(
     course => course._id === _id
   );
@@ -62,7 +62,7 @@ const ProductInProductsList = ({
       } else if (
         checkIfTheCourseIsBought &&
         window.location.pathname ===
-          '/course_shop/user_panel'
+          '#/course_shop/user_panel'
       ) {
         return (
           <button
