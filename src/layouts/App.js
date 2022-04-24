@@ -11,6 +11,7 @@ import LoginPanel from './LoginPanel';
 import '../styles/App.css';
 
 function App() {
+  console.log(process.env.PUBLIC_URL);
   return (
     <Provider store={store}>
       <Router basename={process.env.PUBLIC_URL}>
