@@ -54,16 +54,16 @@ const ProductInProductsList = ({
       item => item.userLogin === user.login
     );
   }
-  console.log(window.location.href);
   const courseStatus = () => {
     if (user) {
       if (checkIfTheCourseInCart) {
         return 'The course has been added to the cart';
       } else if (
-        (checkIfTheCourseIsBought &&
+        checkIfTheCourseIsBought &&
+        (window.location.href ===
+          'https://marcinprzytula.github.io/course_shop/#/course_shop/user_panel' ||
           window.location.href ===
-            'https://marcinprzytula.github.io/course_shop/#/course_shop/user_panel') ||
-        'http://localhost:3000/course_shop/user_panel#/course_shop/user_panel'
+            'http://localhost:3000/course_shop#/course_shop/user_panel')
       ) {
         return (
           <button
