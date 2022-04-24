@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,AAAC,CACrB,OAAO,CAAE,IAAI,CACb,cAAc,CAAE,GAAG,CAKpB,AAHC,MAAM,EAAE,SAAS,EAAE,KAAK,EAJ1B,AAAA,sBAAsB,AAAC,CAKnB,cAAc,CAAE,MAAM,CAEzB",
+    "sources": [
+        "../src/styles/UserPanelPage.scss"
+    ],
+    "names": [],
+    "file": "UserPanelPage.css"
+}

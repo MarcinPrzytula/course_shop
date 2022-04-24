@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACG,AAAD,wBAAQ,AAAC,CACP,MAAM,CAAE,IAAI,CACZ,SAAS,CAAE,IAAI,CAChB,AACA,AAAD,yBAAS,AAAC,CACR,gBAAgB,CAAE,KAAK,CACvB,MAAM,CAAE,eAAe,CACvB,aAAa,CAAE,GAAG,CAClB,KAAK,CAAE,KAAK,CACZ,cAAc,CAAE,SAAS,CACzB,OAAO,CAAE,eAAe,CACxB,WAAW,CAAE,IAAI,CACjB,MAAM,CAAE,OAAO,CACf,UAAU,CAAE,IAAI,CAKjB,AAdA,AAUC,yBAVO,AAUN,MAAM,AAAC,CACN,gBAAgB,CAAE,KAAK,CACvB,KAAK,CAAE,KAAK,CACb",
+    "sources": [
+        "../src/styles/RegistrationPage.scss"
+    ],
+    "names": [],
+    "file": "RegistrationPage.css"
+}
