@@ -54,7 +54,7 @@ const ProductInProductsList = ({
       item => item.userLogin === user.login
     );
   }
-
+  console.log(window.location.pathname);
   const courseStatus = () => {
     if (user) {
       if (checkIfTheCourseInCart) {
@@ -62,7 +62,7 @@ const ProductInProductsList = ({
       } else if (
         checkIfTheCourseIsBought &&
         window.location.pathname ===
-          '#/course_shop/user_panel'
+          'course_shop/#/course_shop/user_panel'
       ) {
         return (
           <button
