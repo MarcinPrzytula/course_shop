@@ -26,7 +26,9 @@ const menu = list.map(item => (
     </NavLink>
   </li>
 ));
-
+const URL = process.env.REACT_APP_API
+  ? `${process.env.REACT_APP_API.trim()}api/logout`
+  : `http://localhost:3001/api/logout`;
 const LoginPanel = () => {
   const user = useSelector(store => store.user);
   const history = useHistory();
@@ -39,7 +41,7 @@ const LoginPanel = () => {
             axios({
               method: 'GET',
               withCredentials: true,
-              url: 'http://localhost:3001/api/logout',
+              url: URL,
             });
             history.push('/login');
           }}
