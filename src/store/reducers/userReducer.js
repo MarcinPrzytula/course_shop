@@ -77,7 +77,6 @@ const removeCourseFromShoppingCart = (state, action) => {
 };
 
 const fetchUserData = (state, action) => {
-  console.log(action.payload);
   return action.payload;
 };
 

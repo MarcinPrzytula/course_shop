@@ -17,8 +17,7 @@ const ProductsListPage = () => {
 
   let courses = null;
   courses = useSelector(store => store.courses);
-  const user = useSelector(store => store.user);
-  console.log(user);
+  console.log('Render');
 
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
