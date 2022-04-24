@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 
 const UserPanelPage = () => {
   const { user, courses } = useSelector(store => store);
-  console.log(user);
   let loggedUserCourses = null;
 
   let mainPage = 'Log in to view your courses';
