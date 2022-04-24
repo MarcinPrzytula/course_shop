@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/LoginPanel.scss';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { FETCH_USER_DATA } from '../store/actions/userActions';
 
 import axios from 'axios';
 
@@ -32,6 +33,7 @@ const URL = process.env.REACT_APP_API
 const LoginPanel = () => {
   const user = useSelector(store => store.user);
   const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <nav className="panel">
       {user ? (
@@ -42,7 +44,13 @@ const LoginPanel = () => {
               method: 'GET',
               withCredentials: true,
               url: URL,
+            }).then(() => {
+              dispatch({
+                type: FETCH_USER_DATA,
+                payload: null,
+              });
             });
+
             history.push('/login');
           }}
         >
