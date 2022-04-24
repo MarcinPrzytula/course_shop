@@ -37,7 +37,6 @@ function LoginPage() {
       withCredentials: true,
       url: URL,
     }).then(res => {
-      console.log(res.data);
       if (res.data !== 'No User Exsist') {
         history.push('/');
       } else {
