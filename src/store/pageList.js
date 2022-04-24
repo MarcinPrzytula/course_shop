@@ -1,4 +1,3 @@
-// import HomePage from '../pages/HomePage';
 import ProductsListPage from '../pages/ProductsListPage';
 import SelectedProductPage from '../pages/SelectedProductPage';
 import LoginPage from '../pages/LoginPage';
