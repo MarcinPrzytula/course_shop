@@ -34,7 +34,7 @@ const ProductInProductsList = ({
   const [showEditModal2, setShowEditModal2] =
     useState(false);
   const { user, courses } = useSelector(store => store);
-  console.loh(user);
+
   const actuallyCourse = courses.find(
     course => course._id === _id
   );
