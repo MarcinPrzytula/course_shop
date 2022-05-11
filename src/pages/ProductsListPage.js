@@ -20,7 +20,9 @@ const ProductsListPage = () => {
 
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
-
+  const [selectedCategory, setSelectedCategory] =
+    useState('');
+  console.log(selectedCategory);
   const firstRenderProducts = courses.map(
     ({ authors, price, title, _id, rating, category }) => (
       <Product
@@ -89,6 +91,8 @@ const ProductsListPage = () => {
   };
 
   const selectCategory = value => {
+    setSelectedCategory(value);
+
     let filterCourses = courses.filter(
       item => item.category === value
     );
@@ -124,43 +128,43 @@ const ProductsListPage = () => {
   };
 
   const renderCategoryList = () => {
+    const categories = [
+      'maths',
+      'programming',
+      'languages',
+      'all',
+    ];
+
+    const categoriesList = categories.map(item => {
+      return (
+        <li>
+          <span
+            className={
+              selectedCategory == item
+                ? 'productsList__categoryContainer active'
+                : null
+            }
+            onClick={() => selectCategory(item)}
+          >
+            {item.charAt(0).toUpperCase() + item.slice(1)}
+          </span>
+        </li>
+      );
+    });
+
     return (
-      <div className="productList__categoryContainer">
-        <ul id="myUL">
-          <li>
-            <span onClick={() => selectCategory('maths')}>
-              Maths
-            </span>
-          </li>
-          <li>
-            <span
-              onClick={() => selectCategory('programming')}
-            >
-              Programming
-            </span>
-          </li>{' '}
-          <li>
-            <span
-              onClick={() => selectCategory('languages')}
-            >
-              Languages
-            </span>
-          </li>
-          <li>
-            <span onClick={() => selectCategory('all')}>
-              All category
-            </span>
-          </li>
-        </ul>
+      <div className="productsList__categoryContainer">
+        <ul>{categoriesList}</ul>
       </div>
     );
   };
+
   return (
     <>
       <div>
         <input
           type="text"
-          id="myInput"
+          className="productsList__searchInput"
           onChange={e => searchCourse(e.target.value)}
           placeholder="Search for names.."
         />

@@ -7,7 +7,6 @@ export const ADD_COURSE_TO_SHOPPING_CART =
 export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
-// console.log(process.env.REACT_APP_API);
 
 const URL = process.env.REACT_APP_API
   ? `${process.env.REACT_APP_API.trim()}api/user`
@@ -24,10 +23,6 @@ export const fetchUserData = () => async dispatch => {
     payload: res.data,
   });
 };
-// export const fetchUserData = data => ({
-//   type: FETCH_USER_DATA,
-//   payload: data,
-// });
 
 export const buyCourse = courseId => ({
   type: BUY_COURSE,

@@ -8,7 +8,7 @@ import Page from './Page';
 import Navigation from '../layouts/Navigation';
 import LoginPanel from './LoginPanel';
 
-import '../styles/App.css';
+import '../styles/App.scss';
 
 function App() {
   return (

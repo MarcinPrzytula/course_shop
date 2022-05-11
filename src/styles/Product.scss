@@ -11,7 +11,7 @@
 
       &_input {
         max-height: 150px;
-        // overflow: hidden;
+
         overflow-y: scroll;
         word-wrap: break-word;
       }
@@ -52,7 +52,6 @@
     padding: 5px;
     font-weight: bold;
     font-size: 20px;
-    // height: 12%;
   }
   &__price {
     padding: 5px;
@@ -70,10 +69,17 @@
     padding-top: 10px;
     font-weight: bold;
   }
-  &__img {
+  &__imgContainer {
     height: 210px;
     position: relative;
     overflow: hidden;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
   &__comment {
     margin: 30px;
@@ -87,29 +93,16 @@
     height: 100px;
     margin: 5px 0 5px 0;
   }
-}
 
-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.overlay {
-  position: fixed;
-  top: 20;
-  left: 20;
-  right: 20;
-  bottom: 20;
-  background-color: rebeccapurple;
-}
-.modal {
-  width: 70%;
-  height: 400px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  overflow-y: scroll;
+  &__modal {
+    width: 70%;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.921);
+    overflow-y: scroll;
+    text-align: center;
+  }
 }

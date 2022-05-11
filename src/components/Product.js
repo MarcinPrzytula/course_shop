@@ -117,7 +117,8 @@ const ProductInProductsList = ({
           {score}/5 Opinions(
           {actuallyCourse.rating.length})
         </div>
-        <div id="modal">
+        {/* <div id="modal"> */}
+        <div>
           <button
             className="product__button"
             onClick={() => setShowEditModal2(true)}
@@ -127,7 +128,7 @@ const ProductInProductsList = ({
 
           <Modal
             ariaHideApp={false}
-            className="modal"
+            className="product__modal"
             isOpen={showEditModal2}
           >
             <button
@@ -170,7 +171,8 @@ const ProductInProductsList = ({
       !checkIfTheUserHasRated
     ) {
       return (
-        <div id="modal">
+        // <div id="modal">
+        <div>
           <button
             className="product__button"
             onClick={() => setShowEditModal(true)}
@@ -180,7 +182,7 @@ const ProductInProductsList = ({
 
           <Modal
             ariaHideApp={false}
-            className="modal"
+            className="product__modal"
             isOpen={showEditModal}
           >
             <button
@@ -279,7 +281,7 @@ const ProductInProductsList = ({
         <span>({category})</span>
       </div>
 
-      <div className="product__img">
+      <div className="product__imgContainer">
         <img src={img} alt="product " />
       </div>
       <div className="product__price">
