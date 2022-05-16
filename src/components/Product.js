@@ -96,7 +96,7 @@ const ProductInProductsList = ({
     actuallyCourse.rating.forEach(item => {
       x += item.rating;
     });
-    score = x / actuallyCourse.rating.length.toFixed(2);
+    score = (x / actuallyCourse.rating.length).toFixed(2);
 
     if (isNaN(score)) {
       score = 0;

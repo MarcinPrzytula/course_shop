@@ -27,7 +27,7 @@ const ShoppingCartPage = () => {
     if (coursesInShoppingCart.length > 0 && user) {
       return (
         <>
-          <div className="shoppingCart_productList">
+          <div className="shoppingCart__productList">
             {coursesInShoppingCart.map(
               ({ authors, price, title, _id }) => (
                 <div

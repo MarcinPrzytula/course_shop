@@ -140,7 +140,7 @@ const ProductsListPage = () => {
         <li>
           <span
             className={
-              selectedCategory == item
+              selectedCategory === item
                 ? 'productsList__categoryContainer active'
                 : null
             }

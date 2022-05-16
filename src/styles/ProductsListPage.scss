@@ -43,14 +43,15 @@
       cursor: pointer;
     }
 
-    & .active {
-      background-color: black;
-      color: white;
-    }
-
     li span:hover {
       background-color: black;
       color: white;
+    }
+    @media (pointer: fine) {
+      & .active {
+        background-color: black;
+        color: white;
+      }
     }
   }
 
