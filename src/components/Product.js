@@ -96,7 +96,8 @@ const ProductInProductsList = ({
     actuallyCourse.rating.forEach(item => {
       x += item.rating;
     });
-    score = x / actuallyCourse.rating.length.toFixed(2);
+
+    score = (x / actuallyCourse.rating.length).toFixed(1);
 
     if (isNaN(score)) {
       score = 0;
@@ -105,7 +106,7 @@ const ProductInProductsList = ({
     return (
       <>
         <StarRatings
-          rating={score}
+          rating={Number(score)}
           starRatedColor="blue"
           starEmptyColor="white"
           numberOfStars={5}
