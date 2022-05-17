@@ -17,6 +17,7 @@ export const fetchCoursesData = () => async dispatch => {
     type: FETCH_COURSES_DATA,
     payload: res.data,
   });
+  console.log(res.data);
 };
 
 export const addRating = (

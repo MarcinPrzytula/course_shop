@@ -15,14 +15,14 @@ const ProductsListPage = () => {
     dispatch(fetchCoursesData());
   }, [dispatch]);
 
-  let courses = null;
-  courses = useSelector(store => store.courses);
+  const courses = useSelector(store => store.courses);
+  console.log(courses);
 
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
   const [selectedCategory, setSelectedCategory] =
     useState('');
-  console.log(selectedCategory);
+
   const firstRenderProducts = courses.map(
     ({ authors, price, title, _id, rating, category }) => (
       <Product
@@ -59,7 +59,7 @@ const ProductsListPage = () => {
       )
     )
   );
-
+  console.log(productsList);
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
       item.title.toLowerCase().includes(value.toLowerCase())
@@ -137,7 +137,7 @@ const ProductsListPage = () => {
 
     const categoriesList = categories.map(item => {
       return (
-        <li>
+        <li key={item}>
           <span
             className={
               selectedCategory === item
@@ -158,7 +158,38 @@ const ProductsListPage = () => {
       </div>
     );
   };
-
+  const renderProductsList = () => {
+    if (firstRenderProducts.length > 0) {
+      if (productsList.length > 0) {
+        return productsList;
+      } else {
+        return firstRenderProducts;
+      }
+    } else {
+      return (
+        <div className="load_container">
+          <span>
+            PLEASE WAIT STARTING THE SERVER AND LOADING
+            RESOURCES FROM THE DATABASE{' '}
+          </span>
+          <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      );
+    }
+  };
   return (
     <>
       <div>
@@ -181,11 +212,8 @@ const ProductsListPage = () => {
       </button>
       {toggleCategoryList ? renderCategoryList() : null}
       <div className="productsList">
-        {productsList.length > 0
-          ? productsList
-          : firstRenderProducts}
+        {renderProductsList()}
       </div>
-      :
     </>
   );
 };
