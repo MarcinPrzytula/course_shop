@@ -9,6 +9,9 @@ import { removeCourseFromShoppingCart } from '../store/actions/userActions';
 import { useHistory } from 'react-router-dom';
 import img from '../assets/images/img1.PNG';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+
 const ShoppingCartPage = () => {
   const { user, courses } = useSelector(store => store);
 
@@ -27,16 +30,13 @@ const ShoppingCartPage = () => {
     if (coursesInShoppingCart.length > 0 && user) {
       return (
         <>
-          <div className="shoppingCart__productList">
+          <div className="shoppingCart__productsList">
             {coursesInShoppingCart.map(
               ({ authors, price, title, _id }) => (
                 <div
                   key={_id}
                   className="shoppingCart__product-container"
                 >
-                  <div className="shoppingCart__product-title">
-                    <span>{title}</span>
-                  </div>
                   <div className="shoppingCart__product-img-container">
                     <img
                       className="shoppingCart__product-img"
@@ -44,24 +44,22 @@ const ShoppingCartPage = () => {
                       alt="product "
                     />
                   </div>
-                  <div className="shoppingCart__product-price">
-                    <span>Price: </span>
-                    <span>{price}</span>
-                  </div>
-                  <div className="shoppingCart__product-author">
-                    <span>Authors: </span>
-                    <span>{authors}</span>
+
+                  <div className="shoppingCart__product-info">
+                    <span>Title: {title}</span>
+                    <span> Price: {price}</span>
+                    <span> Author: {authors}</span>
                   </div>
 
                   <button
-                    className="shoppingCart__product-button"
+                    className="shoppingCart__product-delete_button"
                     onClick={() => {
                       dispatch(
                         removeCourseFromShoppingCart(_id)
                       );
                     }}
                   >
-                    <span>Remove from cart</span>
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 </div>
               )

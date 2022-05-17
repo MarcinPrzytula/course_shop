@@ -167,25 +167,12 @@ const ProductsListPage = () => {
       }
     } else {
       return (
-        <div className="load_container">
+        <div className="productsList__loader_container">
           <span>
             PLEASE WAIT STARTING THE SERVER AND LOADING
             RESOURCES FROM THE DATABASE{' '}
           </span>
-          <div class="lds-spinner">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          <div class="productsList__loader"></div>
         </div>
       );
     }
