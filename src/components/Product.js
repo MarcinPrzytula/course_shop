@@ -178,7 +178,6 @@ const ProductInProductsList = ({
       </>
     );
   };
-  console.log(user.length);
   const userRatingPanel = () => {
     if (
       user &&
