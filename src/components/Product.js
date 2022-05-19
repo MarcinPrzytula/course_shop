@@ -108,7 +108,12 @@ const ProductInProductsList = ({
         checkIfTheCourseIsBought &&
         checkIfTheUserHasRated
           ? `You have rated this course on ${checkIfTheUserHasRated.rating}`
-          : 'Click on the stars to rate the course'}
+          : null}
+        {user &&
+        checkIfTheCourseIsBought &&
+        !checkIfTheUserHasRated
+          ? `Click on stars to rate`
+          : null}
         <button
           className="test"
           onClick={() => setShowEditModal(true)}
@@ -173,7 +178,7 @@ const ProductInProductsList = ({
       </>
     );
   };
-
+  console.log(user.length);
   const userRatingPanel = () => {
     if (
       user &&
