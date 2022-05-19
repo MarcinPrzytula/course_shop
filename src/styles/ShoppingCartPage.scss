@@ -4,8 +4,8 @@
     flex-direction: column;
   }
   &__product-container {
-    width: 70%;
-    height: 100px;
+    width: 80%;
+    // height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -32,7 +32,6 @@
   }
 
   &__product-img-container {
-    height: 100%;
     width: 150px;
     position: relative;
     overflow: hidden;

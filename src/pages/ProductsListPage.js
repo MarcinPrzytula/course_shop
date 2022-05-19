@@ -16,7 +16,6 @@ const ProductsListPage = () => {
   }, [dispatch]);
 
   const courses = useSelector(store => store.courses);
-  console.log(courses);
 
   const [toggleCategoryList, setToggleCategoryList] =
     useState('');
@@ -59,7 +58,7 @@ const ProductsListPage = () => {
       )
     )
   );
-  console.log(productsList);
+
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
       item.title.toLowerCase().includes(value.toLowerCase())
@@ -168,25 +167,21 @@ const ProductsListPage = () => {
     } else {
       return (
         <div className="productsList__loader_container">
-          <span>
-            PLEASE WAIT STARTING THE SERVER AND LOADING
-            RESOURCES FROM THE DATABASE{' '}
-          </span>
-          <div class="productsList__loader"></div>
+          <span>LOADING PAGE</span>
+          <div className="productsList__loader"></div>
         </div>
       );
     }
   };
   return (
     <>
-      <div>
-        <input
-          type="text"
-          className="productsList__searchInput"
-          onChange={e => searchCourse(e.target.value)}
-          placeholder="Search for names.."
-        />
-      </div>
+      <input
+        type="text"
+        className="productsList__searchInput"
+        onChange={e => searchCourse(e.target.value)}
+        placeholder="Search for names.."
+      />
+
       <button
         className="productsList__button"
         onClick={() =>

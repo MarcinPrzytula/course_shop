@@ -20,8 +20,6 @@ function LoginPage() {
 
   const history = useHistory();
 
-  const errorActive = null;
-
   const submit = userLoginData => {
     const { formLogin, formPassword } = userLoginData;
     const URL = process.env.REACT_APP_API
@@ -59,68 +57,64 @@ function LoginPage() {
   };
 
   const loginPanel = (
-    <Formik
-      initialValues={{
-        formLogin: '',
-        formPassword: '',
-      }}
-      validate={values => validateForm(values)}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
-        submit(values);
-        resetForm();
-      }}
-    >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <div className="login">
-            {errorActive ? (
-              <div>
-                The wrong username or password was entered
+    <>
+      <div className="panel__user-info">
+        <span>Log in to your account!</span>
+      </div>
+      <Formik
+        initialValues={{
+          formLogin: '',
+          formPassword: '',
+        }}
+        validate={values => validateForm(values)}
+        onSubmit={(
+          values,
+          { setSubmitting, resetForm }
+        ) => {
+          submit(values);
+          resetForm();
+        }}
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <div className="login">
+              <div className="loginPage__loginWrapper">
+                <ErrorMessage
+                  name="formLogin"
+                  component="div"
+                />
               </div>
-            ) : null}
 
-            <div>
-              <ErrorMessage
-                name="newError"
-                component="div"
-              />
-            </div>
-            <div className="loginPage__loginWrapper">
-              <ErrorMessage
+              <span>Login</span>
+              <Field
+                className="loginPage__input"
                 name="formLogin"
-                component="div"
+                placeholder="login"
               />
             </div>
-
-            <span>Login</span>
-            <Field
-              className="loginPage__input"
-              name="formLogin"
-              placeholder="login"
-            />
-          </div>
-          <div className="password">
-            <ErrorMessage
-              name="formPassword"
-              component="div"
-            />
-            <span>Password</span>
-            <Field
-              className="loginPage__input"
-              placeholder="password"
-              name="formPassword"
-              type="password"
-            />
-          </div>
-          <button
-            className="loginPage__button"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      )}
-    </Formik>
+            <div className="password">
+              <ErrorMessage
+                name="formPassword"
+                component="div"
+              />
+              <span>Password</span>
+              <Field
+                className="loginPage__input"
+                placeholder="password"
+                name="formPassword"
+                type="password"
+              />
+            </div>
+            <button
+              className="loginPage__button"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        )}
+      </Formik>
+    </>
   );
   return <>{loginPanel}</>;
 }

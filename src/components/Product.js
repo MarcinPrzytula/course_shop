@@ -17,7 +17,6 @@ import StarRatings from 'react-star-ratings';
 import '../styles/Product.scss';
 
 import img from '../assets/images/img1.PNG';
-// import vid from '../../assets/videos/vid1.mp4';
 
 const ProductInProductsList = ({
   title,
@@ -211,12 +210,16 @@ const ProductInProductsList = ({
                 initialValues={{
                   formValue: '',
                 }}
-                validate={formValue => {
+                validate={values => {
                   const errors = {};
-                  if (formValue.length < 3) {
+                  if (values.formValue.length < 10) {
                     errors.formValue =
-                      'Enter login (minimum 3 characters)';
+                      'Enter comment (minimum 10 characters)';
+                  } else if (rating === 0) {
+                    errors.formValue =
+                      'Rate a course from 1 to 5';
                   }
+
                   return errors;
                 }}
                 onSubmit={(

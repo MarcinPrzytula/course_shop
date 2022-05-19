@@ -24,6 +24,13 @@
       color: black;
     }
   }
+
+  &__user-info {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   &__list {
     height: 50px;
     display: flex;
