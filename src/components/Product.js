@@ -104,15 +104,25 @@ const ProductInProductsList = ({
 
     return (
       <>
-        <StarRatings
-          rating={Number(score)}
-          starRatedColor="blue"
-          starEmptyColor="white"
-          numberOfStars={5}
-          name="rating"
-          starDimension="30px"
-          starSpacing="5px"
-        />
+        {user &&
+        checkIfTheCourseIsBought &&
+        checkIfTheUserHasRated
+          ? `You have rated this course on ${checkIfTheUserHasRated.rating}`
+          : 'Click on the stars to rate the course'}
+        <button
+          className="test"
+          onClick={() => setShowEditModal(true)}
+        >
+          <StarRatings
+            rating={Number(score)}
+            starRatedColor="blue"
+            starEmptyColor="white"
+            numberOfStars={5}
+            name="rating"
+            starDimension="30px"
+            starSpacing="5px"
+          />
+        </button>
         <div>
           {score}/5 Opinions(
           {actuallyCourse.rating.length})
@@ -173,12 +183,12 @@ const ProductInProductsList = ({
       return (
         // <div id="modal">
         <div>
-          <button
+          {/* <button
             className="product__button"
             onClick={() => setShowEditModal(true)}
           >
             Rating and comment this course
-          </button>
+          </button> */}
 
           <Modal
             ariaHideApp={false}
@@ -267,13 +277,13 @@ const ProductInProductsList = ({
           </Modal>
         </div>
       );
-    } else if (
+    } /*else if (
       user &&
       checkIfTheCourseIsBought &&
       checkIfTheUserHasRated
     ) {
       return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
-    }
+    }*/
   };
 
   return (
