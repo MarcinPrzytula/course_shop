@@ -5,6 +5,17 @@
   margin: 5px;
   text-align: center;
 
+  &__icon-course-status-buyed {
+    color: green;
+  }
+
+  &__icon-course-add-to-cart {
+    background: none;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+  }
+
   &__commentList {
     &_userComment {
       margin: 20px 5px;

@@ -18,6 +18,11 @@ import '../styles/Product.scss';
 
 import img from '../assets/images/img1.PNG';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCheck,
+  faCartPlus,
+} from '@fortawesome/free-solid-svg-icons';
 const ProductInProductsList = ({
   title,
   price,
@@ -73,16 +78,20 @@ const ProductInProductsList = ({
           </button>
         );
       } else if (checkIfTheCourseIsBought) {
-        return <span>You already have this course</span>;
+        return (
+          <div className="product__icon-course-status-buyed ">
+            <FontAwesomeIcon icon={faCheck} />
+          </div>
+        );
       } else
         return (
           <button
-            className="product__button"
+            className="product__icon-course-add-to-cart"
             onClick={() => {
               dispatch(addCourseToShoppingCart(_id));
             }}
           >
-            <span>Add the product to your cart</span>
+            <FontAwesomeIcon icon={faCartPlus} />
           </button>
         );
     } else return 'Log in if you want to buy a course';

@@ -6,7 +6,10 @@ import { useLocation, NavLink } from 'react-router-dom';
 import '../styles/Navigation.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCartShopping,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const ref = useRef();
@@ -65,21 +68,27 @@ const Navigation = () => {
     if (user) {
       if (user.shoppingCart.length > 0) {
         return (
-          <div className="navigation__cart navigation__shoppingCtActive">
-            <FontAwesomeIcon icon={faCartPlus} />
+          <div
+            className="navigation__cart navigation__shoppingCtActive fa-stack"
+            data-count={user.shoppingCart.length}
+          >
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              //   className="fa-stack"
+            />
           </div>
         );
       } else {
         return (
           <div className="navigation__cart ">
-            <FontAwesomeIcon icon={faCartPlus} />
+            <FontAwesomeIcon icon={faCartShopping} />
           </div>
         );
       }
     } else {
       return (
         <div className="navigation__cart ">
-          <FontAwesomeIcon icon={faCartPlus} />
+          <FontAwesomeIcon icon={faCartShopping} />
         </div>
       );
     }
