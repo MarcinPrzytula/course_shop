@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -23,6 +23,7 @@ import {
   faCheck,
   faCartPlus,
 } from '@fortawesome/free-solid-svg-icons';
+
 const ProductInProductsList = ({
   title,
   price,
@@ -35,8 +36,7 @@ const ProductInProductsList = ({
 
   const [rating, setRating] = useState(0);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showEditModal2, setShowEditModal2] =
-    useState(false);
+
   const { user, courses } = useSelector(store => store);
 
   const actuallyCourse = courses.find(
@@ -46,6 +46,8 @@ const ProductInProductsList = ({
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
   let checkIfTheCourseInCart = '';
+
+  const infoRef = useRef(null);
 
   if (user) {
     checkIfTheCourseInCart = user.shoppingCart.find(
@@ -94,7 +96,24 @@ const ProductInProductsList = ({
             <FontAwesomeIcon icon={faCartPlus} />
           </button>
         );
-    } else return 'Log in if you want to buy a course';
+    } else
+      return (
+        <button
+          className="product__icon-course-add-to-cart"
+          onMouseOver={() => {
+            console.log(infoRef.current.className);
+            infoRef.current.classList.add('active-info');
+          }}
+          onMouseOut={() => {
+            infoRef.current.classList.remove('active-info');
+          }}
+        >
+          <div ref={infoRef} className="test2">
+            Log in if you want to buy a course
+          </div>
+          <FontAwesomeIcon icon={faCartPlus} />
+        </button>
+      );
   };
 
   const ratingBoard = () => {
@@ -113,16 +132,6 @@ const ProductInProductsList = ({
 
     return (
       <>
-        {user &&
-        checkIfTheCourseIsBought &&
-        checkIfTheUserHasRated
-          ? `You have rated this course on ${checkIfTheUserHasRated.rating}`
-          : null}
-        {user &&
-        checkIfTheCourseIsBought &&
-        !checkIfTheUserHasRated
-          ? `Click on stars to rate`
-          : null}
         <button
           className="test"
           onClick={() => setShowEditModal(true)}
@@ -136,84 +145,20 @@ const ProductInProductsList = ({
             starDimension="30px"
             starSpacing="5px"
           />
+          {score}/5 ({actuallyCourse.rating.length})
         </button>
-        <div>
-          {score}/5 Opinions(
-          {actuallyCourse.rating.length})
-        </div>
-        {/* <div id="modal"> */}
-        <div>
-          <button
-            className="product__button"
-            onClick={() => setShowEditModal2(true)}
-          >
-            View opinions
-          </button>
-
-          <Modal
-            ariaHideApp={false}
-            className="product__modal"
-            isOpen={showEditModal2}
-          >
-            <button
-              className="product__button product__button-right"
-              onClick={() => setShowEditModal2(false)}
-            >
-              X
-            </button>
-            <div className="product__commentsList">
-              {actuallyCourse.rating.length > 0
-                ? actuallyCourse.rating.map(
-                    ({ rating, comment, userLogin }) => {
-                      return (
-                        <div
-                          className="product__commentList_userComment"
-                          key={comment}
-                        >
-                          <div>author: {userLogin} </div>
-                          comment:
-                          <div className="product__commentList_userComment_input">
-                            {comment}
-                          </div>
-                          <div> rating: {rating}</div>
-                        </div>
-                      );
-                    }
-                  )
-                : 'dont have opinions'}
-            </div>
-          </Modal>
-        </div>
       </>
     );
   };
   const userRatingPanel = () => {
-    if (
-      user &&
-      checkIfTheCourseIsBought &&
-      !checkIfTheUserHasRated
-    ) {
-      return (
-        // <div id="modal">
-        <div>
-          {/* <button
-            className="product__button"
-            onClick={() => setShowEditModal(true)}
-          >
-            Rating and comment this course
-          </button> */}
-
-          <Modal
-            ariaHideApp={false}
-            className="product__modal"
-            isOpen={showEditModal}
-          >
-            <button
-              className="product__button product__button product__button-right"
-              onClick={() => setShowEditModal(false)}
-            >
-              X
-            </button>
+    const ratingPanel = () => {
+      if (
+        user &&
+        checkIfTheCourseIsBought &&
+        !checkIfTheUserHasRated
+      ) {
+        return (
+          <>
             <div className="product__rating">
               <div className="product__title">Ratio:</div>
               <StarRatings
@@ -287,16 +232,52 @@ const ProductInProductsList = ({
                 )}
               </Formik>
             </div>
-          </Modal>
-        </div>
-      );
-    } /*else if (
-      user &&
-      checkIfTheCourseIsBought &&
-      checkIfTheUserHasRated
-    ) {
-      return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
-    }*/
+          </>
+        );
+      } else {
+        return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
+      }
+    };
+    return (
+      <div>
+        <Modal
+          ariaHideApp={false}
+          className="product__modal"
+          isOpen={showEditModal}
+        >
+          <button
+            className="product__button product__button-right"
+            onClick={() => setShowEditModal(false)}
+          >
+            X
+          </button>
+
+          {ratingPanel()}
+
+          <div className="product__commentsList">
+            {actuallyCourse.rating.length > 0
+              ? actuallyCourse.rating.map(
+                  ({ rating, comment, userLogin }) => {
+                    return (
+                      <div
+                        className="product__commentList_userComment"
+                        key={comment}
+                      >
+                        <div>author: {userLogin} </div>
+                        comment:
+                        <div className="product__commentList_userComment_input">
+                          {comment}
+                        </div>
+                        <div> rating: {rating}</div>
+                      </div>
+                    );
+                  }
+                )
+              : 'dont have opinions'}
+          </div>
+        </Modal>
+      </div>
+    );
   };
 
   return (

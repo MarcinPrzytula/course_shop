@@ -69,7 +69,7 @@ const Navigation = () => {
       if (user.shoppingCart.length > 0) {
         return (
           <div
-            className="navigation__cart navigation__shoppingCtActive fa-stack"
+            className="navigation__cart navigation__cart--active  fa-stack"
             data-count={user.shoppingCart.length}
           >
             <FontAwesomeIcon

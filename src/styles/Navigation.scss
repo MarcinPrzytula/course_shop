@@ -1,6 +1,7 @@
 .navigation {
   user-select: none;
   width: 65%;
+
   &__button {
     display: block;
     font-size: 20px;
@@ -26,6 +27,7 @@
     height: 50px;
     list-style: none;
   }
+
   &__item-wraper {
     display: flex;
     width: 30%;
@@ -36,6 +38,7 @@
     border-bottom: 5px gray solid;
     padding-top: 5px;
   }
+
   &__item {
     text-decoration: none;
     text-transform: uppercase;
@@ -46,19 +49,15 @@
   &__burger {
     display: none;
   }
+
   &__cart {
     font-size: 20px;
+    &--active {
+      color: red;
+    }
   }
-  &__shoppingCtActive {
-    color: red;
-  }
 }
-.desktopOnly {
-  display: block;
-}
-.telOnly {
-  display: none;
-}
+
 .fa-stack[data-count]:after {
   position: absolute;
   right: 25%;
@@ -73,6 +72,14 @@
   min-width: 1em;
   background: white;
   border: 1px solid red;
+}
+
+.desktopOnly {
+  display: block;
+}
+
+.telOnly {
+  display: none;
 }
 
 @media (max-width: 320px) {
@@ -122,21 +129,3 @@
     right: 0%;
   }
 }
-
-.overlay {
-  position: fixed;
-  top: 20;
-  left: 20;
-  right: 20;
-  bottom: 20;
-  background-color: rebeccapurple;
-}
-// .modal {
-//   width: 300px;
-//   height: 300px;
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   background-color: white;
-// }
