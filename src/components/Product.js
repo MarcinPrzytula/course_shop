@@ -234,8 +234,14 @@ const ProductInProductsList = ({
             </div>
           </>
         );
-      } else {
+      } else if (
+        user &&
+        checkIfTheCourseIsBought &&
+        checkIfTheUserHasRated
+      ) {
         return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
+      } else {
+        return `Buy this course if you want add rate`;
       }
     };
     return (
