@@ -306,10 +306,7 @@ const ProductInProductsList = ({
               actuallyCourse.rating.map(
                 ({ rating, comment, userLogin }) => {
                   return (
-                    <div
-                      className="modal__rating"
-                      key={comment}
-                    >
+                    <div className="modal__rating">
                       <div>author: {userLogin} </div>
                       <div>comment: {comment}</div>
                       <div>rating: {rating}</div>
