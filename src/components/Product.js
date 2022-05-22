@@ -63,7 +63,31 @@ const ProductInProductsList = ({
   const courseStatus = () => {
     if (user) {
       if (checkIfTheCourseInCart) {
-        return 'The course has been added to the cart';
+        return (
+          <>
+            <div
+              ref={infoRef}
+              className="product__log-out-user-info"
+            >
+              The course is already in the basket
+            </div>
+            <button
+              className="product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active"
+              onMouseOver={() => {
+                infoRef.current.classList.add(
+                  'product__log-out-user-info--active'
+                );
+              }}
+              onMouseOut={() => {
+                infoRef.current.classList.remove(
+                  'product__log-out-user-info--active'
+                );
+              }}
+            >
+              <FontAwesomeIcon icon={faCartPlus} />
+            </button>
+          </>
+        );
       } else if (
         checkIfTheCourseIsBought &&
         window.location.href.includes('user_panel')
@@ -99,17 +123,22 @@ const ProductInProductsList = ({
     } else
       return (
         <>
-          <div ref={infoRef} className="test2">
+          <div
+            ref={infoRef}
+            className="product__log-out-user-info"
+          >
             Log in if you want to buy a course
           </div>
           <button
-            className="product__icon-course-add-to-cart"
-            onClick={() => {
-              infoRef.current.classList.add('active-info');
+            className="product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active"
+            onMouseOver={() => {
+              infoRef.current.classList.add(
+                'product__log-out-user-info--active'
+              );
             }}
             onMouseOut={() => {
               infoRef.current.classList.remove(
-                'active-info'
+                'product__log-out-user-info--active'
               );
             }}
           >
@@ -136,7 +165,7 @@ const ProductInProductsList = ({
     return (
       <>
         <button
-          className="test"
+          className="product__rating-stars"
           onClick={() => setShowEditModal(true)}
         >
           <StarRatings
@@ -242,16 +271,25 @@ const ProductInProductsList = ({
         checkIfTheCourseIsBought &&
         checkIfTheUserHasRated
       ) {
-        return `You have rated this course on ${checkIfTheUserHasRated.rating}`;
+        return (
+          <div className="modal__user-rate">
+            You have rated this course on:{' '}
+            {checkIfTheUserHasRated.rating}
+          </div>
+        );
       } else {
-        return `Buy this course if you want add rate`;
+        return (
+          <div className="modal__user-rate">
+            Buy this course if you want add rate
+          </div>
+        );
       }
     };
     return (
       <div>
         <Modal
           ariaHideApp={false}
-          className="product__modal"
+          className="modal"
           isOpen={showEditModal}
         >
           <button
@@ -263,26 +301,27 @@ const ProductInProductsList = ({
 
           {ratingPanel()}
 
-          <div className="product__commentsList">
-            {actuallyCourse.rating.length > 0
-              ? actuallyCourse.rating.map(
-                  ({ rating, comment, userLogin }) => {
-                    return (
-                      <div
-                        className="product__commentList_userComment"
-                        key={comment}
-                      >
-                        <div>author: {userLogin} </div>
-                        comment:
-                        <div className="product__commentList_userComment_input">
-                          {comment}
-                        </div>
-                        <div> rating: {rating}</div>
-                      </div>
-                    );
-                  }
-                )
-              : 'dont have opinions'}
+          <div className="modal__ratings-list">
+            {actuallyCourse.rating.length > 0 ? (
+              actuallyCourse.rating.map(
+                ({ rating, comment, userLogin }) => {
+                  return (
+                    <div
+                      className="modal__rating"
+                      key={comment}
+                    >
+                      <div>author: {userLogin} </div>
+                      <div>comment: {comment}</div>
+                      <div>rating: {rating}</div>
+                    </div>
+                  );
+                }
+              )
+            ) : (
+              <div className="modal__rating">
+                dont have opinions
+              </div>
+            )}
           </div>
         </Modal>
       </div>

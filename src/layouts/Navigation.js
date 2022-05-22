@@ -6,10 +6,7 @@ import { useLocation, NavLink } from 'react-router-dom';
 import '../styles/Navigation.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCartShopping,
-  faCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
   const ref = useRef();
