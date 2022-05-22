@@ -124,14 +124,16 @@
 
 .test2 {
   position: absolute;
-  top: 120%;
+  width: 75%;
+  top: -40%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   opacity: 0%;
   background-color: white;
   border: 1px solid black;
   padding: 3px;
   transition: 0.3s;
+  font-size: 12px;
 }
 .active-info {
   opacity: 100%;

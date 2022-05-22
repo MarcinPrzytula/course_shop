@@ -98,21 +98,24 @@ const ProductInProductsList = ({
         );
     } else
       return (
-        <button
-          className="product__icon-course-add-to-cart"
-          onMouseOver={() => {
-            console.log(infoRef.current.className);
-            infoRef.current.classList.add('active-info');
-          }}
-          onMouseOut={() => {
-            infoRef.current.classList.remove('active-info');
-          }}
-        >
+        <>
           <div ref={infoRef} className="test2">
             Log in if you want to buy a course
           </div>
-          <FontAwesomeIcon icon={faCartPlus} />
-        </button>
+          <button
+            className="product__icon-course-add-to-cart"
+            onClick={() => {
+              infoRef.current.classList.add('active-info');
+            }}
+            onMouseOut={() => {
+              infoRef.current.classList.remove(
+                'active-info'
+              );
+            }}
+          >
+            <FontAwesomeIcon icon={faCartPlus} />
+          </button>
+        </>
       );
   };
 
