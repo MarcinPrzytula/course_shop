@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/course_shop/static/css/main.de5b8b7d.chunk.css",
-    "main.js": "/course_shop/static/js/main.9757f5e1.chunk.js",
-    "main.js.map": "/course_shop/static/js/main.9757f5e1.chunk.js.map",
+    "main.css": "/course_shop/static/css/main.7dc80667.chunk.css",
+    "main.js": "/course_shop/static/js/main.108b7a4d.chunk.js",
+    "main.js.map": "/course_shop/static/js/main.108b7a4d.chunk.js.map",
     "runtime-main.js": "/course_shop/static/js/runtime-main.0767c3c6.js",
     "runtime-main.js.map": "/course_shop/static/js/runtime-main.0767c3c6.js.map",
-    "static/js/2.1f67c812.chunk.js": "/course_shop/static/js/2.1f67c812.chunk.js",
-    "static/js/2.1f67c812.chunk.js.map": "/course_shop/static/js/2.1f67c812.chunk.js.map",
+    "static/js/2.87503f0b.chunk.js": "/course_shop/static/js/2.87503f0b.chunk.js",
+    "static/js/2.87503f0b.chunk.js.map": "/course_shop/static/js/2.87503f0b.chunk.js.map",
     "index.html": "/course_shop/index.html",
-    "static/css/main.de5b8b7d.chunk.css.map": "/course_shop/static/css/main.de5b8b7d.chunk.css.map",
-    "static/js/2.1f67c812.chunk.js.LICENSE.txt": "/course_shop/static/js/2.1f67c812.chunk.js.LICENSE.txt",
+    "static/css/main.7dc80667.chunk.css.map": "/course_shop/static/css/main.7dc80667.chunk.css.map",
+    "static/js/2.87503f0b.chunk.js.LICENSE.txt": "/course_shop/static/js/2.87503f0b.chunk.js.LICENSE.txt",
     "static/media/img1.52a5b6fa.PNG": "/course_shop/static/media/img1.52a5b6fa.PNG",
     "static/media/vid1.17cf6613.mp4": "/course_shop/static/media/vid1.17cf6613.mp4"
   },
   "entrypoints": [
     "static/js/runtime-main.0767c3c6.js",
-    "static/js/2.1f67c812.chunk.js",
-    "static/css/main.de5b8b7d.chunk.css",
-    "static/js/main.9757f5e1.chunk.js"
+    "static/js/2.87503f0b.chunk.js",
+    "static/css/main.7dc80667.chunk.css",
+    "static/js/main.108b7a4d.chunk.js"
   ]
 }
