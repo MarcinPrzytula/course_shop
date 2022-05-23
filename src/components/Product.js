@@ -19,18 +19,9 @@ import '../styles/Product.scss';
 import img from '../assets/images/img1.PNG';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCheck,
-  faCartPlus,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
-const ProductInProductsList = ({
-  title,
-  price,
-  authors,
-  _id,
-  category,
-}) => {
+const ProductInProductsList = ({ title, price, authors, _id, category }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -39,15 +30,13 @@ const ProductInProductsList = ({
 
   const { user, courses } = useSelector(store => store);
 
-  const actuallyCourse = courses.find(
-    course => course._id === _id
-  );
+  const actuallyCourse = courses.find(course => course._id === _id);
+
+  const infoRef = useRef(null);
 
   let checkIfTheUserHasRated = '';
   let checkIfTheCourseIsBought = '';
   let checkIfTheCourseInCart = '';
-
-  const infoRef = useRef(null);
 
   if (user) {
     checkIfTheCourseInCart = user.shoppingCart.find(
@@ -60,35 +49,39 @@ const ProductInProductsList = ({
       item => item.userLogin === user.login
     );
   }
+
   const courseStatus = () => {
+    const courseStatusButtonInfo = ({
+      info,
+      optionalClickEvent,
+      classes,
+      icon,
+    }) => {
+      return (
+        <>
+          <div ref={infoRef} className="product__status-course">
+            {info}
+          </div>
+          <button
+            onClick={optionalClickEvent}
+            className={classes}
+            onMouseOver={() => {
+              infoRef.current.classList.add('product__status-course--active');
+            }}
+            onMouseOut={() => {
+              infoRef.current.classList.remove(
+                'product__status-course--active'
+              );
+            }}
+          >
+            <FontAwesomeIcon icon={icon} />
+          </button>
+        </>
+      );
+    };
+
     if (user) {
-      if (checkIfTheCourseInCart) {
-        return (
-          <>
-            <div
-              ref={infoRef}
-              className="product__log-out-user-info"
-            >
-              The course is already in the basket
-            </div>
-            <button
-              className="product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active"
-              onMouseOver={() => {
-                infoRef.current.classList.add(
-                  'product__log-out-user-info--active'
-                );
-              }}
-              onMouseOut={() => {
-                infoRef.current.classList.remove(
-                  'product__log-out-user-info--active'
-                );
-              }}
-            >
-              <FontAwesomeIcon icon={faCartPlus} />
-            </button>
-          </>
-        );
-      } else if (
+      if (
         checkIfTheCourseIsBought &&
         window.location.href.includes('user_panel')
       ) {
@@ -104,48 +97,39 @@ const ProductInProductsList = ({
           </button>
         );
       } else if (checkIfTheCourseIsBought) {
-        return (
-          <div className="product__icon-course-status-buyed ">
-            <FontAwesomeIcon icon={faCheck} />
-          </div>
-        );
-      } else
-        return (
-          <button
-            className="product__icon-course-add-to-cart"
-            onClick={() => {
-              dispatch(addCourseToShoppingCart(_id));
-            }}
-          >
-            <FontAwesomeIcon icon={faCartPlus} />
-          </button>
-        );
-    } else
-      return (
-        <>
-          <div
-            ref={infoRef}
-            className="product__log-out-user-info"
-          >
-            Log in if you want to buy a course
-          </div>
-          <button
-            className="product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active"
-            onMouseOver={() => {
-              infoRef.current.classList.add(
-                'product__log-out-user-info--active'
-              );
-            }}
-            onMouseOut={() => {
-              infoRef.current.classList.remove(
-                'product__log-out-user-info--active'
-              );
-            }}
-          >
-            <FontAwesomeIcon icon={faCartPlus} />
-          </button>
-        </>
-      );
+        return courseStatusButtonInfo({
+          info: 'You bought this course',
+          optionalClickEvent: null,
+          classes: 'product__icon-course-status-buyed',
+          icon: faCheck,
+        });
+      } else if (checkIfTheCourseInCart) {
+        return courseStatusButtonInfo({
+          info: 'The course is already in the basket',
+          optionalClickEvent: null,
+          classes:
+            'product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active',
+          icon: faCartPlus,
+        });
+      } else if (!checkIfTheCourseInCart) {
+        return courseStatusButtonInfo({
+          info: 'Click if you want add to cart',
+          optionalClickEvent: () => {
+            dispatch(addCourseToShoppingCart(_id));
+          },
+          classes: 'product__icon-course-add-to-cart',
+          icon: faCartPlus,
+        });
+      }
+    } else {
+      return courseStatusButtonInfo({
+        info: 'Log in if you want to buy a course',
+        optionalClickEvent: null,
+        classes:
+          'product__icon-course-add-to-cart product__icon-course-add-to-cart--no-active',
+        icon: faCartPlus,
+      });
+    }
   };
 
   const ratingBoard = () => {
@@ -184,11 +168,7 @@ const ProductInProductsList = ({
   };
   const userRatingPanel = () => {
     const ratingPanel = () => {
-      if (
-        user &&
-        checkIfTheCourseIsBought &&
-        !checkIfTheUserHasRated
-      ) {
+      if (user && checkIfTheCourseIsBought && !checkIfTheUserHasRated) {
         return (
           <>
             <div className="product__rating">
@@ -213,40 +193,23 @@ const ProductInProductsList = ({
                 validate={values => {
                   const errors = {};
                   if (values.formValue.length < 10) {
-                    errors.formValue =
-                      'Enter comment (minimum 10 characters)';
+                    errors.formValue = 'Enter comment (minimum 10 characters)';
                   } else if (rating === 0) {
-                    errors.formValue =
-                      'Rate a course from 1 to 5';
+                    errors.formValue = 'Rate a course from 1 to 5';
                   }
 
                   return errors;
                 }}
-                onSubmit={(
-                  values,
-                  { setSubmitting, resetForm }
-                ) => {
-                  dispatch(
-                    addRating(
-                      _id,
-                      user.login,
-                      rating,
-                      values
-                    )
-                  );
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  dispatch(addRating(_id, user.login, rating, values));
                   resetForm();
                 }}
               >
                 {({ handleSubmit }) => (
                   <form onSubmit={handleSubmit}>
                     <div className="formValue">
-                      <div className="product__title">
-                        Comment:
-                      </div>
-                      <ErrorMessage
-                        name="formValue"
-                        component="div"
-                      />
+                      <div className="product__title">Comment:</div>
+                      <ErrorMessage name="formValue" component="div" />
                       <Field
                         className="product__formInput"
                         name="formValue"
@@ -254,10 +217,7 @@ const ProductInProductsList = ({
                         component="textarea"
                       />
                     </div>
-                    <button
-                      className="product__button"
-                      type="submit"
-                    >
+                    <button className="product__button" type="submit">
                       Submit
                     </button>
                   </form>
@@ -266,15 +226,10 @@ const ProductInProductsList = ({
             </div>
           </>
         );
-      } else if (
-        user &&
-        checkIfTheCourseIsBought &&
-        checkIfTheUserHasRated
-      ) {
+      } else if (user && checkIfTheCourseIsBought && checkIfTheUserHasRated) {
         return (
           <div className="modal__user-rate">
-            You have rated this course on:{' '}
-            {checkIfTheUserHasRated.rating}
+            You have rated this course on: {checkIfTheUserHasRated.rating}
           </div>
         );
       } else {
@@ -287,11 +242,7 @@ const ProductInProductsList = ({
     };
     return (
       <div>
-        <Modal
-          ariaHideApp={false}
-          className="modal"
-          isOpen={showEditModal}
-        >
+        <Modal ariaHideApp={false} className="modal" isOpen={showEditModal}>
           <button
             className="product__button product__button-right"
             onClick={() => setShowEditModal(false)}
@@ -303,21 +254,17 @@ const ProductInProductsList = ({
 
           <div className="modal__ratings-list">
             {actuallyCourse.rating.length > 0 ? (
-              actuallyCourse.rating.map(
-                ({ rating, comment, userLogin }) => {
-                  return (
-                    <div className="modal__rating">
-                      <div>author: {userLogin} </div>
-                      <div>comment: {comment}</div>
-                      <div>rating: {rating}</div>
-                    </div>
-                  );
-                }
-              )
+              actuallyCourse.rating.map(({ rating, comment, userLogin }) => {
+                return (
+                  <div className="modal__rating">
+                    <div>author: {userLogin} </div>
+                    <div>comment: {comment}</div>
+                    <div>rating: {rating}</div>
+                  </div>
+                );
+              })
             ) : (
-              <div className="modal__rating">
-                dont have opinions
-              </div>
+              <div className="modal__rating">dont have opinions</div>
             )}
           </div>
         </Modal>
@@ -347,9 +294,7 @@ const ProductInProductsList = ({
       </div>
       <div className="product__rating">{ratingBoard()}</div>
       {userRatingPanel()}
-      <div className="product__status">
-        {courseStatus()}
-      </div>
+      <div className="product__status">{courseStatus()}</div>
     </div>
   );
 };
