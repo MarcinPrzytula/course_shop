@@ -5,49 +5,7 @@
   margin: 5px;
   text-align: center;
 
-  &__status {
-    position: relative;
-    padding-top: 15px;
-    font-weight: bold;
-  }
-
-  &__icon-course-status-buyed {
-    color: green;
-    background: none;
-    border: none;
-  }
-
-  &__icon-course-add-to-cart {
-    background: none;
-    font-size: 22px;
-    border: none;
-    cursor: pointer;
-    &--no-active {
-      color: grey;
-    }
-  }
-
-  &__status-course {
-    position: absolute;
-    white-space: nowrap;
-    top: -20%;
-    left: 50%;
-    transform: translate(-50%);
-    opacity: 0;
-    background-color: white;
-    border: 1px solid black;
-    padding: 3px;
-    transition: 0.3s;
-    font-size: 12px;
-    &--active {
-      opacity: 0.99;
-      background-color: white;
-      border: 1px solid black;
-      padding: 3px;
-    }
-  }
-
-  &__button {
+  &__button-right {
     background-color: black;
     border: 1px solid black;
     border-radius: 5px;
@@ -57,24 +15,37 @@
     user-select: none;
     cursor: pointer;
     transition: 0.3s;
+    position: absolute;
+    top: 1%;
+    right: 1%;
     &:hover {
       background-color: white;
       color: black;
     }
-    &-right {
-      position: absolute;
-      top: 1%;
-      right: 1%;
+  }
+
+  &__icon-course-status-buyed {
+    color: green;
+    background: none;
+    border: none;
+  }
+
+  &__icon-course-status-add-to-cart {
+    background: none;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    &--no-active {
+      color: grey;
     }
   }
 
-  &__biggerButton {
-    font-size: 20px;
-    color: yellow;
-    &:hover {
-      background-color: yellow;
-      color: black;
-    }
+  &__icon-course-status-in-user-panel {
+    background: none;
+    border: none;
+    font-size: 36px;
+    color: rgb(215, 60, 60);
+    cursor: pointer;
   }
 
   &__title {
@@ -121,6 +92,32 @@
     width: 100%;
     background: none;
     border: none;
+  }
+
+  &__status {
+    position: relative;
+    padding-top: 15px;
+    font-weight: bold;
+  }
+
+  &__status-course {
+    position: absolute;
+    white-space: nowrap;
+    top: -20%;
+    left: 50%;
+    transform: translate(-50%);
+    opacity: 0;
+    background-color: white;
+    border: 1px solid black;
+    padding: 3px;
+    transition: 0.3s;
+    font-size: 12px;
+    &--active {
+      opacity: 0.99;
+      background-color: white;
+      border: 1px solid black;
+      padding: 3px;
+    }
   }
 }
 
