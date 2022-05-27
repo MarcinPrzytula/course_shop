@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeCourseFromShoppingCart } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
-import img from '../assets/images/img1.PNG';
+import advanced_english_img from '../assets/images/advanced_english.jpg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -31,39 +31,32 @@ const ShoppingCartPage = () => {
       return (
         <>
           <div className="shoppingCart__productsList">
-            {coursesInShoppingCart.map(
-              ({ authors, price, title, _id }) => (
-                <div
-                  key={_id}
-                  className="shoppingCart__product-container"
-                >
-                  <div className="shoppingCart__product-img-container">
-                    <img
-                      className="shoppingCart__product-img"
-                      src={img}
-                      alt="product "
-                    />
-                  </div>
-
-                  <div className="shoppingCart__product-info">
-                    <span>Title: {title}</span>
-                    <span> Price: {price}</span>
-                    <span> Author: {authors}</span>
-                  </div>
-
-                  <button
-                    className="shoppingCart__product-delete_button"
-                    onClick={() => {
-                      dispatch(
-                        removeCourseFromShoppingCart(_id)
-                      );
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
+            {coursesInShoppingCart.map(({ authors, price, title, _id }) => (
+              <div key={_id} className="shoppingCart__product-container">
+                <div className="shoppingCart__product-img-container">
+                  <img
+                    className="shoppingCart__product-img"
+                    src={advanced_english_img}
+                    alt="product "
+                  />
                 </div>
-              )
-            )}
+
+                <div className="shoppingCart__product-info">
+                  <span>Title: {title}</span>
+                  <span> Price: {price}</span>
+                  <span> Author: {authors}</span>
+                </div>
+
+                <button
+                  className="shoppingCart__product-delete_button"
+                  onClick={() => {
+                    dispatch(removeCourseFromShoppingCart(_id));
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </div>
+            ))}
           </div>
           <button
             className="shoppingCart__button"
@@ -77,8 +70,7 @@ const ShoppingCartPage = () => {
       );
     } else if (coursesInShoppingCart.length === 0 && user) {
       return " You haven't added any product to your cart yet";
-    } else
-      return 'Log in if you want to have access to the product basket';
+    } else return 'Log in if you want to have access to the product basket';
   };
 
   return render();

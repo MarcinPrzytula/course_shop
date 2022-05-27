@@ -17,10 +17,8 @@ const ProductsListPage = () => {
 
   const courses = useSelector(store => store.courses);
 
-  const [toggleCategoryList, setToggleCategoryList] =
-    useState('');
-  const [selectedCategory, setSelectedCategory] =
-    useState('');
+  const [toggleCategoryList, setToggleCategoryList] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const firstRenderProducts = courses.map(
     ({ authors, price, title, _id, rating, category }) => (
@@ -37,43 +35,27 @@ const ProductsListPage = () => {
   );
 
   const [productsList, setProductList] = useState(
-    courses.map(
-      ({
-        authors,
-        price,
-        title,
-        _id,
-        rating,
-        category,
-      }) => (
-        <Product
-          key={_id}
-          _id={_id}
-          authors={authors}
-          title={title}
-          price={price}
-          rating={rating}
-          category={category}
-        />
-      )
-    )
+    courses.map(({ authors, price, title, _id, rating, category }) => (
+      <Product
+        key={_id}
+        _id={_id}
+        authors={authors}
+        title={title}
+        price={price}
+        rating={rating}
+        category={category}
+      />
+    ))
   );
 
   const searchCourse = value => {
     const filterCourses = courses.filter(item =>
       item.title.toLowerCase().includes(value.toLowerCase())
     );
+
     setProductList(
       filterCourses.map(
-        ({
-          authors,
-          img,
-          price,
-          title,
-          _id,
-          rating,
-          category,
-        }) => (
+        ({ authors, img, price, title, _id, rating, category }) => (
           <Product
             key={_id}
             _id={_id}
@@ -92,9 +74,7 @@ const ProductsListPage = () => {
   const selectCategory = value => {
     setSelectedCategory(value);
 
-    let filterCourses = courses.filter(
-      item => item.category === value
-    );
+    let filterCourses = courses.filter(item => item.category === value);
 
     if (value === 'all') {
       filterCourses = courses;
@@ -102,15 +82,7 @@ const ProductsListPage = () => {
 
     setProductList(
       filterCourses.map(
-        ({
-          authors,
-          img,
-          price,
-          title,
-          _id,
-          rating,
-          category,
-        }) => (
+        ({ authors, img, price, title, _id, rating, category }) => (
           <Product
             key={_id}
             _id={_id}
@@ -127,12 +99,7 @@ const ProductsListPage = () => {
   };
 
   const renderCategoryList = () => {
-    const categories = [
-      'maths',
-      'programming',
-      'languages',
-      'all',
-    ];
+    const categories = ['maths', 'programming', 'languages', 'all'];
 
     const categoriesList = categories.map(item => {
       return (
@@ -184,18 +151,12 @@ const ProductsListPage = () => {
 
       <button
         className="productsList__button"
-        onClick={() =>
-          setToggleCategoryList(!toggleCategoryList)
-        }
+        onClick={() => setToggleCategoryList(!toggleCategoryList)}
       >
-        {toggleCategoryList
-          ? 'Close category list'
-          : 'Open category list'}
+        {toggleCategoryList ? 'Close category list' : 'Open category list'}
       </button>
       {toggleCategoryList ? renderCategoryList() : null}
-      <div className="productsList">
-        {renderProductsList()}
-      </div>
+      <div className="productsList">{renderProductsList()}</div>
     </>
   );
 };

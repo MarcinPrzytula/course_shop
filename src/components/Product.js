@@ -12,7 +12,6 @@ import StatusButton from './StatusButton';
 import RatingBoard from './RatingBoard';
 import RatingForm from './RatingForm';
 
-import img from '../assets/images/img1.PNG';
 import '../styles/Product.scss';
 
 const Product = ({ title, price, authors, _id, category }) => {
@@ -93,6 +92,22 @@ const Product = ({ title, price, authors, _id, category }) => {
     };
   }
 
+  const importAll = require => {
+    let images = {};
+    require.keys().map(item => {
+      return (images[item.replace('./', '')] = require(item));
+    });
+    return images;
+  };
+
+  const images = importAll(
+    require.context('../assets/images', false, /\.(png|jpe?g|jpg|svg)$/)
+  );
+  const x = Object.keys(images);
+  const y = x.filter(x => x.includes(title.replace(' ', '_').toLowerCase()));
+  console.log(x);
+  console.log(y[0] === 'advanced_maths.jpg');
+
   return (
     <>
       <div className="product">
@@ -104,7 +119,7 @@ const Product = ({ title, price, authors, _id, category }) => {
         </div>
 
         <div className="product__imgContainer">
-          <img src={img} alt="product " />
+          <img src={images[`${y[0]}`].default} alt="product " />
         </div>
         <div className="product__price">
           <span>Price: </span>
