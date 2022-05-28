@@ -1,38 +1,25 @@
 import React from 'react';
 
-import '../styles/TransactionFormPage.scss';
-
 import { useSelector, useDispatch } from 'react-redux';
-
 import { useHistory } from 'react-router-dom';
 import { buyCourse } from '../store/actions/userActions';
 
-import Styles from '../components/credit_card_form/styles';
-import { Form, Field } from 'react-final-form';
-import Card from '../components/credit_card_form/Card';
-import {
-  formatCreditCardNumber,
-  formatCVC,
-  formatExpirationDate,
-} from '../components/credit_card_form/cardUtils';
+import { Formik, Field, ErrorMessage } from 'formik';
+import '../styles/TransactionFormPage.scss';
 
 const TransactionFormPage = () => {
   const { user, courses } = useSelector(store => store);
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log(courses);
   let coursesToBuy = null;
   let coursesToBuyId = null;
 
   if (user) {
     coursesToBuy = courses.filter(course =>
       user.shoppingCart.find(
-        shoppingCartCourseId =>
-          shoppingCartCourseId === course._id
+        shoppingCartCourseId => shoppingCartCourseId === course._id
       )
     );
-    console.log(coursesToBuy);
-    console.log(user.shoppingCart);
     coursesToBuyId = coursesToBuy.map(item => item._id);
   }
   const submit = () => {
@@ -46,92 +33,79 @@ const TransactionFormPage = () => {
 
   return (
     <>
-      <div>
-        <span>
-          You want to purchase a total of{' '}
-          {user ? user.shoppingCart.length : 0} courses
-        </span>
-      </div>
-      <Styles>
-        <Form
-          onSubmit={submit}
-          render={({
-            handleSubmit,
-            form,
-            submitting,
-            pristine,
-            values,
-            active,
-          }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Card
-                  number={values.number || ''}
-                  name={values.name || ''}
-                  expiry={values.expiry || ''}
-                  cvc={values.cvc || ''}
-                  focused={active}
-                />
-                <div>
-                  <Field
-                    required
-                    name="number"
-                    component="input"
-                    type="text"
-                    pattern="[\d| ]{16,22}"
-                    placeholder="Card Number"
-                    format={formatCreditCardNumber}
-                  />
-                </div>
-                <div>
-                  <Field
-                    required
-                    name="name"
-                    component="input"
-                    type="text"
-                    placeholder="Name"
-                  />
-                </div>
-                <div>
-                  <Field
-                    required
-                    name="expiry"
-                    component="input"
-                    type="text"
-                    pattern="\d\d/\d\d"
-                    placeholder="Valid Thru"
-                    format={formatExpirationDate}
-                  />
-                  <Field
-                    required
-                    name="cvc"
-                    component="input"
-                    type="text"
-                    pattern="\d{3,4}"
-                    placeholder="CVC"
-                    format={formatCVC}
-                  />
-                </div>
-                <div className="buttons">
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                  >
-                    Submit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={form.reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset
-                  </button>
-                </div>
-              </form>
-            );
-          }}
-        />
-      </Styles>
+      <span>
+        You want to purchase a total of {user ? user.shoppingCart.length : 0}{' '}
+        courses
+      </span>
+
+      <Formik
+        initialValues={{
+          cardNumber: '',
+          name: '',
+          validThru: '',
+          cvc: '',
+        }}
+        validate={({ cardNumber, name, validThru, cvc }) => {
+          const errors = {};
+          if (cardNumber.toString().length < 16) {
+            errors.cardNumber = 'Format XXXX XXXX XXXX XXXX';
+          } else if (name.length < 1) {
+            errors.name = 'It cannot be empty';
+          } else if (validThru.toString().length < 4) {
+            errors.validThru = 'Format XX/XX';
+          } else if (cvc.toString().length < 3) {
+            errors.cvc = 'Format XXX or XXXX';
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          submit();
+          resetForm();
+        }}
+      >
+        {({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <div className="cardNumber">
+              <ErrorMessage name="cardNumber" component="div" />
+              <Field
+                // className="product__formInput"
+                name="cardNumber"
+                placeholder="Card Number"
+                type="number"
+              />
+            </div>
+            <div className="name">
+              <ErrorMessage name="name" component="div" />
+              <Field
+                // className="product__formInput"
+                name="name"
+                placeholder="Name"
+              />
+            </div>
+            <div className="validThru">
+              <ErrorMessage name="validThru" component="div" />
+              <Field
+                // className="product__formInput"
+                name="validThru"
+                placeholder="Valid Thru"
+                type="number"
+              />
+            </div>
+            <div className="cvc">
+              <ErrorMessage name="cvc" component="div" />
+              <Field
+                // className="product__formInput"
+                name="cvc"
+                placeholder="CVC"
+                type="number"
+              />
+            </div>
+            <button className="product__button" type="submit">
+              Submit
+            </button>
+          </form>
+        )}
+      </Formik>
     </>
   );
 };

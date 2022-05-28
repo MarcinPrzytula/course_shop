@@ -103,10 +103,10 @@ const Product = ({ title, price, authors, _id, category }) => {
   const images = importAll(
     require.context('../assets/images', false, /\.(png|jpe?g|jpg|svg)$/)
   );
-  const x = Object.keys(images);
-  const y = x.filter(x => x.includes(title.replace(' ', '_').toLowerCase()));
-  console.log(x);
-  console.log(y[0] === 'advanced_maths.jpg');
+
+  const img = Object.keys(images).find(item =>
+    item.includes(title.replace(' ', '_').toLowerCase())
+  );
 
   return (
     <>
@@ -119,7 +119,7 @@ const Product = ({ title, price, authors, _id, category }) => {
         </div>
 
         <div className="product__imgContainer">
-          <img src={images[`${y[0]}`].default} alt="product " />
+          <img src={images[img].default} alt="product " />
         </div>
         <div className="product__price">
           <span>Price: </span>
