@@ -51,18 +51,13 @@ function RegistrationPage() {
           const errors = {};
 
           if (values.login.length < 3) {
-            errors.login =
-              'Enter login (minimum 3 characters)';
+            errors.login = 'Enter login (minimum 3 characters)';
           } else if (values.password.length < 4) {
-            errors.password =
-              'Enter password (minimum 4 characters)';
+            errors.password = 'Enter password (minimum 4 characters)';
           }
           return errors;
         }}
-        onSubmit={(
-          values,
-          { setSubmitting, resetForm }
-        ) => {
+        onSubmit={(values, { resetForm }) => {
           registrationSuccessful(values);
           resetForm();
         }}
@@ -79,10 +74,7 @@ function RegistrationPage() {
               />
             </div>
             <div className="password">
-              <ErrorMessage
-                name="password"
-                component="div"
-              />
+              <ErrorMessage name="password" component="div" />
               <span>Password</span>
               <Field
                 className="registrationPage__input"
@@ -91,10 +83,7 @@ function RegistrationPage() {
                 type="password"
               />
             </div>
-            <button
-              type="submit"
-              className="registrationPage__button"
-            >
+            <button type="submit" className="registrationPage__button">
               Submit
             </button>
           </form>

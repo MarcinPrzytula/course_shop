@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { buyCourse } from '../store/actions/userActions';
 
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field } from 'formik';
+import * as yup from 'yup';
 import '../styles/TransactionFormPage.scss';
 
 const TransactionFormPage = () => {
@@ -30,7 +31,14 @@ const TransactionFormPage = () => {
       history.push('/login');
     }
   };
-
+  const getSchema = () =>
+    yup.object().shape({
+      cardNumber: yup.string().required().min(19, 'not less than 16'),
+      cardHolder: yup.string().required(),
+      cardMonth: yup.string().required(),
+      cardYear: yup.string().required(),
+      cvv: yup.string().required(),
+    });
   return (
     <>
       <span>
@@ -39,6 +47,114 @@ const TransactionFormPage = () => {
       </span>
 
       <Formik
+        initialValues={{
+          cardNumber: '',
+          cardHolder: '',
+          cardMonth: '',
+          cardYear: '',
+          cvv: '',
+        }}
+        onSubmit={(values, formikBag) => {
+          submit();
+          formikBag.resetForm();
+        }}
+        validationSchema={getSchema()}
+      >
+        {({
+          handleSubmit,
+          handleChange,
+          values,
+          errors,
+          isValid,
+          touched,
+          handleBlur,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <div className="form">
+              <label className="label">Card Number </label>
+              <input
+                type="text"
+                onChange={handleChange}
+                value={values.cardNumber
+                  .replace(/[^\d]/g, '')
+                  .replace(/\s/g, '')
+                  .replace(/(\d{4})/g, '$1 ')
+                  .trim()}
+                name="cardNumber"
+                maxLength="19"
+              />
+
+              <label className="label">Card Holder</label>
+              <input
+                type="text"
+                name="cardHolder"
+                onChange={handleChange}
+                value={values.cardHolder}
+              />
+              <div className="row">
+                <div className="column">
+                  <label className="label">Expiration Date</label>
+                  <div>
+                    <select
+                      type="text"
+                      placeholder="Month"
+                      name="cardMonth"
+                      onChange={handleChange}
+                      value={values.cardMonth}
+                    >
+                      <option hidden>Month</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m, i) => (
+                        <option key={m} value={m}>
+                          {m < 10 ? `0${m}` : m}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select
+                      type="text"
+                      name="cardYear"
+                      onChange={handleChange}
+                      value={values.cardYear}
+                    >
+                      <option hidden>Year</option>
+                      {[
+                        2020, 2021, 2023, 2024, 2025, 2026, 2027, 2028, 2029,
+                        2030, 2031, 2032,
+                      ].map((y, i) => (
+                        <option key={y} value={y}>
+                          {y}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>{' '}
+                <div className="column">
+                  <label className="label">CVV</label>
+                  <input
+                    type="text"
+                    value={values.cvv}
+                    name="cvv"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <button type="submit" disabled={!isValid}>
+                Submit
+              </button>
+            </div>
+            {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+          </form>
+        )}
+      </Formik>
+    </>
+  );
+};
+
+export default TransactionFormPage;
+
+{
+  /* <Formik
         initialValues={{
           cardNumber: '',
           name: '',
@@ -105,9 +221,5 @@ const TransactionFormPage = () => {
             </button>
           </form>
         )}
-      </Formik>
-    </>
-  );
-};
-
-export default TransactionFormPage;
+      </Formik> */
+}
