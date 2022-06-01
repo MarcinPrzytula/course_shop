@@ -3,13 +3,11 @@ import { Formik, Field, ErrorMessage } from 'formik';
 
 import { useDispatch } from 'react-redux';
 
-import { fetchUserData } from '../store/actions/userActions';
+import { fetchUserData, loginUser } from '../store/actions/userActions';
 
 import { useHistory } from 'react-router-dom';
 
 import '../styles/LoginPage.scss';
-
-import axios from 'axios';
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -20,38 +18,13 @@ function LoginPage() {
 
   const history = useHistory();
 
-  const submit = userLoginData => {
-    const { formLogin, formPassword } = userLoginData;
-    const URL = process.env.REACT_APP_API
-      ? `${process.env.REACT_APP_API.trim()}api/login`
-      : `http://localhost:3001/api/login`;
-
-    axios({
-      method: 'post',
-      data: {
-        username: formLogin,
-        password: formPassword,
-      },
-      withCredentials: true,
-      url: URL,
-    }).then(res => {
-      if (res.data !== 'No User Exsist') {
-        history.push('/');
-      } else {
-        alert('Invalid username or password');
-      }
-    });
-  };
-
-  const validateForm = values => {
+  const validateForm = ({ login, password }) => {
     const errors = {};
 
-    if (values.formLogin.length < 3) {
-      errors.formLogin =
-        'Enter login (minimum 3 characters)';
-    } else if (values.formPassword.length < 4) {
-      errors.formPassword =
-        'Enter password (minimum 4 characters)';
+    if (login.length < 3) {
+      errors.formLogin = 'Enter login (minimum 3 characters)';
+    } else if (password.length < 4) {
+      errors.formPassword = 'Enter password (minimum 4 characters)';
     }
     return errors;
   };
@@ -63,15 +36,13 @@ function LoginPage() {
       </div>
       <Formik
         initialValues={{
-          formLogin: '',
-          formPassword: '',
+          login: '',
+          password: '',
         }}
         validate={values => validateForm(values)}
-        onSubmit={(
-          values,
-          { setSubmitting, resetForm }
-        ) => {
-          submit(values);
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          dispatch(loginUser(values));
+          //   history.push('/');
           resetForm();
         }}
       >
@@ -79,36 +50,27 @@ function LoginPage() {
           <form onSubmit={handleSubmit}>
             <div className="login">
               <div className="loginPage__loginWrapper">
-                <ErrorMessage
-                  name="formLogin"
-                  component="div"
-                />
+                <ErrorMessage name="login" component="div" />
               </div>
 
               <span>Login</span>
               <Field
                 className="loginPage__input"
-                name="formLogin"
+                name="login"
                 placeholder="login"
               />
             </div>
             <div className="password">
-              <ErrorMessage
-                name="formPassword"
-                component="div"
-              />
+              <ErrorMessage name="password" component="div" />
               <span>Password</span>
               <Field
                 className="loginPage__input"
                 placeholder="password"
-                name="formPassword"
+                name="password"
                 type="password"
               />
             </div>
-            <button
-              className="loginPage__button"
-              type="submit"
-            >
+            <button className="loginPage__button" type="submit">
               Submit
             </button>
           </form>

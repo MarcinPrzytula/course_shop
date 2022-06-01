@@ -1,5 +1,7 @@
 import {
   FETCH_USER_DATA,
+  ADD_USER,
+  LOGIN_USER,
   BUY_COURSE,
   ADD_COURSE_TO_SHOPPING_CART,
   REMOVE_COURSE_FROM_SHOPPING_CART,
@@ -10,29 +12,23 @@ import axios from 'axios';
 
 const editDbUser = async values => {
   const URL = process.env.REACT_APP_API
-    ? `${process.env.REACT_APP_API.trim()}api/user/${
-        values._id
-      }`
+    ? `${process.env.REACT_APP_API.trim()}api/user/${values._id}`
     : `http://localhost:3001/api/user/${values._id}`;
 
   await axios.put(URL, values);
 };
 
 const buyCourse = (state, action) => {
-  const checkIfTheCourseAlreadyThere =
-    state.purchasedCourses.find(
-      courseId => courseId === action.payload
-    );
+  const checkIfTheCourseAlreadyThere = state.purchasedCourses.find(
+    courseId => courseId === action.payload
+  );
 
   if (checkIfTheCourseAlreadyThere) {
     return state;
   }
   const newState = { ...state };
 
-  newState.purchasedCourses = [
-    ...state.purchasedCourses,
-    ...action.payload,
-  ];
+  newState.purchasedCourses = [...state.purchasedCourses, ...action.payload];
 
   newState.shoppingCart = [];
   editDbUser(newState);
@@ -48,20 +44,16 @@ const selectCourse = (state, action) => {
 };
 
 const addCourseToShoppingCart = (state, action) => {
-  const checkIfTheCourseAlreadyThere =
-    state.shoppingCart.find(
-      courseId => courseId === action.payload
-    );
+  const checkIfTheCourseAlreadyThere = state.shoppingCart.find(
+    courseId => courseId === action.payload
+  );
 
   if (checkIfTheCourseAlreadyThere) {
     return state;
   }
 
   const newState = { ...state };
-  newState.shoppingCart = [
-    ...state.shoppingCart,
-    action.payload,
-  ];
+  newState.shoppingCart = [...state.shoppingCart, action.payload];
   editDbUser(newState);
   return newState;
 };
@@ -76,14 +68,14 @@ const removeCourseFromShoppingCart = (state, action) => {
   return newState;
 };
 
-const fetchUserData = (state, action) => {
-  return action.payload;
-};
-
 export const userReducer = (state = null, action) => {
   switch (action.type) {
     case FETCH_USER_DATA:
-      return fetchUserData(state, action);
+      return action.payload;
+    case ADD_USER:
+      return action.payload;
+    case LOGIN_USER:
+      return action.payload;
     case BUY_COURSE:
       return buyCourse(state, action);
     case ADD_COURSE_TO_SHOPPING_CART:

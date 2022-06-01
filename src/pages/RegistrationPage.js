@@ -3,38 +3,19 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import '../styles/RegistrationPage.scss';
 
 import { useHistory } from 'react-router-dom';
+import { addUser } from '../store/actions/userActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import axios from 'axios';
 
 function RegistrationPage() {
   const history = useHistory();
+  const { user, courses } = useSelector(store => store);
+
+  const dispatch = useDispatch();
 
   const registrationSuccessful = values => {
-    const URL = process.env.REACT_APP_API
-      ? `${process.env.REACT_APP_API.trim()}api/register`
-      : `http://localhost:3001/api/register`;
-
-    axios({
-      method: 'post',
-      data: {
-        username: values.login,
-        password: values.password,
-      },
-      withCredentials: true,
-      url: URL,
-    }).then(res => {
-      if (res.data !== 'User Already Exsists') {
-        console.log(res.data);
-
-        alert(
-          `Congratulations! An account has been created, your login is: ${values.login}, remember your password and never give it to anyone!`
-        );
-        history.push('/login');
-      } else {
-        console.log(res.data);
-        alert('User Already Exsists');
-      }
-    });
+    dispatch(addUser(values));
   };
 
   return (

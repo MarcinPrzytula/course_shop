@@ -25,11 +25,22 @@
     }
   }
 
-  &__user-info {
-    margin: 20px 0;
-    font-size: 24px;
-    font-weight: bold;
+  &__who-logged-in {
+    width: 100px;
+    font-size: 14px;
   }
+
+  &__logged-in-nickname {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+  }
+
+  //   &__user-info {
+  //     margin: 20px 0;
+  //     font-size: 24px;
+  //     font-weight: bold;
+  //   }
 
   &__list {
     height: 50px;

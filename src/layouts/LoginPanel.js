@@ -37,25 +37,35 @@ const LoginPanel = () => {
   return (
     <nav className="panel">
       {user ? (
-        <button
-          className="panel__button"
-          onClick={() => {
-            axios({
-              method: 'GET',
-              withCredentials: true,
-              url: URL,
-            }).then(() => {
-              dispatch({
-                type: FETCH_USER_DATA,
-                payload: null,
+        <>
+          <div className="panel__who-logged-in">
+            <span>
+              Logged in as:
+              <span className="panel__logged-in-nickname">
+                {user.login}
+              </span>{' '}
+            </span>
+          </div>
+          <button
+            className="panel__button"
+            onClick={() => {
+              axios({
+                method: 'GET',
+                withCredentials: true,
+                url: URL,
+              }).then(() => {
+                dispatch({
+                  type: FETCH_USER_DATA,
+                  payload: null,
+                });
               });
-            });
 
-            history.push('/login');
-          }}
-        >
-          Log out
-        </button>
+              history.push('/login');
+            }}
+          >
+            Log out
+          </button>
+        </>
       ) : (
         <ul className="panel__list">{menu}</ul>
       )}

@@ -14,20 +14,12 @@ const UserPanelPage = () => {
   if (user) {
     loggedUserCourses = courses.filter(course =>
       user.purchasedCourses.find(
-        purchasedCourseId =>
-          purchasedCourseId === course._id
+        purchasedCourseId => purchasedCourseId === course._id
       )
     );
 
     const render = loggedUserCourses.map(
-      ({
-        authors,
-        price,
-        title,
-        _id,
-        category,
-        rating,
-      }) => (
+      ({ authors, price, title, _id, category, rating }) => (
         <Product
           key={_id}
           _id={_id}
@@ -41,16 +33,12 @@ const UserPanelPage = () => {
     );
 
     mainPage =
-      loggedUserCourses.length > 0
-        ? render
-        : `You are logged in as ${user.login}  but you don't have any courses`;
+      loggedUserCourses.length > 0 ? render : `You don't have any courses`;
   }
 
   return (
     <>
-      <div className="userPanel_productList">
-        {mainPage}
-      </div>
+      <div className="userPanel_productList">{mainPage}</div>
     </>
   );
 };

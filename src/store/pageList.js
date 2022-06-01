@@ -13,10 +13,7 @@ const list = [
     path: '/',
     exact: true,
   },
-  //   {
-  //     name: ProductsListPage,
-  //     path: '/products',
-  //   },
+
   {
     name: SelectedProductPage,
     path: '/selected_product',
