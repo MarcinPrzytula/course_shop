@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/course_shop/static/css/main.275ea3ec.chunk.css",
+    "main.css": "/course_shop/static/css/main.dd1d76da.chunk.css",
     "main.js": "/course_shop/static/js/main.8bddd291.chunk.js",
     "main.js.map": "/course_shop/static/js/main.8bddd291.chunk.js.map",
     "runtime-main.js": "/course_shop/static/js/runtime-main.0767c3c6.js",
@@ -8,7 +8,7 @@
     "static/js/2.f12aaee1.chunk.js": "/course_shop/static/js/2.f12aaee1.chunk.js",
     "static/js/2.f12aaee1.chunk.js.map": "/course_shop/static/js/2.f12aaee1.chunk.js.map",
     "index.html": "/course_shop/index.html",
-    "static/css/main.275ea3ec.chunk.css.map": "/course_shop/static/css/main.275ea3ec.chunk.css.map",
+    "static/css/main.dd1d76da.chunk.css.map": "/course_shop/static/css/main.dd1d76da.chunk.css.map",
     "static/js/2.f12aaee1.chunk.js.LICENSE.txt": "/course_shop/static/js/2.f12aaee1.chunk.js.LICENSE.txt",
     "static/media/advanced_english.jpg": "/course_shop/static/media/advanced_english.c8dac0c1.jpg",
     "static/media/advanced_javascript.jpg": "/course_shop/static/media/advanced_javascript.5225a953.jpg",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.0767c3c6.js",
     "static/js/2.f12aaee1.chunk.js",
-    "static/css/main.275ea3ec.chunk.css",
+    "static/css/main.dd1d76da.chunk.css",
     "static/js/main.8bddd291.chunk.js"
   ]
 }
