@@ -41,8 +41,16 @@ function LoginPage() {
         }}
         validate={values => validateForm(values)}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          dispatch(loginUser(values));
-          //   history.push('/');
+          const res = dispatch(loginUser(values));
+
+          res.then(res => {
+            if (res.data !== 'Invalid username or password') {
+              history.push('/');
+            } else {
+              return alert('Invalid username or password');
+            }
+          });
+
           resetForm();
         }}
       >
@@ -82,3 +90,17 @@ function LoginPage() {
 }
 
 export default LoginPage;
+// .then(res => {
+//     if (res.data !== 'User Already Exsists') {
+//       alert(
+//         `Congratulations! An account has been created, your login is: ${login}, remember your password and never give it to anyone!`
+//       );
+//       dispatch(loginUser(values));
+
+//       return 'ok';
+//     } else {
+//       alert('User Already Exsists');
+
+//       return res.data;
+//     }
+//   });

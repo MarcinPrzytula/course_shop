@@ -25,42 +25,10 @@ export const fetchUserData = () => async dispatch => {
   });
 };
 
-export const addUser = values => async dispatch => {
-  const { login, password } = values;
-
+export const addUser = (login, password) => async dispatch => {
   const URL = process.env.REACT_APP_API
     ? `${process.env.REACT_APP_API.trim()}api/register`
     : `http://localhost:3001/api/register`;
-
-  axios({
-    method: 'POST',
-    data: {
-      username: login,
-      password: password,
-    },
-    withCredentials: true,
-    url: URL,
-  }).then(res => {
-    if (res.data !== 'User Already Exsists') {
-      alert(
-        `Congratulations! An account has been created, your login is: ${login}, remember your password and never give it to anyone!`
-      );
-      dispatch(loginUser(values));
-
-      return res.data;
-    } else {
-      alert('User Already Exsists');
-
-      return res.data;
-    }
-  });
-};
-
-export const loginUser = values => async dispatch => {
-  const { login, password } = values;
-  const URL = process.env.REACT_APP_API
-    ? `${process.env.REACT_APP_API.trim()}api/login`
-    : `http://localhost:3001/api/login`;
 
   const res = await axios({
     method: 'POST',
@@ -70,20 +38,37 @@ export const loginUser = values => async dispatch => {
     },
     withCredentials: true,
     url: URL,
-  }).then(res => {
-    if (res.data !== 'Invalid username or password') {
-      return res;
-    } else {
-      return alert('Invalid username or password');
-    }
   });
-  if (res) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: res.data,
-    });
-  }
+
+  return res;
 };
+
+export const loginUser =
+  ({ login, password }) =>
+  async dispatch => {
+    const URL = process.env.REACT_APP_API
+      ? `${process.env.REACT_APP_API.trim()}api/login`
+      : `http://localhost:3001/api/login`;
+
+    const res = await axios({
+      method: 'POST',
+      data: {
+        username: login,
+        password: password,
+      },
+      withCredentials: true,
+      url: URL,
+    });
+
+    if (res.data !== 'Invalid username or password') {
+      dispatch({
+        type: LOGIN_USER,
+        payload: res.data,
+      });
+    }
+
+    return res;
+  };
 
 export const buyCourse = courseId => ({
   type: BUY_COURSE,
