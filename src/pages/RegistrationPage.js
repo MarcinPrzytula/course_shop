@@ -19,8 +19,8 @@ function RegistrationPage() {
         alert(
           `Congratulations! An account has been created, your login is: ${login}, remember your password and never give it to anyone!`
         );
-        const values = { login, password };
-        dispatch(loginUser(values));
+
+        dispatch(loginUser(login, password));
         history.push('/');
       } else {
         alert('User Already Exsists');
