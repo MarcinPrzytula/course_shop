@@ -60,15 +60,7 @@ const TransactionFormPage = () => {
         }}
         validationSchema={getSchema()}
       >
-        {({
-          handleSubmit,
-          handleChange,
-          values,
-          errors,
-          isValid,
-          touched,
-          handleBlur,
-        }) => (
+        {({ handleSubmit, handleChange, values, isValid }) => (
           <form onSubmit={handleSubmit}>
             <div className="form">
               <label className="label">Card Number </label>
@@ -143,7 +135,6 @@ const TransactionFormPage = () => {
                 Submit
               </button>
             </div>
-            {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           </form>
         )}
       </Formik>

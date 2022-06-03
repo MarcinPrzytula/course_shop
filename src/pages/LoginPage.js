@@ -41,7 +41,8 @@ function LoginPage() {
         }}
         validate={values => validateForm(values)}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          const res = dispatch(loginUser(values));
+          const { login, password } = values;
+          const res = dispatch(loginUser(login, password));
 
           res.then(res => {
             if (res.data !== 'Invalid username or password') {
@@ -54,7 +55,7 @@ function LoginPage() {
           resetForm();
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             <div className="login">
               <div className="loginPage__loginWrapper">
@@ -66,6 +67,12 @@ function LoginPage() {
                 className="loginPage__input"
                 name="login"
                 placeholder="login"
+                value={values.login
+                  .toLowerCase()
+                  .replace(/\s/g, '')
+                  .replace(/</g, '')
+                  .replace(/>/g, '')
+                  .trim()}
               />
             </div>
             <div className="password">

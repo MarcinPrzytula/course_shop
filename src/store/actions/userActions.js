@@ -43,32 +43,30 @@ export const addUser = (login, password) => async dispatch => {
   return res;
 };
 
-export const loginUser =
-  ({ login, password }) =>
-  async dispatch => {
-    const URL = process.env.REACT_APP_API
-      ? `${process.env.REACT_APP_API.trim()}api/login`
-      : `http://localhost:3001/api/login`;
+export const loginUser = (login, password) => async dispatch => {
+  const URL = process.env.REACT_APP_API
+    ? `${process.env.REACT_APP_API.trim()}api/login`
+    : `http://localhost:3001/api/login`;
 
-    const res = await axios({
-      method: 'POST',
-      data: {
-        username: login,
-        password: password,
-      },
-      withCredentials: true,
-      url: URL,
+  const res = await axios({
+    method: 'POST',
+    data: {
+      username: login,
+      password: password,
+    },
+    withCredentials: true,
+    url: URL,
+  });
+
+  if (res.data !== 'Invalid username or password') {
+    dispatch({
+      type: LOGIN_USER,
+      payload: res.data,
     });
+  }
 
-    if (res.data !== 'Invalid username or password') {
-      dispatch({
-        type: LOGIN_USER,
-        payload: res.data,
-      });
-    }
-
-    return res;
-  };
+  return res;
+};
 
 export const buyCourse = courseId => ({
   type: BUY_COURSE,

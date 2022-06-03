@@ -53,7 +53,7 @@ function RegistrationPage() {
           resetForm();
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             <div className="login">
               <ErrorMessage name="login" component="div" />
@@ -62,6 +62,12 @@ function RegistrationPage() {
                 className="registrationPage__input"
                 name="login"
                 placeholder="login"
+                value={values.login
+                  .toLowerCase()
+                  .replace(/\s/g, '')
+                  .replace(/</g, '')
+                  .replace(/>/g, '')
+                  .trim()}
               />
             </div>
             <div className="password">

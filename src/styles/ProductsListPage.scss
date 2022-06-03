@@ -1,25 +1,31 @@
+.products-list-page-container {
+  display: flex;
+  flex-direction: column;
+}
 .productsList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 
   @media (max-width: 574px) {
     flex-direction: column;
   }
 
   &__button {
-    background-color: black;
-    border: 1px solid black;
-    border-radius: 5px;
+    background-color: #a435f0;
     color: white;
+    line-height: 30px;
+
+    border-radius: 3px;
     text-transform: uppercase;
+    width: 190px;
     padding: 2px 5px 2px 5px;
     user-select: none;
     cursor: pointer;
     transition: 0.3s;
     &:hover {
-      background-color: white;
-      color: black;
+      background-color: darken(#a435f0, 20%);
     }
   }
 
@@ -28,7 +34,7 @@
     font-size: 16px;
     padding: 12px 20px 12px 40px;
     border: 1px solid black;
-    margin: 10px;
+    margin: 10px 0;
   }
 
   &__categoryContainer {

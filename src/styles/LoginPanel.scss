@@ -8,8 +8,7 @@
   min-width: 30%;
   border-left: 1px solid black;
   &__button {
-    background-color: black;
-    border: 1px solid black;
+    background-color: #a435f0;
     border-radius: 5px;
     height: 50%;
     color: white;
@@ -20,8 +19,7 @@
     cursor: pointer;
     transition: 0.3s;
     &:hover {
-      background-color: white;
-      color: black;
+      background-color: darken(#a435f0, 20%);
     }
   }
 
@@ -60,9 +58,9 @@
     font-size: 12px;
     height: 40px;
     font-size: 12px;
-    background-color: black;
-    border: 1px solid black;
-    border-radius: 5px;
+    background-color: #a435f0;
+
+    border-radius: 3px;
     color: white;
     text-transform: uppercase;
     padding: 2px 5px 2px 5px;
@@ -71,11 +69,10 @@
     cursor: pointer;
     transition: 0.3s;
     &:hover {
-      background-color: white;
-      color: black;
+      background-color: darken(#a435f0, 20%);
     }
   }
   &__item.active {
-    border-bottom: 2px gray solid;
+    background-color: darken(#a435f0, 20%);
   }
 }

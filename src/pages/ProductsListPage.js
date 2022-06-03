@@ -124,6 +124,7 @@ const ProductsListPage = () => {
       </div>
     );
   };
+
   const renderProductsList = () => {
     if (firstRenderProducts.length > 0) {
       if (productsList.length > 0) {
@@ -134,14 +135,14 @@ const ProductsListPage = () => {
     } else {
       return (
         <div className="productsList__loader_container">
-          <span>LOADING PAGE</span>
+          <span>server wakes up...</span>
           <div className="productsList__loader"></div>
         </div>
       );
     }
   };
   return (
-    <>
+    <div className="products-list-page-container">
       <input
         type="text"
         className="productsList__searchInput"
@@ -157,7 +158,7 @@ const ProductsListPage = () => {
       </button>
       {toggleCategoryList ? renderCategoryList() : null}
       <div className="productsList">{renderProductsList()}</div>
-    </>
+    </div>
   );
 };
 
