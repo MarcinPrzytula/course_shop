@@ -1,17 +1,15 @@
-import { Formik, Field, ErrorMessage } from 'formik';
-
-import '../styles/RegistrationPage.scss';
-
 import { useHistory } from 'react-router-dom';
 import { addUser, loginUser } from '../store/actions/userActions';
 import { useDispatch } from 'react-redux';
+import UserDataForm from '../components/UserDataForm';
+import '../styles/RegistrationPage.scss';
 
 function RegistrationPage() {
   const history = useHistory();
 
   const dispatch = useDispatch();
 
-  const registrationSuccessful = ({ login, password }) => {
+  const registrationSuccessful = (login, password) => {
     const res = dispatch(addUser(login, password));
 
     res.then(res => {
@@ -33,59 +31,11 @@ function RegistrationPage() {
       <div className="registrationPage__user-info">
         <span>Register and start learning!</span>
       </div>
-      <Formik
-        initialValues={{
-          login: '',
-          password: '',
+      <UserDataForm
+        handler={(login, password) => {
+          registrationSuccessful(login, password);
         }}
-        validate={values => {
-          const errors = {};
-
-          if (values.login.length < 3) {
-            errors.login = 'Enter login (minimum 3 characters)';
-          } else if (values.password.length < 4) {
-            errors.password = 'Enter password (minimum 4 characters)';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { resetForm }) => {
-          registrationSuccessful(values);
-          resetForm();
-        }}
-      >
-        {({ handleSubmit, values }) => (
-          <form onSubmit={handleSubmit}>
-            <div className="login">
-              <ErrorMessage name="login" component="div" />
-              <span>Login</span>
-              <Field
-                className="registrationPage__input"
-                name="login"
-                placeholder="login"
-                value={values.login
-                  .toLowerCase()
-                  .replace(/\s/g, '')
-                  .replace(/</g, '')
-                  .replace(/>/g, '')
-                  .trim()}
-              />
-            </div>
-            <div className="password">
-              <ErrorMessage name="password" component="div" />
-              <span>Password</span>
-              <Field
-                className="registrationPage__input"
-                placeholder="password"
-                name="password"
-                type="password"
-              />
-            </div>
-            <button type="submit" className="registrationPage__button">
-              Submit
-            </button>
-          </form>
-        )}
-      </Formik>
+      />
     </>
   );
 }

@@ -1,39 +1,41 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import '../styles/LoginPanel.scss';
-
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import { FETCH_USER_DATA } from '../store/actions/userActions';
 
 import axios from 'axios';
+import '../styles/LoginPanel.scss';
 
-const list = [
-  { name: 'Log in', path: '/login' },
-  {
-    name: 'Registration',
-    path: '/registration',
-  },
-];
-
-const menu = list.map(item => (
-  <li className="panel__item-wraper" key={item.name}>
-    <NavLink
-      className="panel__item"
-      to={item.path}
-      exact={item.exact ? item.exact : false}
-    >
-      {item.name}
-    </NavLink>
-  </li>
-));
-const URL = process.env.REACT_APP_API
-  ? `${process.env.REACT_APP_API.trim()}api/logout`
-  : `http://localhost:3001/api/logout`;
 const LoginPanel = () => {
   const user = useSelector(store => store.user);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const URL = process.env.REACT_APP_API
+    ? `${process.env.REACT_APP_API.trim()}api/logout`
+    : `http://localhost:3001/api/logout`;
+
+  const list = [
+    { name: 'Log in', path: '/login' },
+    {
+      name: 'Registration',
+      path: '/registration',
+    },
+  ];
+
+  const menu = list.map(item => (
+    <li className="panel__item-wraper" key={item.name}>
+      <NavLink
+        className="panel__item"
+        to={item.path}
+        exact={item.exact ? item.exact : false}
+      >
+        {item.name}
+      </NavLink>
+    </li>
+  ));
+
   return (
     <nav className="panel">
       {user ? (

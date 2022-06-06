@@ -44,7 +44,7 @@ const RatingForm = ({
 
               return errors;
             }}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
+            onSubmit={(values, { resetForm }) => {
               dispatch(addRating(_id, user.login, rating, values));
               resetForm();
             }}

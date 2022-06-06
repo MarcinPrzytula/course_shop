@@ -25,7 +25,7 @@ export const fetchUserData = () => async dispatch => {
   });
 };
 
-export const addUser = (login, password) => async dispatch => {
+export const addUser = (login, password) => async () => {
   const URL = process.env.REACT_APP_API
     ? `${process.env.REACT_APP_API.trim()}api/register`
     : `http://localhost:3001/api/register`;
