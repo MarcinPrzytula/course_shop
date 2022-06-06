@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/course_shop/static/css/main.f87b881c.chunk.css",
-    "main.js": "/course_shop/static/js/main.6d30ffa5.chunk.js",
-    "main.js.map": "/course_shop/static/js/main.6d30ffa5.chunk.js.map",
+    "main.js": "/course_shop/static/js/main.7c33b12b.chunk.js",
+    "main.js.map": "/course_shop/static/js/main.7c33b12b.chunk.js.map",
     "runtime-main.js": "/course_shop/static/js/runtime-main.0767c3c6.js",
     "runtime-main.js.map": "/course_shop/static/js/runtime-main.0767c3c6.js.map",
-    "static/js/2.d1878a6b.chunk.js": "/course_shop/static/js/2.d1878a6b.chunk.js",
-    "static/js/2.d1878a6b.chunk.js.map": "/course_shop/static/js/2.d1878a6b.chunk.js.map",
+    "static/js/2.4531481c.chunk.js": "/course_shop/static/js/2.4531481c.chunk.js",
+    "static/js/2.4531481c.chunk.js.map": "/course_shop/static/js/2.4531481c.chunk.js.map",
     "index.html": "/course_shop/index.html",
     "static/css/main.f87b881c.chunk.css.map": "/course_shop/static/css/main.f87b881c.chunk.css.map",
-    "static/js/2.d1878a6b.chunk.js.LICENSE.txt": "/course_shop/static/js/2.d1878a6b.chunk.js.LICENSE.txt",
+    "static/js/2.4531481c.chunk.js.LICENSE.txt": "/course_shop/static/js/2.4531481c.chunk.js.LICENSE.txt",
     "static/media/advanced_english.jpg": "/course_shop/static/media/advanced_english.c8dac0c1.jpg",
     "static/media/advanced_javascript.jpg": "/course_shop/static/media/advanced_javascript.5225a953.jpg",
     "static/media/advanced_maths.jpg": "/course_shop/static/media/advanced_maths.c8335d26.jpg",
@@ -18,8 +18,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.0767c3c6.js",
-    "static/js/2.d1878a6b.chunk.js",
+    "static/js/2.4531481c.chunk.js",
     "static/css/main.f87b881c.chunk.css",
-    "static/js/main.6d30ffa5.chunk.js"
+    "static/js/main.7c33b12b.chunk.js"
   ]
 }
