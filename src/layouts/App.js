@@ -10,7 +10,7 @@ import LoginPanel from './LoginPanel';
 
 import '../styles/App.scss';
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
       {/* <Router basename={process.env.PUBLIC_URL}> */}
@@ -25,6 +25,6 @@ function App() {
       </Router>
     </Provider>
   );
-}
+};
 
 export default App;

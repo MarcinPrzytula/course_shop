@@ -8,7 +8,6 @@ import {
   SELECT_COURSE,
 } from '../actions/userActions.js';
 
-
 import axios from 'axios';
 
 const editDbUser = async values => {

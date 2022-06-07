@@ -25,31 +25,24 @@ const LoginPanel = () => {
   ];
 
   const menu = list.map(item => (
-    <li className="panel__item-wraper" key={item.name}>
+    <button key={item.name} className="not-logged-in-panel__button">
       <NavLink
-        className="panel__item"
+        className="not-logged-in-panel__item"
         to={item.path}
         exact={item.exact ? item.exact : false}
       >
         {item.name}
       </NavLink>
-    </li>
+    </button>
   ));
 
   return (
-    <nav className="panel">
+    <>
       {user ? (
-        <>
-          <div className="panel__who-logged-in">
-            <span>
-              Logged in as:
-              <span className="panel__logged-in-nickname">
-                {user.login}
-              </span>{' '}
-            </span>
-          </div>
+        <div className="logged-panel">
+          <div className="logged-panel__who-logged-in">{user.login}</div>
           <button
-            className="panel__button"
+            className="logged-panel__button"
             onClick={() => {
               axios({
                 method: 'GET',
@@ -67,11 +60,11 @@ const LoginPanel = () => {
           >
             Log out
           </button>
-        </>
+        </div>
       ) : (
-        <ul className="panel__list">{menu}</ul>
+        <div className="not-logged-in-panel">{menu}</div>
       )}
-    </nav>
+    </>
   );
 };
 

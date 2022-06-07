@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Product from '../components/Product';
 
 import '../styles/UserPanelPage.scss';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserData } from '../store/actions/userActions';
 
 const UserPanelPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
+
   const { user, courses } = useSelector(store => store);
   let loggedUserCourses = null;
 

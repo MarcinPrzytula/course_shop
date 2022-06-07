@@ -11,6 +11,7 @@ import Modal from 'react-modal';
 import StatusButton from './StatusButton';
 import RatingBoard from './RatingBoard';
 import RatingForm from './RatingForm';
+import { importImage } from '../helpers/importImage.helper';
 
 import '../styles/Product.scss';
 
@@ -91,23 +92,6 @@ const Product = ({ title, price, authors, _id, category }) => {
       icon: 'faCartPlus',
     };
   }
-
-  const importAll = require => {
-    let images = {};
-    require.keys().map(item => {
-      return (images[item.replace('./', '')] = require(item));
-    });
-    return images;
-  };
-
-  const images = importAll(
-    require.context('../assets/images', false, /\.(png|jpe?g|jpg|svg)$/)
-  );
-
-  const img = Object.keys(images).find(item =>
-    item.includes(title.replace(' ', '_').toLowerCase())
-  );
-
   return (
     <>
       <div className="product">
@@ -119,7 +103,7 @@ const Product = ({ title, price, authors, _id, category }) => {
         </div>
 
         <div className="product__imgContainer">
-          <img src={images[img].default} alt="product " />
+          <img src={importImage(title)} alt="product " />
         </div>
         <div className="product__price">
           <span>Price: </span>

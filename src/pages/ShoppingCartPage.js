@@ -1,16 +1,18 @@
-import React from 'react';
-
-import '../styles/ShoppingCartPage.scss';
+import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-
-import { removeCourseFromShoppingCart } from '../store/actions/userActions';
-
 import { useHistory } from 'react-router-dom';
-import advanced_english_img from '../assets/images/advanced_english.jpg';
+import {
+  removeCourseFromShoppingCart,
+  fetchUserData,
+} from '../store/actions/userActions';
+
+import { importImage } from '../helpers/importImage.helper';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+
+import '../styles/ShoppingCartPage.scss';
 
 const ShoppingCartPage = () => {
   const { user, courses } = useSelector(store => store);
@@ -18,15 +20,19 @@ const ShoppingCartPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
+
+  let coursesInShoppingCart = [];
+
+  if (user) {
+    coursesInShoppingCart = courses.filter(item =>
+      user.shoppingCart.find(item2 => item2 === item._id)
+    );
+  }
+
   const render = () => {
-    let coursesInShoppingCart = [];
-
-    if (user) {
-      coursesInShoppingCart = courses.filter(item =>
-        user.shoppingCart.find(item2 => item2 === item._id)
-      );
-    }
-
     if (coursesInShoppingCart.length > 0 && user) {
       return (
         <>
@@ -36,7 +42,7 @@ const ShoppingCartPage = () => {
                 <div className="shoppingCart__product-img-container">
                   <img
                     className="shoppingCart__product-img"
-                    src={advanced_english_img}
+                    src={importImage(title)}
                     alt="product "
                   />
                 </div>
