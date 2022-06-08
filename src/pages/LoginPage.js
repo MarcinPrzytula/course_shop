@@ -32,13 +32,14 @@ const LoginPage = () => {
   };
   const loginPanel = (
     <>
-      <div className="panel__user-info">
+      <div className="loginPage__user-info">
         <span>Log in to your account!</span>
       </div>
       <UserDataForm
         handler={(login, password) => {
           logInSuccessful(login, password);
         }}
+        buttonName={'Log in'}
       />
     </>
   );

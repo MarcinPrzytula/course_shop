@@ -35,6 +35,7 @@ function RegistrationPage() {
         handler={(login, password) => {
           registrationSuccessful(login, password);
         }}
+        buttonName={'Register'}
       />
     </>
   );

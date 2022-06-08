@@ -5,17 +5,21 @@ import '../styles/UserPanelPage.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../store/actions/userActions';
-
+import { fetchCoursesData } from '../store/actions/courseActions';
 const UserPanelPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserData());
+    dispatch(fetchCoursesData());
   }, [dispatch]);
 
   const { user, courses } = useSelector(store => store);
+
   let loggedUserCourses = null;
 
   let mainPage = 'Log in to view your courses';
+
+  let render = null;
 
   if (user) {
     loggedUserCourses = courses.filter(course =>
@@ -24,18 +28,22 @@ const UserPanelPage = () => {
       )
     );
 
-    const render = loggedUserCourses.map(
-      ({ authors, price, title, _id, category, rating }) => (
-        <Product
-          key={_id}
-          _id={_id}
-          authors={authors}
-          title={title}
-          price={price}
-          category={category}
-          rating={rating}
-        />
-      )
+    render = loggedUserCourses.map(
+      ({ authors, price, title, _id, category, rating }) => {
+        return (
+          <div className="userPanel__product">
+            <Product
+              key={_id}
+              _id={_id}
+              authors={authors}
+              title={title}
+              price={price}
+              category={category}
+              rating={rating}
+            />
+          </div>
+        );
+      }
     );
 
     mainPage =
@@ -44,7 +52,7 @@ const UserPanelPage = () => {
 
   return (
     <>
-      <div className="userPanel_productList">{mainPage}</div>
+      <div className="userPanel__productList">{mainPage}</div>
     </>
   );
 };

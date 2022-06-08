@@ -1,8 +1,20 @@
-.userPanel_productList {
-  display: flex;
-  flex-direction: row;
+.userPanel {
+  &__productList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-  @media (max-width: 574px) {
-    flex-direction: column;
+    @media (max-width: 574px) {
+      flex-direction: column;
+    }
+  }
+  &__product {
+    margin: 0 5px;
+  }
+
+  &__user-info {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
   }
 }

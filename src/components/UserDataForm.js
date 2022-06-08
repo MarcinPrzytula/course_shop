@@ -1,6 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 
-const UserDataForm = ({ handler }) => {
+const UserDataForm = ({ handler, buttonName }) => {
   return (
     <Formik
       initialValues={{
@@ -56,7 +56,7 @@ const UserDataForm = ({ handler }) => {
             />
           </div>
           <button type="submit" className="registrationPage__button">
-            Register
+            {buttonName}
           </button>
         </Form>
       )}

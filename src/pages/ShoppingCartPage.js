@@ -6,6 +6,7 @@ import {
   removeCourseFromShoppingCart,
   fetchUserData,
 } from '../store/actions/userActions';
+import { fetchCoursesData } from '../store/actions/courseActions';
 
 import { importImage } from '../helpers/importImage.helper';
 
@@ -22,6 +23,7 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     dispatch(fetchUserData());
+    dispatch(fetchCoursesData());
   }, [dispatch]);
 
   let coursesInShoppingCart = [];
