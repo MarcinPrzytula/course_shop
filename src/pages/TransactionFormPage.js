@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { buyCourse } from '../store/actions/userActions';
+import { buyCourse, fetchUserData } from '../store/actions/userActions';
+import { fetchCoursesData } from '../store/actions/courseActions';
 
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -14,6 +15,11 @@ const TransactionFormPage = () => {
   const dispatch = useDispatch();
   let coursesToBuy = null;
   let coursesToBuyId = null;
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+    dispatch(fetchCoursesData());
+  }, [dispatch]);
 
   if (user) {
     coursesToBuy = courses.filter(course =>

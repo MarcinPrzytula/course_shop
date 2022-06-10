@@ -1,15 +1,10 @@
-import {
-  ADD_RATING,
-  FETCH_COURSES_DATA,
-} from '../actions/courseActions.js';
+import { ADD_RATING, FETCH_COURSES_DATA } from '../actions/courseActions.js';
 
 import axios from 'axios';
 
 const editDbCourse = async values => {
   const URL = process.env.REACT_APP_API
-    ? `${process.env.REACT_APP_API.trim()}api/course/${
-        values._id
-      }`
+    ? `${process.env.REACT_APP_API.trim()}api/course/${values._id}`
     : `http://localhost:3001/api/course/${values._id}`;
 
   await axios.put(URL, values);
@@ -17,19 +12,15 @@ const editDbCourse = async values => {
 
 const addRating = (state, action) => {
   return state.map(currentStateElement => {
-    if (
-      currentStateElement._id !== action.payload.courseId
-    ) {
+    if (currentStateElement._id !== action.payload.courseId) {
       return currentStateElement;
     }
 
-    const userHasAlreadyRated =
-      currentStateElement.rating.filter(
-        item => item.userLogin === action.payload.userLogin
-      );
+    const userHasAlreadyRated = currentStateElement.rating.filter(
+      item => item.userLogin === action.payload.userLogin
+    );
     console.log(userHasAlreadyRated);
-    if (userHasAlreadyRated.length > 0)
-      return currentStateElement;
+    if (userHasAlreadyRated.length > 0) return currentStateElement;
 
     const updateCourse = { ...currentStateElement };
 
@@ -38,10 +29,7 @@ const addRating = (state, action) => {
       rating: action.payload.rating,
       comment: action.payload.comment.formValue,
     };
-    updateCourse.rating = [
-      ...currentStateElement.rating,
-      newRating,
-    ];
+    updateCourse.rating = [...currentStateElement.rating, newRating];
     editDbCourse(updateCourse);
     return updateCourse;
   });

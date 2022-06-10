@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUserData } from '../store/actions/userActions';
+import { fetchCoursesData } from '../store/actions/courseActions';
+
 import ReactPlayer from 'react-player';
-
+import vid from '../assets/videos/vid1.mp4';
 import '../styles/Product.scss';
 
-import vid from '../assets/videos/vid1.mp4';
-
 const SelectedProductPage = () => {
-  const { user, courses } = useSelector(store => store);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchUserData());
+    dispatch(fetchCoursesData());
+  }, [dispatch]);
+
+  const { user, courses } = useSelector(store => store);
   const selectedCourse = courses.find(
     course => course._id === user.selectedCourse
   );
 
-  const { title, authors } = selectedCourse;
   return (
     <div className="container">
-      <span>
-        You are currently viewing the {title} course by{' '}
-        {authors}{' '}
-      </span>
+      {selectedCourse ? (
+        <span>
+          You are currently viewing the {selectedCourse.title} course by{' '}
+          {selectedCourse.authors}{' '}
+        </span>
+      ) : null}
 
       <div className="product__vid">
         <ReactPlayer

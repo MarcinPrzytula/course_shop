@@ -14,7 +14,6 @@ const UserPanelPage = () => {
   }, [dispatch]);
 
   const { user, courses } = useSelector(store => store);
-
   let loggedUserCourses = null;
 
   let mainPage = 'Log in to view your courses';
@@ -31,7 +30,7 @@ const UserPanelPage = () => {
     render = loggedUserCourses.map(
       ({ authors, price, title, _id, category, rating }) => {
         return (
-          <div className="userPanel__product">
+          <div key={_id} className="userPanel__product">
             <Product
               key={_id}
               _id={_id}

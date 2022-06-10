@@ -19,12 +19,7 @@ export const fetchCoursesData = () => async dispatch => {
   });
 };
 
-export const addRating = (
-  courseId,
-  userLogin,
-  rating,
-  comment
-) => ({
+export const addRating = (courseId, userLogin, rating, comment) => ({
   type: ADD_RATING,
   payload: { courseId, userLogin, rating, comment },
 });

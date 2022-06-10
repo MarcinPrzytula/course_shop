@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -16,8 +16,6 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import '../styles/ShoppingCartPage.scss';
 
 const ShoppingCartPage = () => {
-  const { user, courses } = useSelector(store => store);
-
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,9 +24,11 @@ const ShoppingCartPage = () => {
     dispatch(fetchCoursesData());
   }, [dispatch]);
 
+  const { user, courses } = useSelector(store => store);
+
   let coursesInShoppingCart = [];
 
-  if (user) {
+  if (user && courses) {
     coursesInShoppingCart = courses.filter(item =>
       user.shoppingCart.find(item2 => item2 === item._id)
     );

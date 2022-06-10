@@ -60,9 +60,39 @@
     }
   }
 
-  &__who-logged-in {
+  &__menu {
+    position: relative;
+    top: -50px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
     font-size: 20px;
     font-weight: bold;
-    display: inline-block;
+    // border: 1px solid black;
+    // background-color: white;
+
+    height: 300px;
+    &--active {
+      display: flex;
+    }
+  }
+
+  &__menu-button {
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 36px;
+  }
+  &__who-logged-in {
+    margin-top: 50px;
+    max-width: 200px;
+    font-size: 20px;
+    font-weight: bold;
+    word-wrap: break-word;
   }
 }
