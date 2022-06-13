@@ -44,8 +44,8 @@ const LoginPanel = () => {
         <div className="logged-panel">
           <button
             className="logged-panel__menu-button"
-            onMouseOver={() => {
-              ref.current.classList.add('logged-panel__menu--active');
+            onMouseEnter={() => {
+              ref.current.classList.add('logged-panel__menu-wrapper--active');
             }}
             // onMouseOut={() => {
             //   ref.current.classList.remove('logged-panel__menu--active');
@@ -54,36 +54,37 @@ const LoginPanel = () => {
             {user.login.charAt(0).toUpperCase()}
           </button>
           <div
+            onMouseLeave={() => {
+              ref.current.classList.remove(
+                'logged-panel__menu-wrapper--active'
+              );
+            }}
             ref={ref}
-            onMouseOver={() => {
-              ref.current.classList.add('logged-panel__menu--active');
-            }}
-            onMouseOut={() => {
-              ref.current.classList.remove('logged-panel__menu--active');
-            }}
-            className="logged-panel__menu"
+            className="logged-panel__menu-wrapper"
           >
-            <div className="logged-panel__who-logged-in">{user.login}</div>
-            <button
-              className="logged-panel__button"
-              onClick={() => {
-                axios({
-                  method: 'GET',
-                  withCredentials: true,
-                  url: URL,
-                }).then(() => {
-                  dispatch({
-                    type: FETCH_USER_DATA,
-                    payload: null,
+            <div className="logged-panel__menu">
+              <div className="logged-panel__who-logged-in">{user.login}</div>
+              <button
+                className="logged-panel__button"
+                onClick={() => {
+                  axios({
+                    method: 'GET',
+                    withCredentials: true,
+                    url: URL,
+                  }).then(() => {
+                    dispatch({
+                      type: FETCH_USER_DATA,
+                      payload: null,
+                    });
                   });
-                });
 
-                history.push('/login');
-              }}
-            >
-              Log out
-            </button>
-          </div>{' '}
+                  history.push('/login');
+                }}
+              >
+                Log out
+              </button>
+            </div>{' '}
+          </div>
         </div>
       ) : (
         <div className="not-logged-in-panel">{menu}</div>
