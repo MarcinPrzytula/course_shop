@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,6 +14,8 @@ const LoginPanel = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const URL = process.env.REACT_APP_API
     ? `${process.env.REACT_APP_API.trim()}api/logout`
     : `http://localhost:3001/api/logout`;
@@ -27,9 +29,9 @@ const LoginPanel = () => {
   ];
 
   const menu = list.map(item => (
-    <button key={item.name} className="not-logged-in-panel__button">
+    <button key={item.name} className="not-logged-in__button">
       <NavLink
-        className="not-logged-in-panel__item"
+        className="not-logged-in__item"
         to={item.path}
         exact={item.exact ? item.exact : false}
       >
@@ -39,57 +41,60 @@ const LoginPanel = () => {
   ));
 
   return (
-    <>
+    <div className="login-panel">
       {user ? (
-        <div className="logged-panel">
+        <div
+          onMouseLeave={
+            isOpenModal
+              ? () => {
+                  setIsOpenModal(false);
+                  ref.current.classList.remove('logged-panel--visible');
+                }
+              : null
+          }
+          ref={ref}
+          className="logged-panel"
+        >
           <button
             className="logged-panel__menu-button"
-            onMouseEnter={() => {
-              ref.current.classList.add('logged-panel__menu-wrapper--active');
-            }}
-            // onMouseOut={() => {
-            //   ref.current.classList.remove('logged-panel__menu--active');
-            // }}
+            onMouseEnter={
+              !isOpenModal
+                ? () => {
+                    setIsOpenModal(true);
+                    ref.current.classList.add('logged-panel--visible');
+                  }
+                : null
+            }
           >
             {user.login.charAt(0).toUpperCase()}
           </button>
-          <div
-            onMouseLeave={() => {
-              ref.current.classList.remove(
-                'logged-panel__menu-wrapper--active'
-              );
-            }}
-            ref={ref}
-            className="logged-panel__menu-wrapper"
-          >
-            <div className="logged-panel__menu">
-              <div className="logged-panel__who-logged-in">{user.login}</div>
-              <button
-                className="logged-panel__button"
-                onClick={() => {
-                  axios({
-                    method: 'GET',
-                    withCredentials: true,
-                    url: URL,
-                  }).then(() => {
-                    dispatch({
-                      type: FETCH_USER_DATA,
-                      payload: null,
-                    });
+          <div className="logged-panel__menu">
+            <div className="logged-panel__who-logged-in">{user.login}</div>
+            <button
+              className="logged-panel__log-out-button"
+              onClick={() => {
+                axios({
+                  method: 'GET',
+                  withCredentials: true,
+                  url: URL,
+                }).then(() => {
+                  dispatch({
+                    type: FETCH_USER_DATA,
+                    payload: null,
                   });
+                });
 
-                  history.push('/login');
-                }}
-              >
-                Log out
-              </button>
-            </div>{' '}
-          </div>
+                history.push('/login');
+              }}
+            >
+              Log out
+            </button>
+          </div>{' '}
         </div>
       ) : (
-        <div className="not-logged-in-panel">{menu}</div>
+        <div className="not-logged-in">{menu}</div>
       )}
-    </>
+    </div>
   );
 };
 
