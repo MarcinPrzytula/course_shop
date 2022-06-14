@@ -57,10 +57,15 @@ const LoginPanel = () => {
         >
           <button
             className="logged-panel__menu-button"
+            onTouchEnd={() => {
+              ref.current.classList.toggle('logged-panel--visible');
+              console.log('touch');
+            }}
             onMouseEnter={
               !isOpenModal
                 ? () => {
                     setIsOpenModal(true);
+                    console.log('mysz');
                     ref.current.classList.add('logged-panel--visible');
                   }
                 : null
