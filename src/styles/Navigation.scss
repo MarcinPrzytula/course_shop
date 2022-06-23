@@ -1,27 +1,11 @@
 .navigation {
   user-select: none;
-  width: 65%;
-
-  &__button {
-    display: block;
-    font-size: 20px;
-    background-color: #a435f0;
-    border-radius: 5px;
-    color: white;
-    text-transform: uppercase;
-    padding: 2px 5px 2px 5px;
-    user-select: none;
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover {
-      background-color: darken(#a435f0, 20%);
-    }
-  }
+  width: calc(100% - 120px);
 
   &__list {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     height: 50px;
     list-style: none;
   }
@@ -31,10 +15,10 @@
     width: 30%;
     justify-content: center;
     align-items: center;
-  }
-  &__item-wraper.active {
-    border-bottom: 5px darken(#a435f0, 20%) solid;
-    padding-top: 5px;
+    &--active {
+      border-bottom: 5px darken(#a435f0, 20%) solid;
+      padding-top: 5px;
+    }
   }
 
   &__item {
@@ -42,10 +26,8 @@
     text-transform: uppercase;
     font-size: 12px;
     color: black;
-  }
-
-  &__burger {
-    display: none;
+    display: flex;
+    text-align: center;
   }
 
   &__cart {
@@ -72,61 +54,6 @@
   border: 1px solid red;
 }
 
-.desktopOnly {
-  display: block;
-}
-
-.telOnly {
-  display: none;
-}
-
-@media (max-width: 320px) {
-  .telOnly {
-    display: block;
-  }
-  .desktopOnly {
-    display: none;
-  }
-  .navigation {
-    position: relative;
-    width: 40%;
-    z-index: 1;
-
-    &__list {
-      flex-direction: column;
-      list-style: none;
-      background-color: grey;
-      opacity: 0.9;
-      height: 20vh;
-    }
-    &__item-wraper {
-      width: 100%;
-      display: flex;
-      text-align: center;
-    }
-
-    &__item {
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: white;
-    }
-    &__burger {
-      display: flex;
-      background-color: white;
-      color: black;
-      border: none;
-      font-size: 20px;
-    }
-    &__cart {
-      font-size: 20px;
-    }
-    &__comment {
-      margin: 30px;
-    }
-  }
-
-  .fa-stack[data-count]:after {
-    right: 0%;
-  }
+.fa-stack[data-count]:after {
+  right: 0%;
 }

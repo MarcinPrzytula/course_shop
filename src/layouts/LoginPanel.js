@@ -20,6 +20,21 @@ const LoginPanel = () => {
     ? `${process.env.REACT_APP_API.trim()}api/logout`
     : `http://localhost:3001/api/logout`;
 
+  const logOut = () => {
+    axios({
+      method: 'GET',
+      withCredentials: true,
+      url: URL,
+    }).then(() => {
+      dispatch({
+        type: FETCH_USER_DATA,
+        payload: null,
+      });
+    });
+
+    history.push('/login');
+  };
+
   const list = [
     { name: 'Log in', path: '/login' },
     {
@@ -59,13 +74,11 @@ const LoginPanel = () => {
             className="logged-panel__menu-button"
             onTouchEnd={() => {
               ref.current.classList.toggle('logged-panel--visible');
-              console.log('touch');
             }}
             onMouseEnter={
               !isOpenModal
                 ? () => {
                     setIsOpenModal(true);
-                    console.log('mysz');
                     ref.current.classList.add('logged-panel--visible');
                   }
                 : null
@@ -78,18 +91,7 @@ const LoginPanel = () => {
             <button
               className="logged-panel__log-out-button"
               onClick={() => {
-                axios({
-                  method: 'GET',
-                  withCredentials: true,
-                  url: URL,
-                }).then(() => {
-                  dispatch({
-                    type: FETCH_USER_DATA,
-                    payload: null,
-                  });
-                });
-
-                history.push('/login');
+                logOut();
               }}
             >
               Log out
