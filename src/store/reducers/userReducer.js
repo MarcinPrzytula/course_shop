@@ -6,7 +6,7 @@ import {
   ADD_COURSE_TO_SHOPPING_CART,
   REMOVE_COURSE_FROM_SHOPPING_CART,
   SELECT_COURSE,
-} from '../actions/userActions.js';
+} from '../actions/userActions.ts';
 
 import axios from 'axios';
 
@@ -68,7 +68,7 @@ const removeCourseFromShoppingCart = (state, action) => {
   return newState;
 };
 
-export const userReducer = (state = null, action) => {
+const userReducer = (state = null, action) => {
   switch (action.type) {
     case FETCH_USER_DATA:
       return action.payload;
@@ -88,3 +88,5 @@ export const userReducer = (state = null, action) => {
   }
   return state;
 };
+
+export default userReducer;

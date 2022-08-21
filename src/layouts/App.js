@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import store from '../store/store.js';
+import Store from '../store/store.ts';
 
 import Page from './Page';
 import Navigation from '../layouts/Navigation';
@@ -12,7 +12,7 @@ import '../styles/App.scss';
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <Provider store={Store}>
       {/* <Router basename={process.env.PUBLIC_URL}> */}
       <Router basename={'/course_shop'}>
         <div className="app_wrapper">

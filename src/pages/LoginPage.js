@@ -30,8 +30,9 @@ const LoginPage = () => {
       }
     });
   };
-  const loginPanel = (
-    <>
+
+  return (
+    <div className="loginPage">
       <div className="loginPage__user-info">
         <span>Log in to your account!</span>
       </div>
@@ -41,9 +42,8 @@ const LoginPage = () => {
         }}
         buttonName={'Log in'}
       />
-    </>
+    </div>
   );
-  return <>{loginPanel}</>;
 };
 
 export default LoginPage;
