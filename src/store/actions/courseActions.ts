@@ -8,7 +8,7 @@ const URL = process.env.REACT_APP_API
   ? `${process.env.REACT_APP_API.trim()}api/courses`
   : 'http://localhost:3001/api/courses';
 
-export interface fetchCourseDispatchType {
+interface fetchCourseDispatchType {
   type: typeof FETCH_COURSES_DATA;
   payload: {
     data: [];

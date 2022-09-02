@@ -57,12 +57,20 @@ const addRating = (state: CourseI[], action: RatingActionI) => {
     return updateCourse;
   });
 };
-
-const fetchCoursesData = (state: CourseI[], action: any) => {
+interface fetchCourseDataActionI {
+  type: typeof FETCH_COURSES_DATA;
+  payload: {
+    data: [];
+  };
+}
+const fetchCoursesData = (state: CourseI[], action: fetchCourseDataActionI) => {
   return action.payload;
 };
 
-const courseReducer = (state: CourseI[] = [], action: any) => {
+const courseReducer = (
+  state: CourseI[] = [],
+  action: fetchCourseDataActionI | RatingActionI
+) => {
   switch (action.type) {
     case ADD_RATING:
       return addRating(state, action);

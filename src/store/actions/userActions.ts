@@ -10,10 +10,16 @@ export const REMOVE_COURSE_FROM_SHOPPING_CART =
   'REMOVE_COURSE_FROM_SHOPPING_CART';
 export const SELECT_COURSE = 'SELECT_COURSE';
 
-export interface fetchUserDispatchType {
+interface fetchUserDispatchType {
   type: typeof FETCH_USER_DATA;
   payload: {
     data: [];
+  };
+}
+interface loginUserDispatchType {
+  type: typeof LOGIN_USER;
+  payload: {
+    data: {};
   };
 }
 
@@ -52,13 +58,6 @@ export const addUser = (login: string, password: string) => async () => {
 
   return res;
 };
-
-export interface loginUserDispatchType {
-  type: typeof LOGIN_USER;
-  payload: {
-    data: {};
-  };
-}
 
 export const loginUser =
   (login: string, password: string) =>
