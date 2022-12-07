@@ -48,12 +48,11 @@ getToken(messaging, {
 	});
 
 export const onMessageListener = () => {
-	console.log(messaging);
-	// new Promise((resolve) => {
-	// 	onMessage(messaging, (payload) => {
-	// 		resolve(payload);
-	// 	});
-	// });
+	new Promise((resolve) => {
+		onMessage(messaging, (payload) => {
+			resolve(payload);
+		});
+	});
 };
 
 
